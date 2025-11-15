@@ -1,0 +1,172 @@
+[gd_scene load_steps=12 format=3 uid="uid://27v8hfhp36xr"]
+
+[ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
+[ext_resource type="Texture2D" uid="uid://c1qcyoosuijwq" path="res://Game elements/Cards/BaseCardTemplate/CardBackground.png" id="3_o8iy5"]
+[ext_resource type="Texture2D" uid="uid://cunihs4iteotc" path="res://Game elements/Cards/BaseCardTemplate/PlaceHolderCardArt.png" id="4_o8iy5"]
+[ext_resource type="Texture2D" uid="uid://mjd20mpdhyyj" path="res://Game elements/Cards/BaseCardTemplate/CardDescription.png" id="4_umt7n"]
+[ext_resource type="Texture2D" uid="uid://bodaa62ki1bld" path="res://Game elements/Cards/BaseCardTemplate/Overlay.png" id="5_0kbbq"]
+[ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="5_yp28l"]
+[ext_resource type="Script" uid="uid://fkeffmm5c5so" path="res://Resources/HealthManager.cs" id="7_umt7n"]
+[ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
+[ext_resource type="Script" uid="uid://c4ps8r2eainfc" path="res://Resources/CostManager.cs" id="9_qrnnt"]
+
+[sub_resource type="Resource" id="Resource_o8iy5"]
+script = ExtResource("2_7kkpe")
+Art = ExtResource("4_o8iy5")
+Name = "Fella"
+Description = "Very present and exisitng description"
+TimeLeftOnField = 1
+Cost = 1
+Health = 1
+Defense = 1
+Attack = 1
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("healthManager", "attackManager", "costManager", "cardOverlay")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 48.0
+scale = Vector2(4, 4)
+mouse_default_cursor_shape = 2
+script = ExtResource("1_8dryo")
+CardData = SubResource("Resource_o8iy5")
+healthManager = NodePath("HealthManager")
+attackManager = NodePath("AttackManager")
+costManager = NodePath("CostManager")
+cardOverlay = NodePath("CardOverlay")
+
+[node name="CardBackgroundArt" type="Sprite2D" parent="."]
+position = Vector2(17, 24)
+texture = ExtResource("3_o8iy5")
+
+[node name="CardArt" type="Sprite2D" parent="."]
+position = Vector2(16, 13)
+scale = Vector2(0.3333333, 0.3333333)
+
+[node name="CardOverlay" type="Sprite2D" parent="."]
+visible = false
+z_index = 999
+position = Vector2(18, 26)
+texture = ExtResource("5_0kbbq")
+
+[node name="AttackLabel" type="RichTextLabel" parent="CardOverlay"]
+clip_contents = false
+offset_left = 10.0
+offset_top = 18.0
+offset_right = 24.0
+offset_bottom = 36.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="HealthLabel" type="RichTextLabel" parent="CardOverlay"]
+clip_contents = false
+offset_left = -15.0
+offset_top = 16.0
+offset_right = 1.0
+offset_bottom = 34.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="TimeLeftLabel" type="RichTextLabel" parent="CardOverlay"]
+clip_contents = false
+offset_left = 24.0
+offset_top = -28.0
+offset_right = 38.0
+offset_bottom = -10.0
+scale = Vector2(0.6, 0.6)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="DefenseLabel" type="RichTextLabel" parent="CardOverlay"]
+clip_contents = false
+offset_left = -22.0
+offset_top = 16.0
+offset_right = -8.0
+offset_bottom = 34.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="CostLabel" type="RichTextLabel" parent="CardOverlay"]
+clip_contents = false
+offset_left = -27.0
+offset_top = -28.0
+offset_right = -13.0
+offset_bottom = -10.0
+scale = Vector2(0.6, 0.6)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="CardDescription" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -61)
+texture = ExtResource("4_umt7n")
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="CardDescription"]
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -53.0
+offset_right = 48.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource("7_umt7n")
+
+[node name="AttackManager" type="Node" parent="."]
+script = ExtResource("8_yp28l")
+
+[node name="CostManager" type="Node" parent="."]
+script = ExtResource("9_qrnnt")
+
+[node name="NameLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = 23.0
+offset_right = 52.0
+offset_bottom = 41.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "name"
+horizontal_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="onMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="onMouseExited"]

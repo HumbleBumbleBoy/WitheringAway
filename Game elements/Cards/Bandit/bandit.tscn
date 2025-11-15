@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://ck5tb3rct23ku"]
+
+[ext_resource type="Script" uid="uid://byr5oiueyqoxp" path="res://Game elements/Cards/Bandit/Bandit.cs" id="1_hmq4t"]
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/BaseCardTemplate/base_card_template.tscn" id="1_irh7i"]
+[ext_resource type="Texture2D" uid="uid://d0lcepfyhogbx" path="res://Game elements/Cards/Bandit/Bandit.png" id="2_hmq4t"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_qmsbo"]
+
+[sub_resource type="Resource" id="Resource_kov2q"]
+script = ExtResource("2_qmsbo")
+Art = ExtResource("2_hmq4t")
+Name = "Bandit"
+Description = "A simple thief"
+TimeLeftOnField = 3
+Cost = 1
+Health = 2
+Attack = 1
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Bandit" instance=ExtResource("1_irh7i")]
+script = ExtResource("1_hmq4t")
+CardData = SubResource("Resource_kov2q")
+
+[node name="CardArt" parent="." index="1"]
+texture = ExtResource("2_hmq4t")

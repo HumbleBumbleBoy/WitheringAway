@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://n2s4x123s73j"]
+
+[ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
+[ext_resource type="PackedScene" uid="uid://diy7abvrjl5ar" path="res://Game elements/Hand/hand_manager.tscn" id="1_s0if1"]
+[ext_resource type="PackedScene" uid="uid://b62t4dg6vrbm" path="res://Game elements/Deck/deck_manager.tscn" id="3_u4udh"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_ijnl5")
+
+[node name="HandManager" parent="." instance=ExtResource("1_s0if1")]
+offset_left = 285.0
+offset_top = 829.0
+offset_right = 1643.0
+offset_bottom = 971.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+
+[node name="DeckManager" parent="." instance=ExtResource("3_u4udh")]

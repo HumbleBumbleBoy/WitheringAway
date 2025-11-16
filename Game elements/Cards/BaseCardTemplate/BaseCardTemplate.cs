@@ -58,6 +58,7 @@ public partial class BaseCardTemplate : Control
         GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("HealthLabel").Text = healthManager.CurrentHealth.ToString();
         GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("DefenseLabel").Text = healthManager.CurrentDefense.ToString();
         GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackLabel").Text = attackManager.CurrentAttack.ToString();
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackAmountLabel").Text = attackManager.CurrentHowManyAttacks.ToString();
         GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("CostLabel").Text = costManager.CurrentCost.ToString();
         GetNode<RichTextLabel>("NameLabel").Text = CardData.Name.ToString();
         GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("TimeLeftLabel").Text = healthManager.TimeLeftOnField.ToString();

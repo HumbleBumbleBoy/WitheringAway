@@ -1,10 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class PlayerHandManager : Control
 {
     [Export] PlayerDeckManager playerDeckManager;
     private HBoxContainer cardContainer;
+    public List<Node> playerCardsInHand = [];
 
     public override void _Ready()
     {
@@ -15,12 +17,14 @@ public partial class PlayerHandManager : Control
     {
         Node cardInstance = playerDeckManager.playerCardsInDeck[^1].Instantiate();
         cardContainer.AddChild(cardInstance);
+        playerCardsInHand.Add(cardInstance);
         playerDeckManager.removeTopCardFromDeck();
     }
     
-    public void RemoveCardFromHand(Control cardContainerToRemove)
+    public void RemoveCardFromHand(Node cardToRemove)
     {
-        cardContainer.RemoveChild(cardContainerToRemove);
-        cardContainerToRemove.QueueFree();
+        playerCardsInHand.Remove(cardToRemove);
+        cardContainer.RemoveChild(cardToRemove);
+        cardToRemove.QueueFree();
     }
 }

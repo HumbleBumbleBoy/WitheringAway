@@ -10,3 +10,45 @@ script = ExtResource("1_ijnl5")
 [node name="Player" parent="." instance=ExtResource("2_ijnl5")]
 
 [node name="Enemy" parent="." instance=ExtResource("3_u4udh")]
+
+[node name="SummonCardButton" type="Button" parent="."]
+offset_left = 70.0
+offset_top = 750.0
+offset_right = 370.0
+offset_bottom = 825.0
+text = "Summon a card"
+
+[node name="FillHandButton" type="Button" parent="."]
+offset_left = 400.0
+offset_top = 750.0
+offset_right = 700.0
+offset_bottom = 825.0
+text = "Fill hand"
+
+[node name="RemoveCardButton" type="Button" parent="."]
+offset_left = 730.0
+offset_top = 750.0
+offset_right = 1030.0
+offset_bottom = 825.0
+text = "Remove a card"
+
+[node name="ClearHandButton" type="Button" parent="."]
+offset_left = 1069.0
+offset_top = 750.0
+offset_right = 1369.0
+offset_bottom = 825.0
+text = "Clear the hand"
+
+[node name="SpawnDeckButton" type="Button" parent="."]
+offset_left = 1390.0
+offset_top = 750.0
+offset_right = 1690.0
+offset_bottom = 825.0
+text = "Spawn deck
+"
+
+[connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
+[connection signal="pressed" from="FillHandButton" to="." method="onFillHandButton"]
+[connection signal="pressed" from="RemoveCardButton" to="." method="onRemoveCardButtonPressed"]
+[connection signal="pressed" from="ClearHandButton" to="." method="onClearHandButtonPressed"]
+[connection signal="pressed" from="SpawnDeckButton" to="." method="onSpawnDeckButtonPressed"]

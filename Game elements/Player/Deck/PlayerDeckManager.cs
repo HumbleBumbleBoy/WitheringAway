@@ -5,7 +5,7 @@ using System.Linq;
 
 public partial class PlayerDeckManager : Node
 {
-    [Export] private Deck[] Decks = [];
+    [Export] public Deck[] Decks = [];
     private PlayerHandManager handManager;
     public List<PackedScene> playerCardsInDeck = [];
     private VBoxContainer cardsInDeckContainer;
@@ -14,13 +14,28 @@ public partial class PlayerDeckManager : Node
     {
         cardsInDeckContainer = GetParent().GetNode<Control>("PlayerDeck").GetNode<VBoxContainer>("CardContainer");
         handManager = GetParent().GetNode<PlayerHandManager>("PlayerHandManager");
-        playerCardsInDeck.AddRange(Decks[new Random().Next(0, Decks.Length)].Cards);  // for now the deck chosen is random
+
+        var selectedDeck = Decks[new Random().Next(0, Decks.Length)];  // for now chosen randomly
+        playerCardsInDeck.AddRange(selectedDeck.Cards);
+        ShuffleDeck();
 
         foreach (PackedScene card in playerCardsInDeck)
         {
             addCardToDeckVisually(card);
         }
         GD.Print("Deck contains " + playerCardsInDeck.Count + " cards");
+    }
+
+    public void ShuffleDeck()
+    {
+        Random random = new();
+        int n = playerCardsInDeck.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            (playerCardsInDeck[k], playerCardsInDeck[n]) = (playerCardsInDeck[n], playerCardsInDeck[k]);
+        }
     }
 
     public void addCardToDeckVisually(PackedScene cardScene)
@@ -33,9 +48,10 @@ public partial class PlayerDeckManager : Node
         cardsInDeckContainer.AddChild(cardInstance);
     }
 
-        public void addCardToDeck(PackedScene cardScene)
+    public void addCardToDeck(PackedScene cardScene)
     {
         playerCardsInDeck.Add(cardScene);
+        ShuffleDeck();
     }
 
     public void removeTopCardFromDeck()

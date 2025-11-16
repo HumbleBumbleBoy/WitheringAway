@@ -3,6 +3,7 @@ using System;
 
 public partial class PlayerHandManager : Control
 {
+    [Export] PlayerDeckManager playerDeckManager;
     private HBoxContainer cardContainer;
 
     public override void _Ready()
@@ -10,11 +11,11 @@ public partial class PlayerHandManager : Control
         cardContainer = GetNode<HBoxContainer>("CardContainer");
     }
     
-    public Control AddCardToHand(PackedScene cardScene)
+    public void GetTopCard()
     {
-        Node cardInstance = cardScene.Instantiate();
+        Node cardInstance = playerDeckManager.playerCardsInDeck[^1].Instantiate();
         cardContainer.AddChild(cardInstance);
-        return cardContainer;
+        playerDeckManager.removeTopCardFromDeck();
     }
     
     public void RemoveCardFromHand(Control cardContainerToRemove)

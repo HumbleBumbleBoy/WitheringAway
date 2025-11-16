@@ -10,5 +10,8 @@ public partial class GameScene : Node2D
     {
         playerHandManager = GetNode<Node>("Player").GetNode<PlayerHandManager>("PlayerHandManager");
         playerDeckManager = GetNode<Node>("Player").GetNode<PlayerDeckManager>("PlayerDeckManager");
+
+        playerHandManager.GetTopCard();
+        GD.Print(playerDeckManager.playerCardsInDeck.Count);
     }
 }

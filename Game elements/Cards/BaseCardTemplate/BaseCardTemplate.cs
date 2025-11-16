@@ -16,10 +16,10 @@ public partial class BaseCardTemplate : Control
 
     public override void _Process(double delta)
     {
-        if (isHovering)
+        if (isHovering && !isFlipped)
         {
             ZIndex = 3;
-            Scale = new Vector2(4.5f, 4.5f);
+            Scale = new Vector2(4.2f, 4.2f);
         } else 
         { 
             ZIndex = 1;

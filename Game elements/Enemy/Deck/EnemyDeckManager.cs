@@ -12,7 +12,6 @@ public partial class EnemyDeckManager : Node
         foreach (PackedScene cardScene in cardScenes)
         {
             handManager.AddCardToHand(cardScene);
-            GD.Print("Card added");
         }
     }
 }

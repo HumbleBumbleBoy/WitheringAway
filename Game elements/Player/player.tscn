@@ -1,21 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6phh5bua1n3g"]
+[gd_scene load_steps=7 format=3 uid="uid://c6phh5bua1n3g"]
 
 [ext_resource type="PackedScene" uid="uid://diy7abvrjl5ar" path="res://Game elements/Player/Hand/player_hand_manager.tscn" id="1_s3ool"]
 [ext_resource type="PackedScene" uid="uid://b62t4dg6vrbm" path="res://Game elements/Player/Deck/player_deck_manager.tscn" id="2_2t7hi"]
+[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Bandit/bandit.tscn" id="4_1phct"]
+[ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_240if"]
+[ext_resource type="PackedScene" uid="uid://b87kmxjur3uaq" path="res://Game elements/Player/Deck/player_deck.tscn" id="5_1phct"]
+
+[sub_resource type="Resource" id="Resource_1phct"]
+script = ExtResource("4_240if")
+Cards = [ExtResource("4_1phct")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Player" type="Node"]
 
-[node name="PlayerHandManager" parent="." instance=ExtResource("1_s3ool")]
+[node name="PlayerHandManager" parent="." node_paths=PackedStringArray("playerDeckManager") instance=ExtResource("1_s3ool")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -750.0
-offset_top = -260.0
-offset_right = 750.0
-offset_bottom = 0.0
+offset_left = -887.0
+offset_top = -243.0
+offset_right = 613.0
+offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 0
+playerDeckManager = NodePath("../PlayerDeckManager")
 
 [node name="PlayerDeckManager" parent="." instance=ExtResource("2_2t7hi")]
+Decks = [SubResource("Resource_1phct")]
+
+[node name="PlayerDeck" parent="." instance=ExtResource("5_1phct")]
+offset_left = 1686.0
+offset_top = 843.0
+offset_right = -28.0
+offset_bottom = -26.0

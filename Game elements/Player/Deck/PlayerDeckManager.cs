@@ -1,13 +1,13 @@
 using Godot;
 
-public partial class DeckManager : Node
+public partial class PlayerDeckManager : Node
 {
     [Export] private Godot.Collections.Array<PackedScene> cardScenes = new();
-    private HandManager handManager;
+    private PlayerHandManager handManager;
 
     public override void _Ready()
     {
-        handManager = GetParent().GetNode<HandManager>("HandManager");
+        handManager = GetParent().GetNode<PlayerHandManager>("PlayerHandManager");
 
         foreach (PackedScene cardScene in cardScenes)
         {

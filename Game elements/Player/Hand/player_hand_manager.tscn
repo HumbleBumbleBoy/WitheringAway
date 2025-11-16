@@ -1,14 +1,14 @@
 [gd_scene load_steps=2 format=3 uid="uid://diy7abvrjl5ar"]
 
-[ext_resource type="Script" uid="uid://dnho24krgs5e6" path="res://Game elements/Hand/HandManager.cs" id="1_xoult"]
+[ext_resource type="Script" uid="uid://dnho24krgs5e6" path="res://Game elements/Player/Hand/PlayerHandManager.cs" id="1_acxqg"]
 
-[node name="HandManager" type="Control"]
+[node name="PlayerHandManager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1500.0
+offset_bottom = 260.0
 mouse_filter = 2
-script = ExtResource("1_xoult")
+script = ExtResource("1_acxqg")
 
 [node name="CardContainer" type="HBoxContainer" parent="."]
 layout_mode = 0

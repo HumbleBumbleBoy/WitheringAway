@@ -3,12 +3,12 @@ using System;
 
 public partial class GameScene : Node2D
 {
-    private HandManager handManager;
-    private DeckManager deckManager;
+    private PlayerHandManager playerHandManager;
+    private PlayerDeckManager playerDeckManager;
 
     public override void _Ready()
     {
-        handManager = GetNode<HandManager>("HandManager");
-        deckManager = GetNode<DeckManager>("DeckManager");
+        playerHandManager = GetNode<Node>("Player").GetNode<PlayerHandManager>("PlayerHandManager");
+        playerDeckManager = GetNode<Node>("Player").GetNode<PlayerDeckManager>("PlayerDeckManager");
     }
 }

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://dll2sitm1b08a"]
+
+[ext_resource type="PackedScene" uid="uid://1xia3fwv3jf0" path="res://Game elements/Enemy/Hand/enemy_hand_manager.tscn" id="1_qxscf"]
+[ext_resource type="PackedScene" uid="uid://l2t8da7vubhb" path="res://Game elements/Enemy/Deck/enemy_deck_manager.tscn" id="2_ka80h"]
+[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Bandit/bandit.tscn" id="3_fr5dj"]
+[ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Murderer/murderer.tscn" id="4_2omue"]
+
+[node name="Enemy" type="Node"]
+
+[node name="EnemyHandManager" parent="." instance=ExtResource("1_qxscf")]
+anchors_preset = 10
+anchor_bottom = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 1
+
+[node name="EnemyDeckManager" parent="." instance=ExtResource("2_ka80h")]
+cardScenes = Array[PackedScene]([ExtResource("3_fr5dj"), ExtResource("3_fr5dj"), ExtResource("4_2omue"), ExtResource("3_fr5dj")])

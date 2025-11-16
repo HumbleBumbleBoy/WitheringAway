@@ -10,14 +10,25 @@ public partial class BaseCardTemplate : Control
     [Export] private AttackManager attackManager; 
     [Export] private CostManager costManager;
     [Export] private Sprite2D cardOverlay;
+    [Export] private Sprite2D cardBackside;
+    public bool isFlipped;
     private bool isHovering;
 
     public override void _Process(double delta)
     {
         if (isHovering)
         {
+            ZIndex = 3;
             Scale = new Vector2(4.5f, 4.5f);
-        } else { Scale = new Vector2(4.0f, 4.0f); }
+        } else 
+        { 
+            ZIndex = 1;
+            Scale = new Vector2(4.0f, 4.0f); 
+        }
+        if (isFlipped)
+        {
+            cardBackside.Show();
+        } else {cardBackside.Hide();}
     }
 
     public override void _Ready()
@@ -57,8 +68,10 @@ public partial class BaseCardTemplate : Control
     public void onMouseEntered()
     {
         isHovering = true;
-        GD.Print("mouse entered");
-        cardOverlay.Show();
+        if (!isFlipped)
+        {
+            cardOverlay.Show();
+        }
     }
 
     public void onMouseExited()

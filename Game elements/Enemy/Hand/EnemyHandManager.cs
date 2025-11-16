@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class HandManager : Control
+public partial class EnemyHandManager : Control
 {
     private HBoxContainer cardContainer;
 
@@ -13,6 +13,10 @@ public partial class HandManager : Control
     public Control AddCardToHand(PackedScene cardScene)
     {
         Node cardInstance = cardScene.Instantiate();
+        if (cardInstance is BaseCardTemplate enemyCard)
+        {
+            enemyCard.isFlipped = true;
+        }
         cardContainer.AddChild(cardInstance);
         return cardContainer;
     }

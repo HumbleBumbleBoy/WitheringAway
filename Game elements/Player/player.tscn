@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6phh5bua1n3g"]
+
+[ext_resource type="PackedScene" uid="uid://diy7abvrjl5ar" path="res://Game elements/Player/Hand/player_hand_manager.tscn" id="1_s3ool"]
+[ext_resource type="PackedScene" uid="uid://b62t4dg6vrbm" path="res://Game elements/Player/Deck/player_deck_manager.tscn" id="2_2t7hi"]
+
+[node name="Player" type="Node"]
+
+[node name="PlayerHandManager" parent="." instance=ExtResource("1_s3ool")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -750.0
+offset_top = -260.0
+offset_right = 750.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayerDeckManager" parent="." instance=ExtResource("2_2t7hi")]

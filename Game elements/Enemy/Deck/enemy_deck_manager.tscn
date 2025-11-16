@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://l2t8da7vubhb"]
+
+[ext_resource type="Script" uid="uid://bvtb4kw5ykqhg" path="res://Game elements/Enemy/Deck/EnemyDeckManager.cs" id="1_h36aw"]
+
+[node name="EnemyDeckManager" type="Node"]
+script = ExtResource("1_h36aw")

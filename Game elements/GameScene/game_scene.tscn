@@ -8,10 +8,10 @@
 script = ExtResource("1_ijnl5")
 
 [node name="HandManager" parent="." instance=ExtResource("1_s0if1")]
-offset_left = 285.0
-offset_top = 829.0
-offset_right = 1643.0
-offset_bottom = 971.0
+offset_left = 184.0
+offset_top = 807.0
+offset_right = 1684.0
+offset_bottom = 1067.0
 size_flags_horizontal = 8
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2

@@ -10,7 +10,16 @@ public partial class BaseCardTemplate : Control
     [Export] private AttackManager attackManager; 
     [Export] private CostManager costManager;
     [Export] private Sprite2D cardOverlay;
-    
+    private bool isHovering;
+
+    public override void _Process(double delta)
+    {
+        if (isHovering)
+        {
+            Scale = new Vector2(4.5f, 4.5f);
+        } else { Scale = new Vector2(4.0f, 4.0f); }
+    }
+
     public override void _Ready()
     {
         healthManager = GetNode<HealthManager>("HealthManager");
@@ -47,14 +56,14 @@ public partial class BaseCardTemplate : Control
 
     public void onMouseEntered()
     {
-        Scale = new Vector2(4.5f, 4.5f);
+        isHovering = true;
         GD.Print("mouse entered");
         cardOverlay.Show();
     }
 
     public void onMouseExited()
     {
-        Scale = new Vector2(4.0f, 4.0f);
+        isHovering = false;
         cardOverlay.Hide();
     }
 }

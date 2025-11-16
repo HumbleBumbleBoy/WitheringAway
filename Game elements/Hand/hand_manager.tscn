@@ -12,8 +12,8 @@ script = ExtResource("1_xoult")
 
 [node name="CardContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 1088.0
-offset_bottom = 413.0
+offset_right = 1500.0
+offset_bottom = 1.0
 mouse_filter = 2
 theme_override_constants/separation = 128
 alignment = 1

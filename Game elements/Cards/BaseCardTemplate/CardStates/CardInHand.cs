@@ -1,0 +1,15 @@
+using Godot;
+using System;
+
+public partial class CardInHand : CardState
+{
+    public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
+    {
+        GD.Print(card + " entered hand");
+    }
+
+    public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
+    {
+        GD.Print(card + " exited hand");
+    }
+}

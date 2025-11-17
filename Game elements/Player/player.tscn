@@ -33,7 +33,7 @@ playerDeckManager = NodePath("../PlayerDeckManager")
 Decks = [SubResource("Resource_6rmhk")]
 
 [node name="PlayerDeck" parent="." instance=ExtResource("5_1phct")]
-offset_left = 1686.0
-offset_top = 843.0
-offset_right = -28.0
-offset_bottom = -26.0
+offset_left = 1746.0
+offset_top = 847.0
+offset_right = -5.0
+offset_bottom = -22.0

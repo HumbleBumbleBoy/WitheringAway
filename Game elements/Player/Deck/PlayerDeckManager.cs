@@ -6,9 +6,9 @@ using System.Linq;
 public partial class PlayerDeckManager : Node
 {
     [Export] public Deck[] Decks = [];
-    private PlayerHandManager handManager;
+    private PlayerHandManager? handManager;
     public List<PackedScene> playerCardsInDeck = [];
-    private VBoxContainer cardsInDeckContainer;
+    private VBoxContainer? cardsInDeckContainer;
 
     public override void _Ready()
     {
@@ -43,9 +43,9 @@ public partial class PlayerDeckManager : Node
         Node cardInstance = cardScene.Instantiate();
         if (cardInstance is BaseCardTemplate cardInDeck)
         {
-            cardInDeck.isFlipped = true;
+            cardInDeck.ChangeState(new CardInDeck());
         }
-        cardsInDeckContainer.AddChild(cardInstance);
+        cardsInDeckContainer?.AddChild(cardInstance);
     }
 
     public void addCardToDeck(PackedScene cardScene)
@@ -56,7 +56,7 @@ public partial class PlayerDeckManager : Node
 
     public void removeTopCardFromDeck()
     {
-        cardsInDeckContainer.RemoveChild(cardsInDeckContainer.GetChildren()[^1]);
+        cardsInDeckContainer?.RemoveChild(cardsInDeckContainer.GetChildren()[^1]);
         playerCardsInDeck.RemoveAt(playerCardsInDeck.Count-1);
     }
 }

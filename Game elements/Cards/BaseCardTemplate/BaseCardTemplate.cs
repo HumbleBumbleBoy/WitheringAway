@@ -4,17 +4,61 @@ using System;
 [GlobalClass]
 public partial class BaseCardTemplate : Control
 {
-    [Export] public BaseCard CardData { get; set; }
-
-    [Export] private HealthManager healthManager;
-    [Export] private AttackManager attackManager; 
-    [Export] private CostManager costManager;
-    [Export] private Sprite2D cardOverlay;
-    [Export] private Sprite2D cardBackside;
+    [Export] public BaseCard? CardData { get; set; }
+    [Export] private HealthManager? healthManager;
+    [Export] private AttackManager? attackManager; 
+    [Export] private CostManager? costManager;
+    [Export] private Sprite2D? cardOverlay;
+    [Export] private Sprite2D? cardBackside;
+    protected CardState? currentState;
     public bool isFlipped;
+    public bool isCardPlayable;
     private bool isHovering;
+    
 
     public override void _Process(double delta)
+    {
+        checkApperance();
+
+        currentState?.Update(delta);
+    }
+
+    public override void _Ready()
+    {
+        healthManager = GetNode<HealthManager>("HealthManager");
+        attackManager = GetNode<AttackManager>("AttackManager");
+        costManager = GetNode<CostManager>("CostManager");
+
+        healthManager.Health = CardData?.Health??0;
+        healthManager.Defense = CardData?.Defense??0;
+        healthManager.TimeLeftOnField = CardData?.TimeLeftOnField??0;
+        healthManager.Initialize();
+        
+        attackManager.Attack = CardData?.Attack??0;
+        attackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
+        attackManager.Initialize();
+        
+        costManager.Cost = CardData?.Cost??0;
+        costManager.Initialize();
+
+        CustomMinimumSize = new Vector2(32, 48);
+        UpdateVisuals();
+    }
+    
+    private void UpdateVisuals()
+    {
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("HealthLabel").Text = healthManager?.CurrentHealth.ToString();
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("DefenseLabel").Text = healthManager?.CurrentDefense.ToString();
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackLabel").Text = attackManager?.CurrentAttack.ToString();
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackAmountLabel").Text = attackManager?.CurrentHowManyAttacks.ToString();
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("CostLabel").Text = costManager?.CurrentCost.ToString();
+        GetNode<RichTextLabel>("NameLabel").Text = CardData?.Name.ToString();
+        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("TimeLeftLabel").Text = healthManager?.TimeLeftOnField.ToString();
+        GetNode<Sprite2D>("CardDescription").GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description.ToString();
+        GetNode<Sprite2D>("CardArt").Texture = CardData?.Art;
+    }
+
+    public void checkApperance()
     {
         if (isHovering && !isFlipped)
         {
@@ -27,43 +71,18 @@ public partial class BaseCardTemplate : Control
         }
         if (isFlipped)
         {
-            cardBackside.Show();
-        } else {cardBackside.Hide();}
+            cardBackside?.Show();
+        } else {cardBackside?.Hide();}
     }
 
-    public override void _Ready()
+    public void ChangeState(CardState newState)
     {
-        healthManager = GetNode<HealthManager>("HealthManager");
-        attackManager = GetNode<AttackManager>("AttackManager");
-        costManager = GetNode<CostManager>("CostManager");
-
-        healthManager.Health = CardData.Health;
-        healthManager.Defense = CardData.Defense;
-        healthManager.TimeLeftOnField = CardData.TimeLeftOnField;
-        healthManager.Initialize();
-        
-        attackManager.Attack = CardData.Attack;
-        attackManager.HowManyAttacks = CardData.HowManyAttacks;
-        attackManager.Initialize();
-        
-        costManager.Cost = CardData.Cost;
-        costManager.Initialize();
-
-        CustomMinimumSize = new Vector2(32, 48);
-        UpdateVisuals();
-    }
-    
-    private void UpdateVisuals()
-    {
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("HealthLabel").Text = healthManager.CurrentHealth.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("DefenseLabel").Text = healthManager.CurrentDefense.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackLabel").Text = attackManager.CurrentAttack.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackAmountLabel").Text = attackManager.CurrentHowManyAttacks.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("CostLabel").Text = costManager.CurrentCost.ToString();
-        GetNode<RichTextLabel>("NameLabel").Text = CardData.Name.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("TimeLeftLabel").Text = healthManager.TimeLeftOnField.ToString();
-        GetNode<Sprite2D>("CardDescription").GetNode<RichTextLabel>("DescriptionLabel").Text = CardData.Description.ToString();
-        GetNode<Sprite2D>("CardArt").Texture = CardData.Art;
+        CardState? optionalState = newState;
+        currentState?.Exit(this, ref optionalState);
+        currentState = optionalState;
+        currentState?.Enter(this, ref optionalState);
+        if (optionalState != null && optionalState != newState) ChangeState(optionalState);
+        else currentState = null;
     }
 
     public void onMouseEntered()
@@ -71,13 +90,13 @@ public partial class BaseCardTemplate : Control
         isHovering = true;
         if (!isFlipped)
         {
-            cardOverlay.Show();
+            cardOverlay?.Show();
         }
     }
 
     public void onMouseExited()
     {
         isHovering = false;
-        cardOverlay.Hide();
+        cardOverlay?.Hide();
     }
 }

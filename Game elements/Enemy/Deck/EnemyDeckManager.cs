@@ -3,7 +3,7 @@ using Godot;
 public partial class EnemyDeckManager : Node
 {
     [Export] private Godot.Collections.Array<PackedScene> cardScenes = new();
-    private EnemyHandManager handManager;
+    private EnemyHandManager? handManager;
 
     public override void _Ready()
     {

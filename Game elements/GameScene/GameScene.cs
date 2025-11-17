@@ -3,8 +3,8 @@ using System;
 
 public partial class GameScene : Node2D
 {
-    private PlayerHandManager playerHandManager;
-    private PlayerDeckManager playerDeckManager;
+    private PlayerHandManager? playerHandManager;
+    private PlayerDeckManager? playerDeckManager;
 
     public override void _Ready()
     {
@@ -14,7 +14,7 @@ public partial class GameScene : Node2D
 
     private void onDrawCardButtonPressed()
     {
-        if (playerHandManager.playerCardsInHand.Count < 10)
+        if (playerHandManager?.playerCardsInHand.Count < 10)
         {
             playerHandManager.GetTopCard();
         } else { GD.Print("Hand full"); }
@@ -22,7 +22,7 @@ public partial class GameScene : Node2D
 
     private void onFillHandButton()
     {
-        while (playerDeckManager.playerCardsInDeck.Count > 0 && playerHandManager.playerCardsInHand.Count < 10)
+        while (playerDeckManager?.playerCardsInDeck.Count > 0 && playerHandManager?.playerCardsInHand.Count < 10)
         {
             playerHandManager.GetTopCard();
         }
@@ -30,21 +30,21 @@ public partial class GameScene : Node2D
 
     private void onRemoveCardButtonPressed()
     {
-        playerHandManager.RemoveCardFromHand(playerHandManager.playerCardsInHand[new Random().Next(0, playerHandManager.playerCardsInHand.Count)]);
+        playerHandManager?.RemoveCardFromHand(playerHandManager.playerCardsInHand[new Random().Next(0, playerHandManager.playerCardsInHand.Count)]);
     }
 
     private void onSpawnDeckButtonPressed()
     {
-        foreach (PackedScene packedScene in playerDeckManager.Decks[0].Cards)
+        foreach (PackedScene packedScene in playerDeckManager?.Decks[0].Cards??[])
         {
-            playerDeckManager.addCardToDeck(packedScene);
-            playerDeckManager.addCardToDeckVisually(packedScene);
+            playerDeckManager?.addCardToDeck(packedScene);
+            playerDeckManager?.addCardToDeckVisually(packedScene);
         }
     }
 
     private void onClearHandButtonPressed()
     {
-        while (playerHandManager.playerCardsInHand.Count > 0)
+        while (playerHandManager?.playerCardsInHand.Count > 0)
         {
             playerHandManager.RemoveCardFromHand(playerHandManager.playerCardsInHand[0]);
         }

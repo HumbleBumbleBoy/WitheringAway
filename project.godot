@@ -28,6 +28,11 @@ window/size/mode=3
 
 project/assembly_name="Withering away"
 
+[global_group]
+
+PlacablePosition=""
+CardCollisionArea=""
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

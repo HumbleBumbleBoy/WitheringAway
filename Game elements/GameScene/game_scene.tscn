@@ -1,49 +1,62 @@
-[gd_scene load_steps=4 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=5 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
+[ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
 [ext_resource type="PackedScene" uid="uid://c6phh5bua1n3g" path="res://Game elements/Player/player.tscn" id="2_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://dll2sitm1b08a" path="res://Game elements/Enemy/enemy.tscn" id="3_u4udh"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_ijnl5")
 
+[node name="Field" parent="." instance=ExtResource("2_en8yc")]
+
 [node name="Player" parent="." instance=ExtResource("2_ijnl5")]
 
 [node name="Enemy" parent="." instance=ExtResource("3_u4udh")]
 
 [node name="SummonCardButton" type="Button" parent="."]
-offset_left = 70.0
-offset_top = 750.0
-offset_right = 370.0
-offset_bottom = 825.0
+z_index = 4096
+offset_left = 155.0
+offset_top = 46.0
+offset_right = 455.0
+offset_bottom = 121.0
+mouse_default_cursor_shape = 2
 text = "Summon a card"
 
 [node name="FillHandButton" type="Button" parent="."]
-offset_left = 400.0
-offset_top = 750.0
-offset_right = 700.0
-offset_bottom = 825.0
+z_index = 4096
+offset_left = 485.0
+offset_top = 46.0
+offset_right = 785.0
+offset_bottom = 121.0
+mouse_default_cursor_shape = 2
 text = "Fill hand"
 
 [node name="RemoveCardButton" type="Button" parent="."]
-offset_left = 730.0
-offset_top = 750.0
-offset_right = 1030.0
-offset_bottom = 825.0
+z_index = 4096
+offset_left = 815.0
+offset_top = 46.0
+offset_right = 1115.0
+offset_bottom = 121.0
+mouse_default_cursor_shape = 2
 text = "Remove a card"
 
 [node name="ClearHandButton" type="Button" parent="."]
-offset_left = 1069.0
-offset_top = 750.0
-offset_right = 1369.0
-offset_bottom = 825.0
+z_index = 4096
+offset_left = 1154.0
+offset_top = 46.0
+offset_right = 1454.0
+offset_bottom = 121.0
+mouse_default_cursor_shape = 2
 text = "Clear the hand"
 
 [node name="SpawnDeckButton" type="Button" parent="."]
-offset_left = 1390.0
-offset_top = 750.0
-offset_right = 1690.0
-offset_bottom = 825.0
+z_index = 4096
+offset_left = 1475.0
+offset_top = 46.0
+offset_right = 1775.0
+offset_bottom = 121.0
+mouse_default_cursor_shape = 2
 text = "Spawn deck
 "
 

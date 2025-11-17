@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=15 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://mjd20mpdhyyj" path="res://Game elements/Cards/BaseCardTemplate/CardDescription.png" id="4_umt7n"]
 [ext_resource type="Texture2D" uid="uid://bodaa62ki1bld" path="res://Game elements/Cards/BaseCardTemplate/Overlay.png" id="5_0kbbq"]
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="5_yp28l"]
+[ext_resource type="Texture2D" uid="uid://hjdy44pvmpxr" path="res://Game elements/Cards/BaseCardTemplate/InCombatOverlay.png" id="6_yht3s"]
 [ext_resource type="Script" uid="uid://fkeffmm5c5so" path="res://Resources/HealthManager.cs" id="7_umt7n"]
 [ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
 [ext_resource type="Script" uid="uid://c4ps8r2eainfc" path="res://Resources/CostManager.cs" id="9_qrnnt"]
@@ -25,13 +26,15 @@ Attack = 1
 HowManyAttacks = 1
 metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
+size = Vector2(20, 20.25)
+
 [node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("healthManager", "attackManager", "costManager", "cardOverlay", "cardBackside")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
 offset_bottom = 48.0
 scale = Vector2(4, 4)
-mouse_default_cursor_shape = 2
 script = ExtResource("1_8dryo")
 CardData = SubResource("Resource_o8iy5")
 healthManager = NodePath("HealthManager")
@@ -55,6 +58,86 @@ texture = ExtResource("3_o8iy5")
 z_index = 1
 position = Vector2(16, 13)
 scale = Vector2(0.3333333, 0.3333333)
+texture = ExtResource("4_o8iy5")
+
+[node name="CardOnFieldOverlay" type="Sprite2D" parent="."]
+visible = false
+z_index = 3
+position = Vector2(17.25, 9)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_yht3s")
+
+[node name="AttackLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 3.75
+offset_top = 18.333334
+offset_right = 17.75
+offset_bottom = 36.333336
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="AttackAmountLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 12.500001
+offset_top = 19.583334
+offset_right = 37.5
+offset_bottom = 37.583336
+scale = Vector2(0.35, 0.35)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -9.999999
+offset_top = 16.25
+offset_right = 12.666665
+offset_bottom = 34.25
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="TimeLeftLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 11.666665
+offset_top = -12.499999
+offset_right = 35.27779
+offset_bottom = 5.500001
+scale = Vector2(0.6, 0.6)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="DefenseLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -17.916666
+offset_top = 15.833333
+offset_right = -3.916666
+offset_bottom = 33.833332
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
 
 [node name="CardOverlay" type="Sprite2D" parent="."]
 visible = false
@@ -187,6 +270,7 @@ script = ExtResource("8_yp28l")
 script = ExtResource("9_qrnnt")
 
 [node name="NameLabel" type="RichTextLabel" parent="."]
+visible = false
 z_index = 1
 clip_contents = false
 layout_mode = 0
@@ -202,5 +286,14 @@ theme_override_font_sizes/normal_font_size = 16
 text = "name"
 horizontal_alignment = 1
 
+[node name="DetectionArea" type="Area2D" parent="." groups=["CardCollisionArea"]]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(16, 23.5)
+shape = SubResource("RectangleShape2D_gdwny")
+metadata/_edit_lock_ = true
+
 [connection signal="mouse_entered" from="." to="." method="onMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="onMouseExited"]
+[connection signal="area_entered" from="DetectionArea" to="." method="onAreaEntered"]

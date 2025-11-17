@@ -99,4 +99,13 @@ public partial class BaseCardTemplate : Control
         isHovering = false;
         cardOverlay?.Hide();
     }
+
+    public void onAreaEntered(Area2D area)
+    {
+        if (area.IsInGroup("PlacablePosition"))
+        {
+            GD.Print("Card is placable");
+        }
+    }
 }
+

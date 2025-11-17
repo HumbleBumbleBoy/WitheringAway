@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6phh5bua1n3g"]
+[gd_scene load_steps=11 format=3 uid="uid://c6phh5bua1n3g"]
 
 [ext_resource type="PackedScene" uid="uid://diy7abvrjl5ar" path="res://Game elements/Player/Hand/player_hand_manager.tscn" id="1_s3ool"]
 [ext_resource type="PackedScene" uid="uid://b62t4dg6vrbm" path="res://Game elements/Player/Deck/player_deck_manager.tscn" id="2_2t7hi"]
@@ -7,10 +7,16 @@
 [ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_240if"]
 [ext_resource type="PackedScene" uid="uid://b87kmxjur3uaq" path="res://Game elements/Player/Deck/player_deck.tscn" id="5_1phct"]
 [ext_resource type="PackedScene" uid="uid://dtwm31d3iqt5m" path="res://Game elements/Cards/Undead/undead.tscn" id="6_6rmhk"]
+[ext_resource type="PackedScene" uid="uid://dmgh2loabw462" path="res://Game elements/Cards/Hooligan/hooligan.tscn" id="7_k0wrq"]
 
 [sub_resource type="Resource" id="Resource_6rmhk"]
 script = ExtResource("4_240if")
-Cards = [ExtResource("4_221xc"), ExtResource("4_221xc"), ExtResource("4_221xc"), ExtResource("6_6rmhk"), ExtResource("4_1phct"), ExtResource("4_221xc"), ExtResource("6_6rmhk")]
+Cards = [ExtResource("4_221xc"), ExtResource("4_221xc"), ExtResource("4_221xc"), ExtResource("6_6rmhk"), ExtResource("4_1phct"), ExtResource("4_221xc"), ExtResource("6_6rmhk"), ExtResource("4_1phct")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
+[sub_resource type="Resource" id="Resource_l0a8p"]
+script = ExtResource("4_240if")
+Cards = [ExtResource("7_k0wrq"), ExtResource("7_k0wrq"), ExtResource("7_k0wrq"), ExtResource("4_1phct"), ExtResource("4_1phct"), ExtResource("4_1phct"), ExtResource("4_1phct"), ExtResource("4_221xc"), ExtResource("4_221xc"), ExtResource("4_221xc")]
 metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Player" type="Node"]
@@ -30,7 +36,7 @@ grow_vertical = 0
 playerDeckManager = NodePath("../PlayerDeckManager")
 
 [node name="PlayerDeckManager" parent="." instance=ExtResource("2_2t7hi")]
-Decks = [SubResource("Resource_6rmhk")]
+Decks = [SubResource("Resource_6rmhk"), SubResource("Resource_l0a8p")]
 
 [node name="PlayerDeck" parent="." instance=ExtResource("5_1phct")]
 offset_left = 1746.0

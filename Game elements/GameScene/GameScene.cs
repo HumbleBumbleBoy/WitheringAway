@@ -35,7 +35,10 @@ public partial class GameScene : Node2D
 
     private void onSpawnDeckButtonPressed()
     {
-        foreach (PackedScene packedScene in playerDeckManager?.Decks[0].Cards??[])
+        int randomDeckIndex = new Random().Next(0, playerDeckManager?.Decks.Length??0);
+        PackedScene[] selectedDeckCards = playerDeckManager?.Decks[randomDeckIndex].Cards??[];
+        
+        foreach (PackedScene packedScene in selectedDeckCards)
         {
             playerDeckManager?.addCardToDeck(packedScene);
             playerDeckManager?.addCardToDeckVisually(packedScene);

@@ -3,7 +3,7 @@ using Godot;
 [GlobalClass]
 public partial class BaseCard : Resource
 {
-    [Export] public Texture2D Art { get; set; }
+    [Export] public Texture2D? Art { get; set; }
     [Export] public string Name { get; set; }
     [Export] public string Description { get; set; }
     [Export] public int TimeLeftOnField { get; set; }

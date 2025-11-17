@@ -5,7 +5,7 @@ public partial class CardDied : CardState
 {
     public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
     {
-        GD.Print(card + " died");
+        GD.Print(card.Name + " died");
         /* 
         if ( has on death abbility )
         {

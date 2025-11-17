@@ -9,17 +9,49 @@ public partial class BaseCardTemplate : Control
     [Export] private AttackManager? attackManager; 
     [Export] private CostManager? costManager;
     [Export] private Sprite2D? cardOverlay;
+    [Export] private Sprite2D? cardOnFieldOverlay;
+    [Export] private Sprite2D? cardDescription;
     [Export] private Sprite2D? cardBackside;
     protected CardState? currentState;
+    private bool isHovering;
     public bool isFlipped;
     public bool isCardPlayable;
-    private bool isHovering;
+    public bool isCheckingDescription;
+    // idk if i should be doing it like that so im putting it between comments in case i want to change it
+    private double _mouseDownTime;
+    private Vector2 _mouseDownPosition;
+    private bool _isMouseDown;
+    private const float HOLD_DURATION = 1.0f;
+    private const float MOVE_TOLERANCE = 10f;
+    // end of segment
     
+    public override void _GuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
+        {
+            if (mouseEvent.Pressed)
+            {
+                // Mouse pressed on this card
+                _mouseDownTime = Time.GetTicksMsec();
+                _mouseDownPosition = GetGlobalMousePosition();
+                _isMouseDown = true;
+            }
+            else
+            {
+                // Mouse released - hide description
+                if (isCheckingDescription)
+                {
+                    isCheckingDescription = false;
+                }
+                _isMouseDown = false;
+            }
+        }
+    }
 
     public override void _Process(double delta)
     {
-        checkApperance();
-
+        CheckForHold();
+        CheckApperance();
         currentState?.Update(delta);
     }
 
@@ -58,7 +90,33 @@ public partial class BaseCardTemplate : Control
         GetNode<Sprite2D>("CardArt").Texture = CardData?.Art;
     }
 
-    public void checkApperance()
+    private void CheckForHold()
+    {
+        if (_isMouseDown && !isCheckingDescription && !isFlipped)
+        {
+            // Check if mouse moved too much
+            Vector2 currentPos = GetGlobalMousePosition();
+            float distance = _mouseDownPosition.DistanceTo(currentPos);
+            
+            if (distance < MOVE_TOLERANCE)
+            {
+                // Check if held long enough
+                double holdTime = (Time.GetTicksMsec() - _mouseDownTime) / 1000.0;
+                if (holdTime >= HOLD_DURATION)
+                {
+                    isCheckingDescription = true;
+                    _isMouseDown = false; // Prevent retriggering
+                }
+            }
+            else
+            {
+                // Mouse moved too far - cancel
+                _isMouseDown = false;
+            }
+        }
+    }
+
+    public void CheckApperance()
     {
         if (isHovering && !isFlipped)
         {
@@ -73,6 +131,10 @@ public partial class BaseCardTemplate : Control
         {
             cardBackside?.Show();
         } else {cardBackside?.Hide();}
+        if (isCheckingDescription)
+        {
+            cardDescription?.Show();
+        } else { cardDescription?.Hide(); }
     }
 
     public void ChangeState(CardState newState)
@@ -98,6 +160,13 @@ public partial class BaseCardTemplate : Control
     {
         isHovering = false;
         cardOverlay?.Hide();
+
+        if (isCheckingDescription)
+        {
+            isCheckingDescription = false;
+        }
+        
+        _isMouseDown = false;
     }
 
     public void onAreaEntered(Area2D area)

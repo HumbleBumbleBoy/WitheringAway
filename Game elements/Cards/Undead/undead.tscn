@@ -24,6 +24,9 @@ CardData = SubResource("Resource_j0qtv")
 [node name="CardArt" parent="." index="2"]
 texture = ExtResource("3_kgje3")
 
+[node name="CardOnFieldOverlay" parent="." index="3"]
+visible = false
+
 [node name="AttackAmountLabel" parent="CardOverlay" index="1"]
 offset_left = 19.749998
 offset_top = 19.5

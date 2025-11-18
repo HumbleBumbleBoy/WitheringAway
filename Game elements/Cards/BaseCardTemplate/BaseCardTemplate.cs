@@ -5,13 +5,16 @@ using System;
 public partial class BaseCardTemplate : Control
 {
     [Export] public BaseCard? CardData { get; set; }
-    [Export] private HealthManager? healthManager;
-    [Export] private AttackManager? attackManager; 
-    [Export] private CostManager? costManager;
-    [Export] private Sprite2D? cardOverlay;
-    [Export] private Sprite2D? cardOnFieldOverlay;
-    [Export] private Sprite2D? cardDescription;
-    [Export] private Sprite2D? cardBackside;
+    [Export] public HealthManager? healthManager;
+    [Export] public AttackManager? attackManager; 
+    [Export] public CostManager? costManager;
+    [Export] public Sprite2D? cardOverlay;
+    [Export] public Sprite2D? cardArt;
+    [Export] public Sprite2D? cardOnFieldOverlay;
+    [Export] public Sprite2D? cardDescription;
+    [Export] public Sprite2D? cardBackground;
+    [Export] public Sprite2D? cardBackside;
+    [Export] public RichTextLabel? cardName;
     protected CardState? currentState;
     private bool isHovering;
     public bool isFlipped;
@@ -20,7 +23,12 @@ public partial class BaseCardTemplate : Control
     // idk if i should be doing it like that so im putting it between comments in case i want to change it
     private double _mouseDownTime;
     private Vector2 _mouseDownPosition;
+    private Vector2 _mouseDownCardPosition;
     private bool _isMouseDown;
+    public bool isDraggingAlready;
+    public bool isCardInField;
+    public Vector2 whereIsAreaWePlaceOurCardIn;
+    public string? nameOfAreaPlaceOurCardIn;
     private const float HOLD_DURATION = 1.0f;
     private const float MOVE_TOLERANCE = 10f;
     // end of segment
@@ -34,16 +42,30 @@ public partial class BaseCardTemplate : Control
                 // Mouse pressed on this card
                 _mouseDownTime = Time.GetTicksMsec();
                 _mouseDownPosition = GetGlobalMousePosition();
+                _mouseDownCardPosition = GlobalPosition;
                 _isMouseDown = true;
+                if (isCardInField) return;
+                if (_isMouseDown && !isFlipped && !isDraggingAlready)
+                {
+                    ChangeState(new DraggingCard());
+                }
             }
             else
             {
-                // Mouse released - hide description
+                // Mouse released
                 if (isCheckingDescription)
                 {
                     isCheckingDescription = false;
                 }
+                
                 _isMouseDown = false;
+                
+                // If we're currently dragging, transition to appropriate state
+                if (currentState is DraggingCard)
+                {
+                    CardState? nextState = CheckIfValidDropPosition() ? new CardEnteredField() : new CardInHand();
+                    ChangeState(nextState);
+                }
             }
         }
     }
@@ -52,6 +74,7 @@ public partial class BaseCardTemplate : Control
     {
         CheckForHold();
         CheckApperance();
+        
         currentState?.Update(delta);
     }
 
@@ -79,15 +102,12 @@ public partial class BaseCardTemplate : Control
     
     private void UpdateVisuals()
     {
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("HealthLabel").Text = healthManager?.CurrentHealth.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("DefenseLabel").Text = healthManager?.CurrentDefense.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackLabel").Text = attackManager?.CurrentAttack.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("AttackAmountLabel").Text = attackManager?.CurrentHowManyAttacks.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("CostLabel").Text = costManager?.CurrentCost.ToString();
-        GetNode<RichTextLabel>("NameLabel").Text = CardData?.Name.ToString();
-        GetNode<Node2D>("CardOverlay").GetNode<RichTextLabel>("TimeLeftLabel").Text = healthManager?.TimeLeftOnField.ToString();
-        GetNode<Sprite2D>("CardDescription").GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description.ToString();
-        GetNode<Sprite2D>("CardArt").Texture = CardData?.Art;
+        healthManager?.UpdateLabels();
+        attackManager?.UpdateLabels(); 
+        if (!isCardInField) { costManager?.UpdateLabels(); }
+
+        cardName.Text = CardData?.Name ?? "";
+        cardArt.Texture = CardData?.Art;
     }
 
     private void CheckForHold()
@@ -118,7 +138,7 @@ public partial class BaseCardTemplate : Control
 
     public void CheckApperance()
     {
-        if (isHovering && !isFlipped)
+        if (isHovering && !isFlipped && !isCardInField)
         {
             ZIndex = 3;
             Scale = new Vector2(4.2f, 4.2f);
@@ -139,18 +159,25 @@ public partial class BaseCardTemplate : Control
 
     public void ChangeState(CardState newState)
     {
-        CardState? optionalState = newState;
-        currentState?.Exit(this, ref optionalState);
-        currentState = optionalState;
-        currentState?.Enter(this, ref optionalState);
-        if (optionalState != null && optionalState != newState) ChangeState(optionalState);
-        else currentState = null;
+        GD.Print($"Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
+        
+        CardState? nextState = newState;
+        currentState?.Exit(this, ref nextState);
+        currentState = nextState;
+        currentState?.Enter(this, ref nextState);
+        
+        if (nextState != null && nextState != currentState)
+        {
+            ChangeState(nextState);
+        }
+        
+        GD.Print($"Current state is now: {currentState?.GetType().Name}");
     }
 
     public void onMouseEntered()
     {
         isHovering = true;
-        if (!isFlipped)
+        if (!isFlipped && !isCardInField)
         {
             cardOverlay?.Show();
         }
@@ -173,8 +200,16 @@ public partial class BaseCardTemplate : Control
     {
         if (area.IsInGroup("PlacablePosition"))
         {
-            GD.Print("Card is placable");
-        }
+            whereIsAreaWePlaceOurCardIn = area.GlobalPosition;
+            nameOfAreaPlaceOurCardIn = area.Name;
+            isCardPlayable = true;
+        } else isCardPlayable = false;
+    }
+
+    private bool CheckIfValidDropPosition()
+    {
+        if (isCardPlayable) return true;
+        return false;
     }
 }
 

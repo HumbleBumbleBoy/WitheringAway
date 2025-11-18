@@ -4,8 +4,8 @@ using System;
 
 public partial class FieldData : Node
 {
-    private BaseCardTemplate?[] enemyCardsOnField = new BaseCardTemplate[5];
-    private BaseCardTemplate?[] playerCardsOnField = new BaseCardTemplate[5];
+    public BaseCardTemplate?[] enemyCardsOnField = new BaseCardTemplate[5];
+    public BaseCardTemplate?[] playerCardsOnField = new BaseCardTemplate[5];
 
     public void playCardOnSpecificLane(int whichLane, BaseCardTemplate whichCard, bool isPlayer)
     {

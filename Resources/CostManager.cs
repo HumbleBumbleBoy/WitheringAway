@@ -10,4 +10,13 @@ public partial class CostManager : Node
     {
         CurrentCost = Cost;
     }
+
+    public void UpdateLabels()
+    {
+        var parent = GetParent<BaseCardTemplate>();
+        if (parent != null)
+        {
+            parent.cardOverlay.GetNode<RichTextLabel>("CostLabel").Text = CurrentCost.ToString();
+        }
+    }
 }

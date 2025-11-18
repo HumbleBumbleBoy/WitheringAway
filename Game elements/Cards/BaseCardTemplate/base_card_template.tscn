@@ -29,7 +29,7 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
-[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("healthManager", "attackManager", "costManager", "cardOverlay", "cardOnFieldOverlay", "cardDescription", "cardBackside")]
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("healthManager", "attackManager", "costManager", "cardOverlay", "cardArt", "cardOnFieldOverlay", "cardDescription", "cardBackground", "cardBackside", "cardName")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
@@ -41,9 +41,12 @@ healthManager = NodePath("HealthManager")
 attackManager = NodePath("AttackManager")
 costManager = NodePath("CostManager")
 cardOverlay = NodePath("CardOverlay")
+cardArt = NodePath("CardArt")
 cardOnFieldOverlay = NodePath("CardOnFieldOverlay")
 cardDescription = NodePath("CardDescription")
+cardBackground = NodePath("CardBackgroundArt")
 cardBackside = NodePath("CardBackside")
+cardName = NodePath("NameLabel")
 
 [node name="CardBackside" type="Sprite2D" parent="."]
 visible = false

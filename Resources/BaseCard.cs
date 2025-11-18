@@ -4,8 +4,8 @@ using Godot;
 public partial class BaseCard : Resource
 {
     [Export] public Texture2D? Art { get; set; }
-    [Export] public string Name { get; set; }
-    [Export] public string Description { get; set; }
+    [Export] public string? Name { get; set; }
+    [Export] public string? Description { get; set; }
     [Export] public int TimeLeftOnField { get; set; }
     [Export] public int Cost { get; set; }
     [Export] public int Health { get; set; }

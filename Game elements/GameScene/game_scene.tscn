@@ -1,12 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=6 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
 [ext_resource type="PackedScene" uid="uid://c6phh5bua1n3g" path="res://Game elements/Player/player.tscn" id="2_ijnl5"]
+[ext_resource type="Script" uid="uid://cbfxs1vsvpi25" path="res://Game elements/Game field/FieldData.cs" id="2_wh43m"]
 [ext_resource type="PackedScene" uid="uid://dll2sitm1b08a" path="res://Game elements/Enemy/enemy.tscn" id="3_u4udh"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_ijnl5")
+
+[node name="FieldData" type="Node" parent="."]
+script = ExtResource("2_wh43m")
 
 [node name="Field" parent="." instance=ExtResource("2_en8yc")]
 

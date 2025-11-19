@@ -15,7 +15,7 @@ public partial class BaseCardTemplate : Control
     [Export] public Sprite2D? cardBackground;
     [Export] public Sprite2D? cardBackside;
     [Export] public RichTextLabel? cardName;
-    protected CardState? currentState;
+    protected CardState? currentState;  // if not "protected" MAKE IT protected
     private bool isHovering;
     public bool isFlipped;
     public bool isCardPlayable;
@@ -108,6 +108,7 @@ public partial class BaseCardTemplate : Control
 
         cardName.Text = CardData?.Name ?? "";
         cardArt.Texture = CardData?.Art;
+        cardDescription.GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description;
     }
 
     private void CheckForHold()
@@ -207,9 +208,14 @@ public partial class BaseCardTemplate : Control
     }
 
     private bool CheckIfValidDropPosition()
-    {
-        if (isCardPlayable) return true;
-        return false;
+{
+        if (!isCardPlayable) return false;
+        
+        FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
+        string numberOnly = System.Text.RegularExpressions.Regex.Replace(nameOfAreaPlaceOurCardIn, @"[^\d]", "");
+        int laneIndex = int.Parse(numberOnly) - 1;
+        
+        return !fieldData.IsLaneOccupied(laneIndex, true);
     }
 }
 

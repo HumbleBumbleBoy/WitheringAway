@@ -28,4 +28,12 @@ public partial class FieldData : Node
         if (isPlayer) { return playerCardsOnField[whichLane]; } 
         return enemyCardsOnField[whichLane];
     }
+
+    public bool IsLaneOccupied(int whichLane, bool isPlayer)
+    {
+        if (isPlayer)
+            return playerCardsOnField[whichLane] != null;
+        else
+            return enemyCardsOnField[whichLane] != null;
+    }
 }

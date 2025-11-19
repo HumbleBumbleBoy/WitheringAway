@@ -20,52 +20,62 @@ script = ExtResource("2_wh43m")
 
 [node name="SummonCardButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 155.0
-offset_top = 46.0
-offset_right = 455.0
-offset_bottom = 121.0
+offset_left = 18.0
+offset_top = 44.0
+offset_right = 218.0
+offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Summon a card"
 
 [node name="FillHandButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 485.0
-offset_top = 46.0
-offset_right = 785.0
-offset_bottom = 121.0
+offset_left = 348.0
+offset_top = 44.0
+offset_right = 548.0
+offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Fill hand"
 
 [node name="RemoveCardButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 815.0
-offset_top = 46.0
-offset_right = 1115.0
-offset_bottom = 121.0
+offset_left = 678.0
+offset_top = 44.0
+offset_right = 878.0
+offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Remove a card"
 
 [node name="ClearHandButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 1154.0
-offset_top = 46.0
-offset_right = 1454.0
-offset_bottom = 121.0
+offset_left = 1017.0
+offset_top = 44.0
+offset_right = 1217.0
+offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Clear the hand"
 
 [node name="SpawnDeckButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 1475.0
-offset_top = 46.0
-offset_right = 1775.0
-offset_bottom = 121.0
+offset_left = 1338.0
+offset_top = 44.0
+offset_right = 1538.0
+offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Spawn deck
 "
+
+[node name="KillCardOnFieldButton" type="Button" parent="."]
+z_index = 4096
+offset_left = 1652.0
+offset_top = 44.0
+offset_right = 1852.0
+offset_bottom = 119.0
+mouse_default_cursor_shape = 2
+text = "Kill a card on field"
 
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="FillHandButton" to="." method="onFillHandButton"]
 [connection signal="pressed" from="RemoveCardButton" to="." method="onRemoveCardButtonPressed"]
 [connection signal="pressed" from="ClearHandButton" to="." method="onClearHandButtonPressed"]
 [connection signal="pressed" from="SpawnDeckButton" to="." method="onSpawnDeckButtonPressed"]
+[connection signal="pressed" from="KillCardOnFieldButton" to="." method="onKillCardOnFieldButton"]

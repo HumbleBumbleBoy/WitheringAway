@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class GameScene : Node2D
 {
@@ -29,7 +30,7 @@ public partial class GameScene : Node2D
     }
 
     private void onRemoveCardButtonPressed()
-    {
+    {   // this will not work always since it just might remove field cards sob
         playerHandManager?.RemoveCardFromHand(playerHandManager.playerCardsInHand[new Random().Next(0, playerHandManager.playerCardsInHand.Count)]);
     }
 
@@ -50,6 +51,26 @@ public partial class GameScene : Node2D
         while (playerHandManager?.playerCardsInHand.Count > 0)
         {
             playerHandManager.RemoveCardFromHand(playerHandManager.playerCardsInHand[0]);
+        }
+    }
+
+    private void onKillCardOnFieldButton()
+    {
+        FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
+    
+        // Get all non-null cards on field
+        var aliveCards = fieldData.playerCardsOnField.Where(card => card != null).ToList();
+        
+        if (aliveCards.Count > 0)
+        {
+            // Pick a random card and kill it
+            var randomCard = aliveCards[new Random().Next(0, aliveCards.Count)];
+            randomCard.ChangeState(new CardDied());
+            GD.Print("Killed: " + randomCard.Name);
+        }
+        else
+        {
+            GD.Print("No cards on field to kill");
         }
     }
 }

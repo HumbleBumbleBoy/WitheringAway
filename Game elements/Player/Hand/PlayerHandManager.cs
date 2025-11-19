@@ -15,27 +15,30 @@ public partial class PlayerHandManager : Control
     
     public void GetTopCard()
     {
+        if (playerDeckManager?.playerCardsInDeck.Count == 0)
+        {
+            // i could make the game auto lose if this happens
+            return;
+        }
+
         Node? cardInstance = playerDeckManager?.playerCardsInDeck[^1].Instantiate();
         
-        // Cast to BaseCardTemplate to access ChangeState
         if (cardInstance is BaseCardTemplate card)
         {
             card.ChangeState(new CardInHand());
             cardContainer?.AddChild(card);
             playerCardsInHand.Add(card);
+            
             playerDeckManager?.removeTopCardFromDeck();
         }
     }
 
     public void RemoveCardFromHand(Node cardToRemove)  
     {
-        // since this ALWAYS means the player had to manually place the card we change the state to placed, since this will be called after dragging ends
         if (cardToRemove is BaseCardTemplate card)
         {
-            card.ChangeState(new CardEnteredField());
             playerCardsInHand.Remove(card);
             cardContainer?.RemoveChild(card);
-            card.QueueFree();
         }
     }
 }

@@ -6,7 +6,7 @@ public partial class CardEnteredField : CardState
 {   
     public Node2D? Field;
     public int indexOfLane;
-    public PlayerHandManager? playerHandManager;
+    public EnemyHandManager? playerHandManager;
     public override void Enter(BaseCardTemplate card, ref CardState? optionalState)  // FIX CARD COMING BACK TO HAND AFTER DRAWING
     {
         GD.Print(card.Name + " entered field");
@@ -17,7 +17,7 @@ public partial class CardEnteredField : CardState
         Field = card.GetParent().GetParent().GetParent().GetParent().GetNode<Node2D>("Field");
         
         // GET HAND MANAGER FIRST (while card still has parent)
-        playerHandManager = card.GetParent().GetParent().GetParent().GetNode<PlayerHandManager>("PlayerHandManager");
+        playerHandManager = card.GetParent().GetParent().GetParent().GetNode<EnemyHandManager>("PlayerHandManager");
         
         // REMOVE FROM HAND
         playerHandManager.RemoveCardFromHand(card);

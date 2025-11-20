@@ -15,8 +15,11 @@ public partial class PlayerHandManager : Control
     
     public void GetTopCard()
     {
-        if (playerDeckManager?.playerCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}
-        if (playerCardsInHand.Count >= 10) { GD.Print("Hand is full"); return; }
+        if (playerDeckManager?.playerCardsInDeck.Count == 0)
+        {
+            // i could make the game auto lose if this happens
+            return;
+        }
 
         Node? cardInstance = playerDeckManager?.playerCardsInDeck[^1].Instantiate();
         

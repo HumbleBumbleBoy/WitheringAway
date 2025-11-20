@@ -5,32 +5,26 @@ using System.Linq;
 public partial class GameScene : Node2D
 {
     [Export] public HBoxContainer? inGameMenu;
+    [Export] private TurnManager? turnManager;
 
-    private PlayerHandManager? playerHandManager;
+    private EnemyHandManager? playerHandManager;
     private PlayerDeckManager? playerDeckManager;
 
     public override void _Ready()
     {
-        playerHandManager = GetNode<Node>("Player").GetNode<PlayerHandManager>("PlayerHandManager");
+        playerHandManager = GetNode<Node>("Player").GetNode<EnemyHandManager>("PlayerHandManager");
         playerDeckManager = GetNode<Node>("Player").GetNode<PlayerDeckManager>("PlayerDeckManager");
+    }
+
+    private void OnSettingsButtonPressed()
+    {
+        GetNode<AudioStreamPlayer>("Click").Play();
+        inGameMenu.Visible = !inGameMenu.Visible;  
     }
 
     private void onDrawCardButtonPressed()
     {
         playerHandManager?.GetTopCard();
-    }
-
-    private void onFillHandButton()
-    {
-        while (playerDeckManager?.playerCardsInDeck.Count > 0 && playerHandManager?.playerCardsInHand.Count < 10)
-        {
-            playerHandManager.GetTopCard();
-        }
-    }
-
-    private void onRemoveCardButtonPressed()
-    {   // this will not work always since it just might remove field cards sob
-        playerHandManager?.RemoveCardFromHand(playerHandManager.playerCardsInHand[new Random().Next(0, playerHandManager.playerCardsInHand.Count)]);
     }
 
     private void onSpawnDeckButtonPressed()
@@ -42,14 +36,6 @@ public partial class GameScene : Node2D
         {
             playerDeckManager?.addCardToDeck(packedScene);
             playerDeckManager?.addCardToDeckVisually(packedScene);
-        }
-    }
-
-    private void onClearHandButtonPressed()
-    {
-        while (playerHandManager?.playerCardsInHand.Count > 0)
-        {
-            playerHandManager.RemoveCardFromHand(playerHandManager.playerCardsInHand[0]);
         }
     }
 
@@ -73,9 +59,9 @@ public partial class GameScene : Node2D
         }
     }
 
-    private void OnSettingsButtonPressed()
+    private void OnPassTurnButtonPressed()
     {
         GetNode<AudioStreamPlayer>("Click").Play();
-        inGameMenu.Visible = !inGameMenu.Visible;  
+        turnManager?.ChangeState(new EnemyTurn());
     }
 }

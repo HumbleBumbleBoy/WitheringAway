@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=22 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
@@ -12,10 +12,14 @@
 [ext_resource type="Texture2D" uid="uid://kes41gem1dgq" path="res://Game elements/GameScene/BackgroundFrames/tile004.png" id="6_0bjk3"]
 [ext_resource type="Texture2D" uid="uid://4bv0l0ni0dvg" path="res://Game elements/GameScene/BackgroundFrames/tile005.png" id="7_pm7yj"]
 [ext_resource type="Texture2D" uid="uid://diwyi2i4dpemu" path="res://Game elements/GameScene/BackgroundFrames/tile006.png" id="8_f45hw"]
+[ext_resource type="Script" uid="uid://muo67jrimni4" path="res://Game elements/Game field/TurnManager.cs" id="9_5scjv"]
 [ext_resource type="PackedScene" uid="uid://bmsqjcqprjxkr" path="res://Game elements/UI/In game menu/in_game_menu.tscn" id="13_aek3x"]
 [ext_resource type="Texture2D" uid="uid://cxn8sn574srn7" path="res://General assets/MenuAssets/SettingsButton.png" id="14_st7st"]
 [ext_resource type="Texture2D" uid="uid://7bkdbjlta0wr" path="res://General assets/MenuAssets/SettingsButtonPressed.png" id="15_0bjk3"]
+[ext_resource type="Texture2D" uid="uid://cwjehhp2doumu" path="res://Game elements/Game field/NextTurnHover.png" id="15_8brxi"]
 [ext_resource type="AudioStream" uid="uid://c24il8nymjmhi" path="res://Game elements/UI/ClickAButton.wav" id="16_0bjk3"]
+[ext_resource type="Texture2D" uid="uid://b36a0vf4vufhp" path="res://Game elements/Game field/NextTurn.png" id="17_f45hw"]
+[ext_resource type="Texture2D" uid="uid://c01af30pkl82d" path="res://Game elements/Game field/NextTurnDisabled.png" id="18_5scjv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5scjv"]
 animations = [{
@@ -46,9 +50,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="GameScene" type="Node2D" node_paths=PackedStringArray("inGameMenu")]
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("inGameMenu", "turnManager")]
 script = ExtResource("1_ijnl5")
 inGameMenu = NodePath("InGameMenu")
+turnManager = NodePath("TurnManager")
 
 [node name="Background" type="AnimatedSprite2D" parent="."]
 position = Vector2(959.99994, 540)
@@ -56,6 +61,11 @@ scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_5scjv")
 autoplay = "default"
 frame_progress = 0.5247236
+
+[node name="TurnManager" type="Node" parent="." node_paths=PackedStringArray("passTurnButton", "enemyNode")]
+script = ExtResource("9_5scjv")
+passTurnButton = NodePath("../PassTurnButton")
+enemyNode = NodePath("../Enemy")
 
 [node name="FieldData" type="Node" parent="."]
 script = ExtResource("2_wh43m")
@@ -75,38 +85,11 @@ offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Summon a card"
 
-[node name="FillHandButton" type="Button" parent="."]
-z_index = 4096
-offset_left = 348.0
-offset_top = 44.0
-offset_right = 548.0
-offset_bottom = 119.0
-mouse_default_cursor_shape = 2
-text = "Fill hand"
-
-[node name="RemoveCardButton" type="Button" parent="."]
-z_index = 4096
-offset_left = 678.0
-offset_top = 44.0
-offset_right = 878.0
-offset_bottom = 119.0
-mouse_default_cursor_shape = 2
-text = "Remove a card"
-
-[node name="ClearHandButton" type="Button" parent="."]
-z_index = 4096
-offset_left = 1017.0
-offset_top = 44.0
-offset_right = 1217.0
-offset_bottom = 119.0
-mouse_default_cursor_shape = 2
-text = "Clear the hand"
-
 [node name="SpawnDeckButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 1338.0
+offset_left = 259.0
 offset_top = 44.0
-offset_right = 1538.0
+offset_right = 459.0
 offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Spawn deck
@@ -114,12 +97,24 @@ text = "Spawn deck
 
 [node name="KillCardOnFieldButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 1652.0
+offset_left = 516.0
 offset_top = 44.0
-offset_right = 1852.0
+offset_right = 716.0
 offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Kill a card on field"
+
+[node name="PassTurnButton" type="TextureButton" parent="."]
+z_index = 4096
+offset_left = 1696.0
+offset_top = 842.00006
+offset_right = 1760.0
+offset_bottom = 906.00006
+scale = Vector2(3, 3)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("17_f45hw")
+texture_hover = ExtResource("15_8brxi")
+texture_disabled = ExtResource("18_5scjv")
 
 [node name="InGameMenu" parent="." instance=ExtResource("13_aek3x")]
 visible = false
@@ -144,9 +139,7 @@ stream = ExtResource("16_0bjk3")
 bus = &"SFX"
 
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
-[connection signal="pressed" from="FillHandButton" to="." method="onFillHandButton"]
-[connection signal="pressed" from="RemoveCardButton" to="." method="onRemoveCardButtonPressed"]
-[connection signal="pressed" from="ClearHandButton" to="." method="onClearHandButtonPressed"]
 [connection signal="pressed" from="SpawnDeckButton" to="." method="onSpawnDeckButtonPressed"]
 [connection signal="pressed" from="KillCardOnFieldButton" to="." method="onKillCardOnFieldButton"]
+[connection signal="pressed" from="PassTurnButton" to="." method="OnPassTurnButtonPressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="OnSettingsButtonPressed"]

@@ -1,29 +1,41 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class EnemyHandManager : Control
 {
+    [Export] PlayerDeckManager? playerDeckManager;
     private HBoxContainer? cardContainer;
+    public List<Node> playerCardsInHand = [];
 
     public override void _Ready()
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
     }
     
-    public Control? AddCardToHand(PackedScene cardScene)
+    public void GetTopCard()
     {
-        Node cardInstance = cardScene.Instantiate();
-        if (cardInstance is BaseCardTemplate enemyCard)
+        if (playerDeckManager?.playerCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}
+        if (playerCardsInHand.Count >= 10) { GD.Print("Hand is full"); return; }
+
+        Node? cardInstance = playerDeckManager?.playerCardsInDeck[^1].Instantiate();
+        
+        if (cardInstance is BaseCardTemplate card)
         {
-            enemyCard.isFlipped = true;
+            card.ChangeState(new CardInHand());
+            cardContainer?.AddChild(card);
+            playerCardsInHand.Add(card);
+            
+            playerDeckManager?.removeTopCardFromDeck();
         }
-        cardContainer?.AddChild(cardInstance);
-        return cardContainer;
     }
-    
-    public void RemoveCardFromHand(Control cardContainerToRemove)
+
+    public void RemoveCardFromHand(Node cardToRemove)  
     {
-        cardContainer?.RemoveChild(cardContainerToRemove);
-        cardContainerToRemove.QueueFree();
+        if (cardToRemove is BaseCardTemplate card)
+        {
+            playerCardsInHand.Remove(card);
+            cardContainer?.RemoveChild(card);
+        }
     }
 }

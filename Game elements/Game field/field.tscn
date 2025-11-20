@@ -32,89 +32,15 @@ metadata/_edit_lock_ = true
 
 [node name="PlayerArea" type="HBoxContainer" parent="PlayerSide"]
 layout_mode = 0
-offset_left = 382.0
-offset_top = -2.0
-offset_right = 714.0
-offset_bottom = 637.0
+offset_left = 450.0
+offset_top = -54.0
+offset_right = 613.0
+offset_bottom = 679.0
 theme_override_constants/separation = 200
-
-[node name="BackLane" type="VBoxContainer" parent="PlayerSide/PlayerArea"]
-layout_mode = 2
-theme_override_constants/separation = 130
-
-[node name="Position1" type="Control" parent="PlayerSide/PlayerArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="PlayerSide/PlayerArea/BackLane/Position1"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position1DetectCardArea" type="Area2D" parent="PlayerSide/PlayerArea/BackLane/Position1" groups=["PlacablePosition"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/PlayerArea/BackLane/Position1/Position1DetectCardArea"]
-position = Vector2(65, 65)
-shape = SubResource("CircleShape2D_4q5cl")
-
-[node name="Position2" type="Control" parent="PlayerSide/PlayerArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="PlayerSide/PlayerArea/BackLane/Position2"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position2DetectCardArea" type="Area2D" parent="PlayerSide/PlayerArea/BackLane/Position2" groups=["PlacablePosition"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/PlayerArea/BackLane/Position2/Position2DetectCardArea"]
-position = Vector2(65, 65)
-shape = SubResource("CircleShape2D_4q5cl")
-
-[node name="Position3" type="Control" parent="PlayerSide/PlayerArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="PlayerSide/PlayerArea/BackLane/Position3"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position3DetectCardArea" type="Area2D" parent="PlayerSide/PlayerArea/BackLane/Position3" groups=["PlacablePosition"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/PlayerArea/BackLane/Position3/Position3DetectCardArea"]
-position = Vector2(65, 65)
-shape = SubResource("CircleShape2D_4q5cl")
-
-[node name="Position4" type="Control" parent="PlayerSide/PlayerArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="PlayerSide/PlayerArea/BackLane/Position4"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position4DetectCardArea" type="Area2D" parent="PlayerSide/PlayerArea/BackLane/Position4" groups=["PlacablePosition"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/PlayerArea/BackLane/Position4/Position4DetectCardArea"]
-position = Vector2(65, 65)
-shape = SubResource("CircleShape2D_4q5cl")
-
-[node name="Position5" type="Control" parent="PlayerSide/PlayerArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="PlayerSide/PlayerArea/BackLane/Position5"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position5DetectCardArea" type="Area2D" parent="PlayerSide/PlayerArea/BackLane/Position5" groups=["PlacablePosition"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/PlayerArea/BackLane/Position5/Position5DetectCardArea"]
-position = Vector2(65, 65)
-shape = SubResource("CircleShape2D_4q5cl")
 
 [node name="FrontLane" type="VBoxContainer" parent="PlayerSide/PlayerArea"]
 layout_mode = 2
-theme_override_constants/separation = 130
+theme_override_constants/separation = 150
 
 [node name="Position1" type="Control" parent="PlayerSide/PlayerArea/FrontLane"]
 layout_mode = 2
@@ -187,7 +113,7 @@ position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
 [node name="PlayerArt" type="Sprite2D" parent="PlayerSide/PlayerArea"]
-position = Vector2(-195.5, 314.5)
+position = Vector2(-238, 362.00003)
 scale = Vector2(3.9305556, 12.833333)
 texture = ExtResource("1_0hj3r")
 
@@ -209,60 +135,16 @@ color = Color(1, 0.32423162, 0.22894186, 1)
 
 [node name="EnemyArea" type="HBoxContainer" parent="EnemySide"]
 layout_mode = 0
-offset_left = 344.0
-offset_top = -2.0
-offset_right = 676.0104
-offset_bottom = 637.0
+offset_left = 243.0
+offset_top = -57.874847
+offset_right = 418.52832
+offset_bottom = 633.0
 scale = Vector2(-1, 1)
 theme_override_constants/separation = 200
 
-[node name="BackLane" type="VBoxContainer" parent="EnemySide/EnemyArea"]
-layout_mode = 2
-theme_override_constants/separation = 130
-
-[node name="Position1" type="Control" parent="EnemySide/EnemyArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="EnemySide/EnemyArea/BackLane/Position1"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position2" type="Control" parent="EnemySide/EnemyArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="EnemySide/EnemyArea/BackLane/Position2"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position3" type="Control" parent="EnemySide/EnemyArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="EnemySide/EnemyArea/BackLane/Position3"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position4" type="Control" parent="EnemySide/EnemyArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="EnemySide/EnemyArea/BackLane/Position4"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
-[node name="Position5" type="Control" parent="EnemySide/EnemyArea/BackLane"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="EnemySide/EnemyArea/BackLane/Position5"]
-layout_mode = 1
-offset_right = 130.0
-offset_bottom = 130.0
-
 [node name="FrontLane" type="VBoxContainer" parent="EnemySide/EnemyArea"]
 layout_mode = 2
-theme_override_constants/separation = 130
+theme_override_constants/separation = 150
 
 [node name="Position1" type="Control" parent="EnemySide/EnemyArea/FrontLane"]
 layout_mode = 2
@@ -272,6 +154,12 @@ layout_mode = 1
 offset_right = 130.0
 offset_bottom = 130.0
 
+[node name="Position1DetectCardArea" type="Area2D" parent="EnemySide/EnemyArea/FrontLane/Position1" groups=["EnemyPlacablePosition"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/EnemyArea/FrontLane/Position1/Position1DetectCardArea"]
+position = Vector2(65, 65)
+shape = SubResource("CircleShape2D_4q5cl")
+
 [node name="Position2" type="Control" parent="EnemySide/EnemyArea/FrontLane"]
 layout_mode = 2
 
@@ -279,6 +167,12 @@ layout_mode = 2
 layout_mode = 1
 offset_right = 130.0
 offset_bottom = 130.0
+
+[node name="Position2DetectCardArea" type="Area2D" parent="EnemySide/EnemyArea/FrontLane/Position2" groups=["EnemyPlacablePosition"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/EnemyArea/FrontLane/Position2/Position2DetectCardArea"]
+position = Vector2(65, 65)
+shape = SubResource("CircleShape2D_4q5cl")
 
 [node name="Position3" type="Control" parent="EnemySide/EnemyArea/FrontLane"]
 layout_mode = 2
@@ -288,6 +182,12 @@ layout_mode = 1
 offset_right = 130.0
 offset_bottom = 130.0
 
+[node name="Position3DetectCardArea" type="Area2D" parent="EnemySide/EnemyArea/FrontLane/Position3" groups=["EnemyPlacablePosition"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/EnemyArea/FrontLane/Position3/Position3DetectCardArea"]
+position = Vector2(65, 65)
+shape = SubResource("CircleShape2D_4q5cl")
+
 [node name="Position4" type="Control" parent="EnemySide/EnemyArea/FrontLane"]
 layout_mode = 2
 
@@ -296,6 +196,12 @@ layout_mode = 1
 offset_right = 130.0
 offset_bottom = 130.0
 
+[node name="Position4DetectCardArea" type="Area2D" parent="EnemySide/EnemyArea/FrontLane/Position4" groups=["EnemyPlacablePosition"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/EnemyArea/FrontLane/Position4/Position4DetectCardArea"]
+position = Vector2(65, 65)
+shape = SubResource("CircleShape2D_4q5cl")
+
 [node name="Position5" type="Control" parent="EnemySide/EnemyArea/FrontLane"]
 layout_mode = 2
 
@@ -303,6 +209,12 @@ layout_mode = 2
 layout_mode = 1
 offset_right = 130.0
 offset_bottom = 130.0
+
+[node name="Position5DetectCardArea" type="Area2D" parent="EnemySide/EnemyArea/FrontLane/Position5" groups=["EnemyPlacablePosition"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/EnemyArea/FrontLane/Position5/Position5DetectCardArea"]
+position = Vector2(65, 65)
+shape = SubResource("CircleShape2D_4q5cl")
 
 [node name="PlayerArt" type="Sprite2D" parent="EnemySide"]
 position = Vector2(533, 327)

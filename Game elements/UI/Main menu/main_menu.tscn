@@ -1,3 +1,242 @@
-[gd_scene format=3 uid="uid://030uy8eg76ie"]
+[gd_scene load_steps=16 format=3 uid="uid://030uy8eg76ie"]
 
-[node name="MainMenu" type="CanvasLayer"]
+[ext_resource type="Script" uid="uid://bgt37u1sqybmo" path="res://Game elements/UI/Main menu/MainMenu.cs" id="1_uy6qq"]
+[ext_resource type="Texture2D" uid="uid://dqtmnnkf0yles" path="res://General assets/MenuAssets/Button.png" id="1_v10j6"]
+[ext_resource type="Texture2D" uid="uid://c4d4rdwjrlgg2" path="res://Game elements/GameScene/BackgroundFrames/tile000.png" id="2_h6fk2"]
+[ext_resource type="Texture2D" uid="uid://d35jclnbmq2wp" path="res://General assets/MenuAssets/ButtonPressed.png" id="2_uy6qq"]
+[ext_resource type="Texture2D" uid="uid://buwu4fwxelqqd" path="res://Game elements/GameScene/BackgroundFrames/tile001.png" id="3_x3tfw"]
+[ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="3_xm62j"]
+[ext_resource type="Texture2D" uid="uid://caa60b22p1tv5" path="res://Game elements/GameScene/BackgroundFrames/tile002.png" id="4_r7on2"]
+[ext_resource type="Texture2D" uid="uid://bkp6vr5ppornu" path="res://Game elements/GameScene/BackgroundFrames/tile003.png" id="5_6vt65"]
+[ext_resource type="Texture2D" uid="uid://kes41gem1dgq" path="res://Game elements/GameScene/BackgroundFrames/tile004.png" id="6_kbhla"]
+[ext_resource type="Texture2D" uid="uid://4bv0l0ni0dvg" path="res://Game elements/GameScene/BackgroundFrames/tile005.png" id="7_jvdu7"]
+[ext_resource type="Texture2D" uid="uid://diwyi2i4dpemu" path="res://Game elements/GameScene/BackgroundFrames/tile006.png" id="8_i4u55"]
+[ext_resource type="Texture2D" uid="uid://dunsv37by0ob0" path="res://General assets/MenuAssets/ButtonHover.png" id="12_x3tfw"]
+[ext_resource type="Texture2D" uid="uid://ccu7fmw27mvw" path="res://General assets/MenuAssets/SettingsOptionsBackground.png" id="13_6vt65"]
+[ext_resource type="PackedScene" uid="uid://c1eqg0bgo73hy" path="res://Game elements/UI/Main menu/Settings/volume_sliders.tscn" id="14_kbhla"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4u6i3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_h6fk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_x3tfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_r7on2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6vt65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kbhla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jvdu7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_i4u55")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("mainMenu", "settings")]
+script = ExtResource("1_uy6qq")
+mainMenu = NodePath("MainScreen")
+settings = NodePath("Settings")
+
+[node name="Background" type="AnimatedSprite2D" parent="."]
+position = Vector2(959.99994, 540)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_4u6i3")
+autoplay = "default"
+
+[node name="MainScreen" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Content" type="VBoxContainer" parent="MainScreen"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="GameName" type="RichTextLabel" parent="MainScreen/Content"]
+clip_contents = false
+custom_minimum_size = Vector2(1000, 200)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.72560143, 0.33172378, 0.21580562, 1)
+theme_override_constants/line_separation = -30
+theme_override_constants/paragraph_separation = -30
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 32
+theme_override_fonts/normal_font = ExtResource("3_xm62j")
+theme_override_font_sizes/normal_font_size = 128
+text = "WITHERING 
+AWAY"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+
+[node name="Buttons" type="VBoxContainer" parent="MainScreen/Content"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 33
+alignment = 1
+
+[node name="PlayButton" type="TextureButton" parent="MainScreen/Content/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_v10j6")
+texture_pressed = ExtResource("2_uy6qq")
+texture_hover = ExtResource("12_x3tfw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainScreen/Content/Buttons/PlayButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("3_xm62j")
+theme_override_font_sizes/normal_font_size = 64
+text = "Play"
+horizontal_alignment = 1
+
+[node name="SettingsButton" type="TextureButton" parent="MainScreen/Content/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_v10j6")
+texture_pressed = ExtResource("2_uy6qq")
+texture_hover = ExtResource("12_x3tfw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainScreen/Content/Buttons/SettingsButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("3_xm62j")
+theme_override_font_sizes/normal_font_size = 48
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="MainScreen/Content/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_v10j6")
+texture_pressed = ExtResource("2_uy6qq")
+texture_hover = ExtResource("12_x3tfw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainScreen/Content/Buttons/ExitButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("3_xm62j")
+theme_override_font_sizes/normal_font_size = 64
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="HBoxContainer" parent="."]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+
+[node name="SettingsName" type="RichTextLabel" parent="Settings"]
+clip_contents = false
+custom_minimum_size = Vector2(1920, 200)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.72560143, 0.33172378, 0.21580562, 1)
+theme_override_constants/line_separation = -30
+theme_override_constants/paragraph_separation = -30
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 48
+theme_override_fonts/normal_font = ExtResource("3_xm62j")
+theme_override_font_sizes/normal_font_size = 192
+text = "S E T T I N G S"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+
+[node name="BackgroundOfSettings" type="Sprite2D" parent="Settings"]
+position = Vector2(966, 605)
+scale = Vector2(2.7765, 2.7765)
+texture = ExtResource("13_6vt65")
+
+[node name="BackButton" type="TextureButton" parent="Settings/BackgroundOfSettings"]
+offset_left = -111.839836
+offset_top = 63.02899
+offset_right = 108.160164
+offset_bottom = 133.02899
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_v10j6")
+texture_pressed = ExtResource("2_uy6qq")
+texture_hover = ExtResource("12_x3tfw")
+metadata/_edit_lock_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/BackgroundOfSettings/BackButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("3_xm62j")
+theme_override_font_sizes/normal_font_size = 64
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="VolumeSliders" parent="Settings/BackgroundOfSettings" instance=ExtResource("14_kbhla")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -570.0
+offset_top = -122.09616
+offset_right = -30.0
+offset_bottom = 57.90384
+grow_horizontal = 2
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="MainScreen/Content/Buttons/PlayButton" to="." method="OnPlayButtonPressed"]
+[connection signal="pressed" from="MainScreen/Content/Buttons/SettingsButton" to="." method="OnSettingsButtonPressed"]
+[connection signal="pressed" from="MainScreen/Content/Buttons/ExitButton" to="." method="OnExitButtonPressed"]
+[connection signal="pressed" from="Settings/BackgroundOfSettings/BackButton" to="." method="OnBackButtonPressed"]

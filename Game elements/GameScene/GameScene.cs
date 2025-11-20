@@ -4,6 +4,8 @@ using System.Linq;
 
 public partial class GameScene : Node2D
 {
+    [Export] public HBoxContainer? inGameMenu;
+
     private PlayerHandManager? playerHandManager;
     private PlayerDeckManager? playerDeckManager;
 
@@ -15,10 +17,7 @@ public partial class GameScene : Node2D
 
     private void onDrawCardButtonPressed()
     {
-        if (playerHandManager?.playerCardsInHand.Count < 10)
-        {
-            playerHandManager.GetTopCard();
-        } else { GD.Print("Hand full"); }
+        playerHandManager?.GetTopCard();
     }
 
     private void onFillHandButton()
@@ -65,12 +64,17 @@ public partial class GameScene : Node2D
         {
             // Pick a random card and kill it
             var randomCard = aliveCards[new Random().Next(0, aliveCards.Count)];
-            randomCard.ChangeState(new CardDied());
-            GD.Print("Killed: " + randomCard.Name);
+            randomCard?.ChangeState(new CardDied());
+            GD.Print("Killed: " + randomCard?.Name);
         }
         else
         {
             GD.Print("No cards on field to kill");
         }
+    }
+
+    private void OnSettingsButtonPressed()
+    {
+        inGameMenu.Visible = !inGameMenu.Visible;  
     }
 }

@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1eqg0bgo73hy"]
+
+[ext_resource type="PackedScene" uid="uid://xvd64dqfco8c" path="res://Game elements/UI/Main menu/Settings/volume_slider.tscn" id="1_t4l6x"]
+
+[node name="VolumeSliders" type="VBoxContainer"]
+offset_right = 540.0
+offset_bottom = 180.0
+theme_override_constants/separation = 30
+
+[node name="VolumeSlider" parent="." instance=ExtResource("1_t4l6x")]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+BusName = "Master"
+
+[node name="VolumeSlider2" parent="." instance=ExtResource("1_t4l6x")]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+BusName = "Music"
+BusIndex = 1
+
+[node name="VolumeSlider3" parent="." instance=ExtResource("1_t4l6x")]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+BusName = "SFX"
+BusIndex = 2

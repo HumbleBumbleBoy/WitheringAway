@@ -1,13 +1,60 @@
-[gd_scene load_steps=6 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=17 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
 [ext_resource type="PackedScene" uid="uid://c6phh5bua1n3g" path="res://Game elements/Player/player.tscn" id="2_ijnl5"]
+[ext_resource type="Texture2D" uid="uid://c4d4rdwjrlgg2" path="res://Game elements/GameScene/BackgroundFrames/tile000.png" id="2_mclku"]
 [ext_resource type="Script" uid="uid://cbfxs1vsvpi25" path="res://Game elements/Game field/FieldData.cs" id="2_wh43m"]
+[ext_resource type="Texture2D" uid="uid://buwu4fwxelqqd" path="res://Game elements/GameScene/BackgroundFrames/tile001.png" id="3_aek3x"]
 [ext_resource type="PackedScene" uid="uid://dll2sitm1b08a" path="res://Game elements/Enemy/enemy.tscn" id="3_u4udh"]
+[ext_resource type="Texture2D" uid="uid://caa60b22p1tv5" path="res://Game elements/GameScene/BackgroundFrames/tile002.png" id="4_1dhfi"]
+[ext_resource type="Texture2D" uid="uid://bkp6vr5ppornu" path="res://Game elements/GameScene/BackgroundFrames/tile003.png" id="5_st7st"]
+[ext_resource type="Texture2D" uid="uid://kes41gem1dgq" path="res://Game elements/GameScene/BackgroundFrames/tile004.png" id="6_0bjk3"]
+[ext_resource type="Texture2D" uid="uid://4bv0l0ni0dvg" path="res://Game elements/GameScene/BackgroundFrames/tile005.png" id="7_pm7yj"]
+[ext_resource type="Texture2D" uid="uid://diwyi2i4dpemu" path="res://Game elements/GameScene/BackgroundFrames/tile006.png" id="8_f45hw"]
+[ext_resource type="PackedScene" uid="uid://bmsqjcqprjxkr" path="res://Game elements/UI/In game menu/in_game_menu.tscn" id="13_aek3x"]
+[ext_resource type="Texture2D" uid="uid://cxn8sn574srn7" path="res://General assets/MenuAssets/SettingsButton.png" id="14_st7st"]
+[ext_resource type="Texture2D" uid="uid://7bkdbjlta0wr" path="res://General assets/MenuAssets/SettingsButtonPressed.png" id="15_0bjk3"]
 
-[node name="GameScene" type="Node2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_5scjv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mclku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_aek3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1dhfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_st7st")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0bjk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pm7yj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_f45hw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("inGameMenu")]
 script = ExtResource("1_ijnl5")
+inGameMenu = NodePath("InGameMenu")
+
+[node name="Background" type="AnimatedSprite2D" parent="."]
+position = Vector2(959.99994, 540)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_5scjv")
+autoplay = "default"
+frame_progress = 0.5247236
 
 [node name="FieldData" type="Node" parent="."]
 script = ExtResource("2_wh43m")
@@ -73,9 +120,27 @@ offset_bottom = 119.0
 mouse_default_cursor_shape = 2
 text = "Kill a card on field"
 
+[node name="InGameMenu" parent="." instance=ExtResource("13_aek3x")]
+visible = false
+z_index = 999
+offset_left = -1.0
+offset_right = 1919.0
+
+[node name="SettingsButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(4, 4)
+offset_left = 1784.0
+offset_top = 11.0
+offset_right = 1816.0
+offset_bottom = 43.0
+scale = Vector2(4, 4)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("14_st7st")
+texture_pressed = ExtResource("15_0bjk3")
+
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="FillHandButton" to="." method="onFillHandButton"]
 [connection signal="pressed" from="RemoveCardButton" to="." method="onRemoveCardButtonPressed"]
 [connection signal="pressed" from="ClearHandButton" to="." method="onClearHandButtonPressed"]
 [connection signal="pressed" from="SpawnDeckButton" to="." method="onSpawnDeckButtonPressed"]
 [connection signal="pressed" from="KillCardOnFieldButton" to="." method="onKillCardOnFieldButton"]
+[connection signal="pressed" from="SettingsButton" to="." method="OnSettingsButtonPressed"]

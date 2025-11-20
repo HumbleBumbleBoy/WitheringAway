@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1v0wq1qcsrko"]
+
+[ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="1_o4qqk"]
+[ext_resource type="Texture2D" uid="uid://ccu7fmw27mvw" path="res://General assets/MenuAssets/SettingsOptionsBackground.png" id="2_ckxjn"]
+[ext_resource type="Texture2D" uid="uid://dqtmnnkf0yles" path="res://General assets/MenuAssets/Button.png" id="3_6e766"]
+[ext_resource type="Texture2D" uid="uid://d35jclnbmq2wp" path="res://General assets/MenuAssets/ButtonPressed.png" id="4_4wrnv"]
+[ext_resource type="Texture2D" uid="uid://dunsv37by0ob0" path="res://General assets/MenuAssets/ButtonHover.png" id="5_wyj67"]
+[ext_resource type="PackedScene" uid="uid://c1eqg0bgo73hy" path="res://Game elements/UI/Main menu/Settings/volume_sliders.tscn" id="6_afk6h"]
+
+[node name="Settings" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+
+[node name="SettingsName" type="RichTextLabel" parent="."]
+clip_contents = false
+custom_minimum_size = Vector2(1920, 200)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.72560143, 0.33172378, 0.21580562, 1)
+theme_override_constants/line_separation = -30
+theme_override_constants/paragraph_separation = -30
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 48
+theme_override_fonts/normal_font = ExtResource("1_o4qqk")
+theme_override_font_sizes/normal_font_size = 192
+text = "S E T T I N G S"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+
+[node name="BackgroundOfSettings" type="Sprite2D" parent="."]
+position = Vector2(966, 605)
+scale = Vector2(2.7765, 2.7765)
+texture = ExtResource("2_ckxjn")
+
+[node name="BackButton" type="TextureButton" parent="BackgroundOfSettings"]
+offset_left = -111.839836
+offset_top = 63.02899
+offset_right = 108.160164
+offset_bottom = 133.02899
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_6e766")
+texture_pressed = ExtResource("4_4wrnv")
+texture_hover = ExtResource("5_wyj67")
+metadata/_edit_lock_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BackgroundOfSettings/BackButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("1_o4qqk")
+theme_override_font_sizes/normal_font_size = 64
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="VolumeSliders" parent="BackgroundOfSettings" instance=ExtResource("6_afk6h")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -570.0
+offset_top = -122.09616
+offset_right = -30.0
+offset_bottom = 57.90384
+grow_horizontal = 2
+metadata/_edit_lock_ = true

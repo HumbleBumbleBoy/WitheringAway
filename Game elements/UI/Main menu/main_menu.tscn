@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://030uy8eg76ie"]
+[gd_scene load_steps=17 format=3 uid="uid://030uy8eg76ie"]
 
 [ext_resource type="Script" uid="uid://bgt37u1sqybmo" path="res://Game elements/UI/Main menu/MainMenu.cs" id="1_uy6qq"]
 [ext_resource type="Texture2D" uid="uid://dqtmnnkf0yles" path="res://General assets/MenuAssets/Button.png" id="1_v10j6"]
 [ext_resource type="Texture2D" uid="uid://c4d4rdwjrlgg2" path="res://Game elements/GameScene/BackgroundFrames/tile000.png" id="2_h6fk2"]
+[ext_resource type="AudioStream" uid="uid://c24il8nymjmhi" path="res://Game elements/UI/ClickAButton.wav" id="2_kbhla"]
 [ext_resource type="Texture2D" uid="uid://d35jclnbmq2wp" path="res://General assets/MenuAssets/ButtonPressed.png" id="2_uy6qq"]
 [ext_resource type="Texture2D" uid="uid://buwu4fwxelqqd" path="res://Game elements/GameScene/BackgroundFrames/tile001.png" id="3_x3tfw"]
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="3_xm62j"]
@@ -48,6 +49,10 @@ animations = [{
 script = ExtResource("1_uy6qq")
 mainMenu = NodePath("MainScreen")
 settings = NodePath("Settings")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_kbhla")
+bus = &"SFX"
 
 [node name="Background" type="AnimatedSprite2D" parent="."]
 position = Vector2(959.99994, 540)

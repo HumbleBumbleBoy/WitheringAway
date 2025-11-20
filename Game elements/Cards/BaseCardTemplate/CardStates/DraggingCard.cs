@@ -9,6 +9,7 @@ public partial class DraggingCard : CardState
     public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
     {
         GD.Print("dragging " + card.Name);
+        card.audioFolder?.GetNode<AudioStreamPlayer>("PickUp").Play();
         _card = card;
         _card.isDraggingAlready = true;
         _originalPosition = _card.GlobalPosition; // Save the original position

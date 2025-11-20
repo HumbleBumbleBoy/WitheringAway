@@ -1,12 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=17 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
 [ext_resource type="Texture2D" uid="uid://c1qcyoosuijwq" path="res://Game elements/Cards/BaseCardTemplate/CardBackground.png" id="3_o8iy5"]
 [ext_resource type="Texture2D" uid="uid://bs8oembj5pxwv" path="res://Game elements/Cards/BaseCardTemplate/CardBackside.png" id="4_gdwny"]
+[ext_resource type="AudioStream" uid="uid://uao0u0y3mlo3" path="res://Game elements/Cards/BaseCardTemplate/Audio/PickUp.wav" id="4_h4fyw"]
 [ext_resource type="Texture2D" uid="uid://cunihs4iteotc" path="res://Game elements/Cards/BaseCardTemplate/PlaceHolderCardArt.png" id="4_o8iy5"]
 [ext_resource type="Texture2D" uid="uid://mjd20mpdhyyj" path="res://Game elements/Cards/BaseCardTemplate/CardDescription.png" id="4_umt7n"]
 [ext_resource type="Texture2D" uid="uid://bodaa62ki1bld" path="res://Game elements/Cards/BaseCardTemplate/Overlay.png" id="5_0kbbq"]
+[ext_resource type="AudioStream" uid="uid://bjigqmmtxvnja" path="res://Game elements/Cards/BaseCardTemplate/Audio/PlaceDown.wav" id="5_h4fyw"]
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="5_yp28l"]
 [ext_resource type="Texture2D" uid="uid://hjdy44pvmpxr" path="res://Game elements/Cards/BaseCardTemplate/InCombatOverlay.png" id="6_yht3s"]
 [ext_resource type="Script" uid="uid://fkeffmm5c5so" path="res://Resources/HealthManager.cs" id="7_umt7n"]
@@ -29,7 +31,7 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
-[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("healthManager", "attackManager", "costManager", "cardOverlay", "cardArt", "cardOnFieldOverlay", "cardDescription", "cardBackground", "cardBackside", "cardName")]
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("healthManager", "attackManager", "costManager", "cardOverlay", "cardArt", "cardOnFieldOverlay", "cardDescription", "cardBackground", "cardBackside", "cardName", "audioFolder")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
@@ -47,6 +49,17 @@ cardDescription = NodePath("CardDescription")
 cardBackground = NodePath("CardBackgroundArt")
 cardBackside = NodePath("CardBackside")
 cardName = NodePath("NameLabel")
+audioFolder = NodePath("Audio")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="PickUp" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_h4fyw")
+bus = &"SFX"
+
+[node name="PlaceDown" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_h4fyw")
+bus = &"SFX"
 
 [node name="CardBackside" type="Sprite2D" parent="."]
 visible = false

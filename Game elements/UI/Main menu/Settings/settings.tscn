@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1v0wq1qcsrko"]
+[gd_scene load_steps=8 format=3 uid="uid://b1v0wq1qcsrko"]
 
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="1_o4qqk"]
 [ext_resource type="Texture2D" uid="uid://ccu7fmw27mvw" path="res://General assets/MenuAssets/SettingsOptionsBackground.png" id="2_ckxjn"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d35jclnbmq2wp" path="res://General assets/MenuAssets/ButtonPressed.png" id="4_4wrnv"]
 [ext_resource type="Texture2D" uid="uid://dunsv37by0ob0" path="res://General assets/MenuAssets/ButtonHover.png" id="5_wyj67"]
 [ext_resource type="PackedScene" uid="uid://c1eqg0bgo73hy" path="res://Game elements/UI/Main menu/Settings/volume_sliders.tscn" id="6_afk6h"]
+[ext_resource type="AudioStream" uid="uid://c24il8nymjmhi" path="res://Game elements/UI/ClickAButton.wav" id="6_ckxjn"]
 
 [node name="Settings" type="HBoxContainer"]
 anchors_preset = 10
@@ -64,6 +65,10 @@ text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="Click" type="AudioStreamPlayer" parent="BackgroundOfSettings/BackButton"]
+stream = ExtResource("6_ckxjn")
+bus = &"SFX"
 
 [node name="VolumeSliders" parent="BackgroundOfSettings" instance=ExtResource("6_afk6h")]
 anchors_preset = 5

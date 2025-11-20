@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=18 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bmsqjcqprjxkr" path="res://Game elements/UI/In game menu/in_game_menu.tscn" id="13_aek3x"]
 [ext_resource type="Texture2D" uid="uid://cxn8sn574srn7" path="res://General assets/MenuAssets/SettingsButton.png" id="14_st7st"]
 [ext_resource type="Texture2D" uid="uid://7bkdbjlta0wr" path="res://General assets/MenuAssets/SettingsButtonPressed.png" id="15_0bjk3"]
+[ext_resource type="AudioStream" uid="uid://c24il8nymjmhi" path="res://Game elements/UI/ClickAButton.wav" id="16_0bjk3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5scjv"]
 animations = [{
@@ -127,6 +128,7 @@ offset_left = -1.0
 offset_right = 1919.0
 
 [node name="SettingsButton" type="TextureButton" parent="."]
+z_index = 999
 custom_minimum_size = Vector2(4, 4)
 offset_left = 1784.0
 offset_top = 11.0
@@ -136,6 +138,10 @@ scale = Vector2(4, 4)
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("14_st7st")
 texture_pressed = ExtResource("15_0bjk3")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_0bjk3")
+bus = &"SFX"
 
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="FillHandButton" to="." method="onFillHandButton"]

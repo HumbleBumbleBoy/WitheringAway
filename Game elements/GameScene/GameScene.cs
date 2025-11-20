@@ -75,6 +75,7 @@ public partial class GameScene : Node2D
 
     private void OnSettingsButtonPressed()
     {
+        GetNode<AudioStreamPlayer>("Click").Play();
         inGameMenu.Visible = !inGameMenu.Visible;  
     }
 }

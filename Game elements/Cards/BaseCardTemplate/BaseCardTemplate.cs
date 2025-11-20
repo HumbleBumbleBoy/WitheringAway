@@ -15,6 +15,7 @@ public partial class BaseCardTemplate : Control
     [Export] public Sprite2D? cardBackground;
     [Export] public Sprite2D? cardBackside;
     [Export] public RichTextLabel? cardName;
+    [Export] public Node? audioFolder;
     protected CardState? currentState;  // if not "protected" MAKE IT protected
     private bool isHovering;
     public bool isFlipped;

@@ -8,23 +8,27 @@ public partial class MainMenu : CanvasLayer
 
     private void OnPlayButtonPressed()
     {
+        GetNode<AudioStreamPlayer>("Click").Play();
         GetTree().ChangeSceneToFile("res://Game elements/GameScene/game_scene.tscn");
     }
 
     private void OnSettingsButtonPressed()
     {
+        GetNode<AudioStreamPlayer>("Click").Play();
         mainMenu?.Hide();
         settings?.Show();
     }
 
     private void OnBackButtonPressed()
     {
+        GetNode<AudioStreamPlayer>("Click").Play();
         settings?.Hide();
         mainMenu?.Show();
     }
 
     private void OnExitButtonPressed()
     {
+        GetNode<AudioStreamPlayer>("Click").Play();
         GetTree().Quit();
     }
 }

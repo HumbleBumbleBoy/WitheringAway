@@ -11,6 +11,7 @@ public partial class CardEnteredField : CardState
     {
         GD.Print(card.Name + " entered field");
         card.isCardInField = true;
+        card.audioFolder?.GetNode<AudioStreamPlayer>("PlaceDown").Play();
 
         // GET FIELD REFERENCE FIRST (while card still has parent)
         Field = card.GetParent().GetParent().GetParent().GetParent().GetNode<Node2D>("Field");

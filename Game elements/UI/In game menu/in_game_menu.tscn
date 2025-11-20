@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmsqjcqprjxkr"]
+[gd_scene load_steps=9 format=3 uid="uid://bmsqjcqprjxkr"]
 
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="1_ckgk1"]
 [ext_resource type="Script" uid="uid://blrpbkrapbm4a" path="res://Game elements/UI/In game menu/InGameMenu.cs" id="1_xnv2i"]
 [ext_resource type="Texture2D" uid="uid://ccu7fmw27mvw" path="res://General assets/MenuAssets/SettingsOptionsBackground.png" id="2_xnv2i"]
 [ext_resource type="Texture2D" uid="uid://dqtmnnkf0yles" path="res://General assets/MenuAssets/Button.png" id="3_ko5qt"]
 [ext_resource type="Texture2D" uid="uid://d35jclnbmq2wp" path="res://General assets/MenuAssets/ButtonPressed.png" id="4_gi46t"]
+[ext_resource type="AudioStream" uid="uid://c24il8nymjmhi" path="res://Game elements/UI/ClickAButton.wav" id="4_ko5qt"]
 [ext_resource type="Texture2D" uid="uid://dunsv37by0ob0" path="res://General assets/MenuAssets/ButtonHover.png" id="5_p1hl1"]
 [ext_resource type="PackedScene" uid="uid://c1eqg0bgo73hy" path="res://Game elements/UI/Main menu/Settings/volume_sliders.tscn" id="6_0jir3"]
 
@@ -42,9 +43,9 @@ scale = Vector2(2.7765, 2.7765)
 texture = ExtResource("2_xnv2i")
 
 [node name="BackButton" type="TextureButton" parent="BackgroundOfSettings"]
-offset_left = -111.839836
+offset_left = -234.1077
 offset_top = 63.02899
-offset_right = 108.160164
+offset_right = -14.107697
 offset_bottom = 133.02899
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_ko5qt")
@@ -70,6 +71,35 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
+[node name="ExitButton" type="TextureButton" parent="BackgroundOfSettings"]
+offset_top = 62.668823
+offset_right = 220.0
+offset_bottom = 132.66882
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_ko5qt")
+texture_pressed = ExtResource("4_gi46t")
+texture_hover = ExtResource("5_p1hl1")
+metadata/_edit_lock_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BackgroundOfSettings/ExitButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("1_ckgk1")
+theme_override_font_sizes/normal_font_size = 64
+text = "Quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
 [node name="VolumeSliders" parent="BackgroundOfSettings" instance=ExtResource("6_0jir3")]
 anchors_preset = 5
 anchor_left = 0.5
@@ -81,4 +111,9 @@ offset_bottom = 57.90384
 grow_horizontal = 2
 metadata/_edit_lock_ = true
 
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ko5qt")
+bus = &"SFX"
+
 [connection signal="pressed" from="BackgroundOfSettings/BackButton" to="." method="OnBackButtonPressed"]
+[connection signal="pressed" from="BackgroundOfSettings/ExitButton" to="." method="OnExitButtonPressed"]

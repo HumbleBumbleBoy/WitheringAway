@@ -11,14 +11,12 @@ public partial class DraggingCard : CardState
         GD.Print("dragging " + card.Name);
         card.audioFolder?.GetNode<AudioStreamPlayer>("PickUp").Play();
         _card = card;
-        _card.isDraggingAlready = true;
         _originalPosition = _card.GlobalPosition; // Save the original position
     }
 
     public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
     {
         GD.Print("stopped dragging " + card.Name);
-        _card.isDraggingAlready = false;
         
         // If we're transitioning to CardInHand (invalid drop), return to original position
         if (optionalState is CardInHand)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=18 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://uao0u0y3mlo3" path="res://Game elements/Cards/BaseCardTemplate/Audio/PickUp.wav" id="4_h4fyw"]
 [ext_resource type="Texture2D" uid="uid://cunihs4iteotc" path="res://Game elements/Cards/BaseCardTemplate/PlaceHolderCardArt.png" id="4_o8iy5"]
 [ext_resource type="Texture2D" uid="uid://mjd20mpdhyyj" path="res://Game elements/Cards/BaseCardTemplate/CardDescription.png" id="4_umt7n"]
+[ext_resource type="Script" uid="uid://b54ni8h41tvj1" path="res://Game elements/components/DraggableComponent.cs" id="4_vhxup"]
 [ext_resource type="Texture2D" uid="uid://bodaa62ki1bld" path="res://Game elements/Cards/BaseCardTemplate/Overlay.png" id="5_0kbbq"]
 [ext_resource type="AudioStream" uid="uid://bjigqmmtxvnja" path="res://Game elements/Cards/BaseCardTemplate/Audio/PlaceDown.wav" id="5_h4fyw"]
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="5_yp28l"]
@@ -50,6 +51,15 @@ cardBackground = NodePath("CardBackgroundArt")
 cardBackside = NodePath("CardBackside")
 cardName = NodePath("NameLabel")
 audioFolder = NodePath("Audio")
+
+[node name="components" type="Node" parent="."]
+
+[node name="DraggableComponent" type="Node" parent="components"]
+script = ExtResource("4_vhxup")
+DragSecondsThreshold = 0.0
+DragDistanceThreshold = 0.0
+_dragContainerPath = NodePath("../..")
+metadata/_custom_type_script = "uid://b54ni8h41tvj1"
 
 [node name="Audio" type="Node" parent="."]
 

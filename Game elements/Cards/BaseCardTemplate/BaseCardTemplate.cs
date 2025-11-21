@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Witheringaway.Game_elements.components;
 
 [GlobalClass]
 public partial class BaseCardTemplate : Control
@@ -26,7 +27,6 @@ public partial class BaseCardTemplate : Control
     private Vector2 _mouseDownPosition;
     private Vector2 _mouseDownCardPosition;
     private bool _isMouseDown;
-    public bool isDraggingAlready;
     public bool isCardInField;
     public Vector2 whereIsAreaWePlaceOurCardIn;
     public string? nameOfAreaPlaceOurCardIn;
@@ -34,43 +34,6 @@ public partial class BaseCardTemplate : Control
     private const float MOVE_TOLERANCE = 10f;
     // end of segment
     private TurnManager? turnManager;
-    
-    public override void _GuiInput(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
-        {
-            if (mouseEvent.Pressed)
-            {
-                // Mouse pressed on this card
-                _mouseDownTime = Time.GetTicksMsec();
-                _mouseDownPosition = GetGlobalMousePosition();
-                _mouseDownCardPosition = GlobalPosition;
-                _isMouseDown = true;
-                if (isCardInField) return;
-                if (_isMouseDown && !isFlipped && !isDraggingAlready)
-                {
-                    ChangeState(new DraggingCard());
-                }
-            }
-            else
-            {
-                // Mouse released
-                if (isCheckingDescription)
-                {
-                    isCheckingDescription = false;
-                }
-                
-                _isMouseDown = false;
-                
-                // If we're currently dragging, transition to appropriate state
-                if (currentState is DraggingCard)
-                {
-                    CardState? nextState = CheckIfValidDropPosition() ? new CardEnteredField() : new CardInHand();
-                    ChangeState(nextState);
-                }
-            }
-        }
-    }
 
     public override void _Process(double delta)
     {
@@ -102,6 +65,21 @@ public partial class BaseCardTemplate : Control
 
         CustomMinimumSize = new Vector2(32, 48);
         UpdateVisuals();
+
+        var draggable = this.FirstComponent<DraggableComponent>();
+        if (draggable is null) return;
+        draggable.DragStarted += _ =>
+        {
+            ChangeState(new DraggingCard());
+        };
+        
+        draggable.DragEnded += (_, _) =>
+        {
+            if (currentState is not DraggingCard) return;
+                
+            CardState nextState = CheckIfValidDropPosition() ? new CardEnteredField() : new CardInHand();
+            ChangeState(nextState);
+        };
     }
     
     private void UpdateVisuals()

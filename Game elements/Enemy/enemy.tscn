@@ -2,13 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://1xia3fwv3jf0" path="res://Game elements/Enemy/Hand/enemy_hand_manager.tscn" id="1_qxscf"]
 [ext_resource type="PackedScene" uid="uid://l2t8da7vubhb" path="res://Game elements/Enemy/Deck/enemy_deck_manager.tscn" id="2_ka80h"]
-[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Bandit/bandit.tscn" id="3_fr5dj"]
-[ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Murderer/murderer.tscn" id="4_2omue"]
-[ext_resource type="PackedScene" uid="uid://dtwm31d3iqt5m" path="res://Game elements/Cards/Undead/undead.tscn" id="5_2omue"]
+[ext_resource type="PackedScene" uid="uid://dmgh2loabw462" path="res://Game elements/Cards/Hooligan/hooligan.tscn" id="3_fr5dj"]
+[ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_2omue"]
+
+[sub_resource type="Resource" id="Resource_bwjm8"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("3_fr5dj")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Enemy" type="Node"]
 
-[node name="EnemyHandManager" parent="." instance=ExtResource("1_qxscf")]
+[node name="EnemyHandManager" parent="." node_paths=PackedStringArray("enemyDeckManager") instance=ExtResource("1_qxscf")]
 anchors_preset = 10
 anchor_bottom = 0.0
 offset_left = 100.0
@@ -16,6 +20,7 @@ offset_top = -50.0
 offset_right = 100.0
 offset_bottom = -50.0
 grow_vertical = 1
+enemyDeckManager = NodePath("../EnemyDeckManager")
 
 [node name="EnemyDeckManager" parent="." instance=ExtResource("2_ka80h")]
-cardScenes = Array[PackedScene]([ExtResource("3_fr5dj"), ExtResource("3_fr5dj"), ExtResource("4_2omue"), ExtResource("3_fr5dj"), ExtResource("5_2omue")])
+Decks = [SubResource("Resource_bwjm8")]

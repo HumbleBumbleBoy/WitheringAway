@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public partial class EnemyHandManager : Control
 {
-    [Export] PlayerDeckManager? playerDeckManager;
+    [Export] EnemyDeckManager? enemyDeckManager;
     private HBoxContainer? cardContainer;
-    public List<Node> playerCardsInHand = [];
+    public List<Node> enemyCardsInHand = [];
 
     public override void _Ready()
     {
@@ -15,18 +15,18 @@ public partial class EnemyHandManager : Control
     
     public void GetTopCard()
     {
-        if (playerDeckManager?.playerCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}
-        if (playerCardsInHand.Count >= 10) { GD.Print("Hand is full"); return; }
+        if (enemyDeckManager?.enemyCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}
+        if (enemyCardsInHand.Count >= 10) { GD.Print("Hand is full"); return; }
 
-        Node? cardInstance = playerDeckManager?.playerCardsInDeck[^1].Instantiate();
+        Node? cardInstance = enemyDeckManager?.enemyCardsInDeck[^1].Instantiate();
         
         if (cardInstance is BaseCardTemplate card)
         {
             card.ChangeState(new CardInHand());
             cardContainer?.AddChild(card);
-            playerCardsInHand.Add(card);
+            enemyCardsInHand.Add(card);
             
-            playerDeckManager?.removeTopCardFromDeck();
+            enemyDeckManager?.removeTopCardFromDeck();
         }
     }
 
@@ -34,7 +34,7 @@ public partial class EnemyHandManager : Control
     {
         if (cardToRemove is BaseCardTemplate card)
         {
-            playerCardsInHand.Remove(card);
+            enemyCardsInHand.Remove(card);
             cardContainer?.RemoveChild(card);
         }
     }

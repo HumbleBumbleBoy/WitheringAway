@@ -6,14 +6,14 @@ using System.Linq;
 public partial class PlayerDeckManager : Node
 {
     [Export] public Deck[] Decks = [];
-    private EnemyHandManager? handManager;
+    private PlayerHandManager? handManager;
     public List<PackedScene> playerCardsInDeck = [];
     private VBoxContainer? cardsInDeckContainer;
 
     public override void _Ready()
     {
         cardsInDeckContainer = GetParent().GetNode<Control>("PlayerDeck").GetNode<VBoxContainer>("CardContainer");
-        handManager = GetParent().GetNode<EnemyHandManager>("PlayerHandManager");
+        handManager = GetParent().GetNode<PlayerHandManager>("PlayerHandManager");
 
         var selectedDeck = Decks[new Random().Next(0, Decks.Length)];  // for now chosen randomly
         playerCardsInDeck.AddRange(selectedDeck.Cards);

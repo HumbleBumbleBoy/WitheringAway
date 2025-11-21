@@ -316,3 +316,4 @@ metadata/_edit_lock_ = true
 [connection signal="mouse_entered" from="." to="." method="onMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="onMouseExited"]
 [connection signal="area_entered" from="DetectionArea" to="." method="onAreaEntered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="onAreaExited"]

@@ -7,12 +7,12 @@ public partial class GameScene : Node2D
     [Export] public HBoxContainer? inGameMenu;
     [Export] private TurnManager? turnManager;
 
-    private EnemyHandManager? playerHandManager;
+    private PlayerHandManager? playerHandManager;
     private PlayerDeckManager? playerDeckManager;
 
     public override void _Ready()
     {
-        playerHandManager = GetNode<Node>("Player").GetNode<EnemyHandManager>("PlayerHandManager");
+        playerHandManager = GetNode<Node>("Player").GetNode<PlayerHandManager>("PlayerHandManager");
         playerDeckManager = GetNode<Node>("Player").GetNode<PlayerDeckManager>("PlayerDeckManager");
     }
 

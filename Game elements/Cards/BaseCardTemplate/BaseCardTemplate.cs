@@ -33,6 +33,7 @@ public partial class BaseCardTemplate : Control
     private const float HOLD_DURATION = 1.0f;
     private const float MOVE_TOLERANCE = 10f;
     // end of segment
+    private TurnManager? turnManager;
     
     public override void _GuiInput(InputEvent @event)
     {
@@ -81,6 +82,8 @@ public partial class BaseCardTemplate : Control
 
     public override void _Ready()
     {
+        turnManager = GetParent().GetParent().GetParent().GetParent().GetNode<TurnManager>("TurnManager");
+
         healthManager = GetNode<HealthManager>("HealthManager");
         attackManager = GetNode<AttackManager>("AttackManager");
         costManager = GetNode<CostManager>("CostManager");
@@ -198,14 +201,23 @@ public partial class BaseCardTemplate : Control
         _isMouseDown = false;
     }
 
-    public void onAreaEntered(Area2D area)
+    public void onAreaEntered(Area2D area)  // when card colides with either player or enemy placable position
     {
-        if (area.IsInGroup("PlacablePosition"))
+        if (area.IsInGroup("PlacablePosition") && turnManager.canPlayerPlaceCards) // <- we need canplayerplacecards for both player and enemy side of the board
         {
             whereIsAreaWePlaceOurCardIn = area.GlobalPosition;
             nameOfAreaPlaceOurCardIn = area.Name;
             isCardPlayable = true;
         } else isCardPlayable = false;
+    }
+
+    public void onAreaExited(Area2D area)
+    {
+        if (area.IsInGroup("PlacablePosition"))
+        {
+            
+            isCardPlayable = false;
+        }
     }
 
     private bool CheckIfValidDropPosition()

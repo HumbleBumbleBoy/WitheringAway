@@ -105,7 +105,7 @@ mouse_default_cursor_shape = 2
 text = "Kill a card on field"
 
 [node name="PassTurnButton" type="TextureButton" parent="."]
-z_index = 4096
+z_index = 2000
 offset_left = 1696.0
 offset_top = 842.00006
 offset_right = 1760.0

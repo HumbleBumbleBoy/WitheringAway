@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_1phct"]
 script = ExtResource("4_240if")
-Cards = [ExtResource("7_k0wrq")]
+Cards = [ExtResource("7_k0wrq"), ExtResource("7_k0wrq"), ExtResource("7_k0wrq")]
 metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Player" type="Node"]

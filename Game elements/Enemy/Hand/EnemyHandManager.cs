@@ -11,6 +11,10 @@ public partial class EnemyHandManager : Control
     public override void _Ready()
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
+        GetTopCard();
+        GetTopCard();
+        GetTopCard();
+        GetTopCard();
     }
     
     public void GetTopCard()
@@ -22,7 +26,7 @@ public partial class EnemyHandManager : Control
         
         if (cardInstance is BaseCardTemplate card)
         {
-            card.ChangeState(new CardInHand());
+            GD.Print("Card added");
             cardContainer?.AddChild(card);
             enemyCardsInHand.Add(card);
             
@@ -37,5 +41,19 @@ public partial class EnemyHandManager : Control
             enemyCardsInHand.Remove(card);
             cardContainer?.RemoveChild(card);
         }
+    }
+
+    public BaseCardTemplate PlayCard(int soulsAvailable)
+    {
+        GetTopCard();
+        foreach (BaseCardTemplate card in enemyCardsInHand)
+        {
+            GD.Print(card.Name);
+            if (card.CardData.Cost <= soulsAvailable)
+            {
+                return card;
+            }
+        }
+        return null;
     }
 }

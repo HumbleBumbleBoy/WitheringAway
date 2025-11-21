@@ -82,7 +82,7 @@ public partial class BaseCardTemplate : Control
 
     public override void _Ready()
     {
-        turnManager = GetParent().GetParent().GetParent().GetParent().GetNode<TurnManager>("TurnManager");
+        turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
         healthManager = GetNode<HealthManager>("HealthManager");
         attackManager = GetNode<AttackManager>("AttackManager");

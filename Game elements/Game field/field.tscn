@@ -135,11 +135,10 @@ color = Color(1, 0.32423162, 0.22894186, 1)
 
 [node name="EnemyArea" type="HBoxContainer" parent="EnemySide"]
 layout_mode = 0
-offset_left = 243.0
-offset_top = -57.874847
-offset_right = 418.52832
-offset_bottom = 633.0
-scale = Vector2(-1, 1)
+offset_left = 90.0
+offset_top = -56.0
+offset_right = 265.52832
+offset_bottom = 634.8749
 theme_override_constants/separation = 200
 
 [node name="FrontLane" type="VBoxContainer" parent="EnemySide/EnemyArea"]

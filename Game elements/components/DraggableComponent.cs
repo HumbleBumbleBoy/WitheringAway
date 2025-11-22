@@ -37,6 +37,8 @@ public partial class DraggableComponent : Component
     
     private bool _isDragging;
     private Vector2 _oldMousePosition;
+    
+    private bool _isConnected;
 
     public override void _Ready()
     {
@@ -44,14 +46,19 @@ public partial class DraggableComponent : Component
         
         DragContainer.GuiInput += _OnMouseEvent;
         DragContainer.GuiInput += _OnMouseMotionEvent;
+        
+        _isConnected = true;
     }
 
     public override void _ExitTree()
     {
         if (DragContainer is null) return;
+        if (!_isConnected) return;
         
         DragContainer.GuiInput -= _OnMouseEvent;
         DragContainer.GuiInput -= _OnMouseMotionEvent;
+        
+        _isConnected = false;
     }
 
     private void _StartDragging()

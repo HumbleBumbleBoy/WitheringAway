@@ -1,73 +1,66 @@
-using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.lib;
 
-public class EnemyTurn : State<TurnManager>
+public class EnemyTurn : IState<TurnManager>
 {
     private EnemyHandManager? enemyHandManager;
-    private Node? enemyDeckManager;
-    private HBoxContainer? enemyCardContainer;
-    private TurnManager? _turnManager;
-    private CancellationTokenSource? tokenSource = new();
 
-    public async Task OnEnter(TurnManager turnManager, State<TurnManager>? previousState)
+    public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
-        _turnManager = turnManager;
         turnManager.canEnemyPlaceCards = true; // is even needed??
 
-        enemyDeckManager = turnManager.GetParent().GetNode<Node>("Enemy").GetNode<Node>("EnemyDeckManager");
-        enemyHandManager = turnManager.GetParent().GetNode<Node>("Enemy").GetNode<EnemyHandManager>("EnemyHandManager");
-        enemyCardContainer = enemyHandManager.GetNode<HBoxContainer>("CardContainer");
+        enemyHandManager = turnManager.GetTree().GetFirstNodeInGroup("EnemyHandManager") as EnemyHandManager;
 
-        try
-        {
-            await PlayCards(tokenSource.Token);
-        } catch (OperationCanceledException _){} 
-    }
+        PlayCards(turnManager);
 
-    public State<TurnManager>? OnExit(TurnManager turnManager, State<TurnManager>? nextState)
-    {
-        turnManager.canEnemyPlaceCards = false;
-        tokenSource.Dispose();
         return null;
     }
 
-    private async Task PlayCards(CancellationToken cancellationToken)
+    public IState<TurnManager>? OnExit(TurnManager turnManager, IState<TurnManager>? nextState)
     {
-        var enemyPlacablePositions = _turnManager.GetTree().GetNodesInGroup("EnemyPlacablePosition");
-        foreach (var position in enemyPlacablePositions)
+        turnManager.canEnemyPlaceCards = false;
+        return null;
+    }
+
+    private void PlayCards(TurnManager turnManager)
+    {
+        var keepPlaying = true;
+        
+        var enemyPlacablePositions = turnManager.GetTree().GetNodesInGroup("EnemyPlacablePosition");
+        for (var i = 0; i < enemyPlacablePositions.Count; i++)
         {
-            var positionTaken = position.GetChildren().Where(child => child is BaseCardTemplate).Any();
+            var position = enemyPlacablePositions[i];
+            var positionTaken = position.GetChildren().Any(child => child is BaseCardTemplate);
 
             if (!positionTaken)
             {
-                await position.ToSignal(position.GetTree().CreateTimer(.1), "timeout");
-                await PlaceSingleCard(cancellationToken, position);
+                position.GetTree().CreateTimer((i + 1) * 0.1).Timeout += () =>
+                {
+                    if (!keepPlaying)
+                    {
+                        return;
+                    }
+                    
+                    keepPlaying = PlaceSingleCard(turnManager, position);
+                };
             }
         }
     }
 
-    private async Task PlaceSingleCard(CancellationToken cancellationToken, Node cardPosition)
+    private bool PlaceSingleCard(TurnManager turnManager, Node cardPosition)
     {
-        if (cancellationToken.IsCancellationRequested)
-        {
-            cancellationToken.ThrowIfCancellationRequested(); 
-            return;
-        }   
-
         var card = enemyHandManager.PlayCard(100); // so rich
         
         if (card == null) 
-        { 
-            tokenSource.Cancel();
-            _turnManager.StateMachine.ChangeState(new Combat());
-            return;
+        {
+            turnManager.StateMachine.ChangeState(new Combat());
+            return false;
         }
 
         enemyHandManager.RemoveCardFromHand(card);
         cardPosition.AddChild(card);
+
+        return true;
     }
 }

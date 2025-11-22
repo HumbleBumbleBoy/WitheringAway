@@ -1,12 +1,12 @@
+using System.Text.RegularExpressions;
 using Godot;
-using System;
 using Witheringaway.Game_elements.components;
+using Witheringaway.Game_elements.lib;
 
 [GlobalClass]
 public partial class BaseCardTemplate : Control
 {
     [Export] public BaseCard? CardData { get; set; }
-    [Export] public HealthManager? healthManager;
     [Export] public AttackManager? attackManager; 
     [Export] public CostManager? costManager;
     [Export] public Sprite2D? cardOverlay;
@@ -17,7 +17,9 @@ public partial class BaseCardTemplate : Control
     [Export] public Sprite2D? cardBackside;
     [Export] public RichTextLabel? cardName;
     [Export] public Node? audioFolder;
-    protected CardState? currentState;  // if not "protected" MAKE IT protected
+    
+    public StateMachine<BaseCardTemplate> StateMachine { get; }
+    
     private bool isHovering;
     public bool isFlipped;
     public bool isCardPlayable;
@@ -35,26 +37,36 @@ public partial class BaseCardTemplate : Control
     // end of segment
     private TurnManager? turnManager;
 
+    public BaseCardTemplate()
+    {
+        StateMachine = this.CreateStateMachine(this);
+    }
+
     public override void _Process(double delta)
     {
         CheckForHold();
         CheckApperance();
-        
-        currentState?.Update(delta);
+        UpdateVisuals();
     }
 
     public override void _Ready()
     {
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
-        healthManager = GetNode<HealthManager>("HealthManager");
         attackManager = GetNode<AttackManager>("AttackManager");
         costManager = GetNode<CostManager>("CostManager");
 
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        healthComponent.SetMaxHealth(CardData?.Health ?? healthComponent.MaxHealth);
+        
+        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
+        defenseComponent.SetDefense(CardData?.Defense ?? defenseComponent.Defense);
+
+        /*
         healthManager.Health = CardData?.Health??0;
         healthManager.Defense = CardData?.Defense??0;
         healthManager.TimeLeftOnField = CardData?.TimeLeftOnField??0;
-        healthManager.Initialize();
+        healthManager.Initialize();*/
         
         attackManager.Attack = CardData?.Attack??0;
         attackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
@@ -70,27 +82,43 @@ public partial class BaseCardTemplate : Control
         if (draggable is null) return;
         draggable.DragStarted += _ =>
         {
-            ChangeState(new DraggingCard());
+            StateMachine.ChangeState(new DraggingCard());
         };
         
         draggable.DragEnded += (_, _) =>
         {
-            if (currentState is not DraggingCard) return;
+            if (StateMachine.CurrentState is not DraggingCard) return;
                 
-            CardState nextState = CheckIfValidDropPosition() ? new CardEnteredField() : new CardInHand();
-            ChangeState(nextState);
+            IState<BaseCardTemplate> nextState = CheckIfValidDropPosition() ? new CardEnteredField() : new CardInHand();
+            StateMachine.ChangeState(nextState);
         };
     }
     
     private void UpdateVisuals()
     {
-        healthManager?.UpdateLabels();
+        UpdateVisualHealth();
+        UpdateVisualDefense();
+        
         attackManager?.UpdateLabels(); 
         if (!isCardInField) { costManager?.UpdateLabels(); }
 
         cardName.Text = CardData?.Name ?? "";
         cardArt.Texture = CardData?.Art;
         cardDescription.GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description;
+    }
+
+    private void UpdateVisualHealth()
+    {
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        cardOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
+        cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
+    }
+    
+    private void UpdateVisualDefense()
+    {
+        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
+        cardOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = defenseComponent.Defense.ToString();
+        cardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = defenseComponent.Defense.ToString();
     }
 
     private void CheckForHold()
@@ -140,23 +168,6 @@ public partial class BaseCardTemplate : Control
         } else { cardDescription?.Hide(); }
     }
 
-    public void ChangeState(CardState newState)
-    {
-        GD.Print($"Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
-        
-        CardState? nextState = newState;
-        currentState?.Exit(this, ref nextState);
-        currentState = nextState;
-        currentState?.Enter(this, ref nextState);
-        
-        if (nextState != null && nextState != currentState)
-        {
-            ChangeState(nextState);
-        }
-        
-        GD.Print($"Current state is now: {currentState?.GetType().Name}");
-    }
-
     public void onMouseEntered()
     {
         isHovering = true;
@@ -203,7 +214,7 @@ public partial class BaseCardTemplate : Control
         if (!isCardPlayable) return false;
         
         FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
-        string numberOnly = System.Text.RegularExpressions.Regex.Replace(nameOfAreaPlaceOurCardIn, @"[^\d]", "");
+        string numberOnly = Regex.Replace(nameOfAreaPlaceOurCardIn, @"[^\d]", "");
         int laneIndex = int.Parse(numberOnly) - 1;
         
         return !fieldData.IsLaneOccupied(laneIndex, true);

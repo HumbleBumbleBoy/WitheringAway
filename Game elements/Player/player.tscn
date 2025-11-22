@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Player" type="Node"]
 
-[node name="PlayerHandManager" parent="." node_paths=PackedStringArray("playerDeckManager") instance=ExtResource("1_s3ool")]
+[node name="PlayerHandManager" parent="." node_paths=PackedStringArray("playerDeckManager") groups=["PlayerHandManager"] instance=ExtResource("1_s3ool")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

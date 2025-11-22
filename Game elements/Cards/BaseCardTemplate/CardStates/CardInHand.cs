@@ -1,17 +1,21 @@
 using Godot;
-using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class CardInHand : CardState
+public class CardInHand : IState<BaseCardTemplate>
 {
-    public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
         GD.Print(card.Name + " entered hand");
         card.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
+
+        return null;
     }
 
-    public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnExit(BaseCardTemplate card, IState<BaseCardTemplate>? nextState)
     {
         GD.Print(card.Name + " exited hand");
         card.MouseDefaultCursorShape = Control.CursorShape.Arrow;
+
+        return null;
     }
 }

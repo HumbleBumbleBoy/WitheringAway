@@ -33,6 +33,8 @@ project/assembly_name="Withering away"
 PlacablePosition=""
 CardCollisionArea=""
 EnemyPlacablePosition=""
+EnemyHandManager=""
+PlayerHandManager=""
 
 [rendering]
 

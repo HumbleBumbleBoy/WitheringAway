@@ -1,37 +1,37 @@
 using Godot;
-using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class DraggingCard : CardState
+public class DraggingCard : IState<BaseCardTemplate>
 {
     private Vector2 _originalPosition;
-    private BaseCardTemplate? _card;
-    
-    public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
+
+    public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
         GD.Print("dragging " + card.Name);
         card.audioFolder?.GetNode<AudioStreamPlayer>("PickUp").Play();
-        _card = card;
-        _originalPosition = _card.GlobalPosition; // Save the original position
+        _originalPosition = card.GlobalPosition; // Save the original position
+
+        return null;
     }
 
-    public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnExit(BaseCardTemplate card, IState<BaseCardTemplate>? nextState)
     {
         GD.Print("stopped dragging " + card.Name);
-        
-        // If we're transitioning to CardInHand (invalid drop), return to original position
-        if (optionalState is CardInHand)
+
+        if (nextState is CardInHand)
         {
-            _card.GlobalPosition = _originalPosition;
+            card.GlobalPosition = _originalPosition;
         }
-        // If we're transitioning to CardEnteredField (valid drop), keep the current position
+
+        return null;
     }
 
-    public override void Update(double delta)
+    public IState<BaseCardTemplate>? OnUpdate(BaseCardTemplate card, double deltaTime)
     {
-        if (_card != null)
-        {
-            // THIS IS WHAT MAKES THE CARD FOLLOW THE MOUSE
-            _card.GlobalPosition = _card.GetGlobalMousePosition() - _card.GetGlobalRect().Size / 2;
-        }
+        GD.Print("dragging update " + card.Name);
+        
+        card.GlobalPosition = card.GetGlobalMousePosition() - card.GetGlobalRect().Size / 2;
+        
+        return null;
     }
 }

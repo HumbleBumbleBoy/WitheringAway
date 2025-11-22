@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Witheringaway.Game_elements.components;
 
 public partial class PlayerHandManager : Control
 {
@@ -22,7 +23,9 @@ public partial class PlayerHandManager : Control
         
         if (cardInstance is BaseCardTemplate card)
         {
-            card.ChangeState(new CardInHand());
+            card.GetOrAddComponent<DraggableComponent>();
+            
+            card.StateMachine.ChangeState(new CardInHand());
             cardContainer?.AddChild(card);
             playerCardsInHand.Add(card);
             

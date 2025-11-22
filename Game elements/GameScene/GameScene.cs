@@ -50,7 +50,7 @@ public partial class GameScene : Node2D
         {
             // Pick a random card and kill it
             var randomCard = aliveCards[new Random().Next(0, aliveCards.Count)];
-            randomCard?.ChangeState(new CardDied());
+            randomCard?.StateMachine.ChangeState(new CardDied());
             GD.Print("Killed: " + randomCard?.Name);
         }
         else

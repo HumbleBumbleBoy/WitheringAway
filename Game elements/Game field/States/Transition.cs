@@ -1,5 +1,5 @@
 using Witheringaway.Game_elements.lib;
 
-public class Transition : State<TurnManager>
+public class Transition : IState<TurnManager>
 {
 }

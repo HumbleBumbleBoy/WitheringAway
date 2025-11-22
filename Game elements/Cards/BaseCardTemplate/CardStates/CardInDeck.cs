@@ -1,18 +1,24 @@
 using Godot;
 using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class CardInDeck : CardState
+public class CardInDeck : IState<BaseCardTemplate>
 {
-    public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
+    
+    public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
         GD.Print(card.Name + " entered deck");
         card.isFlipped = true; 
+        
+        return null;
     }
 
-    public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnExit(BaseCardTemplate card, IState<BaseCardTemplate>? nextState)
     {
         GD.Print(card.Name + " exited deck");
         card.isFlipped = false;
-        optionalState = new CardInHand();
+
+        return new CardInHand();
     }
+
 }

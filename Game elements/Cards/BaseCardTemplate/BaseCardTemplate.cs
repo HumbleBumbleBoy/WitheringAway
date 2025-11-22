@@ -1,4 +1,6 @@
+using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
@@ -89,9 +91,60 @@ public partial class BaseCardTemplate : Control
         {
             if (StateMachine.CurrentState is not DraggingCard) return;
                 
-            IState<BaseCardTemplate> nextState = CheckIfValidDropPosition() ? new CardEnteredField() : new CardInHand();
+            IState<BaseCardTemplate> nextState = CheckIfValidDropPosition() ? new CardEnteredField(true) : new CardInHand();
             StateMachine.ChangeState(nextState);
         };
+    }
+    
+    public void TakeDamage(int damage)
+    {
+        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
+        var remainingDamage = defenseComponent.AbsorbDamage(damage);
+        
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        healthComponent.TakeDamage(remainingDamage);
+        
+        var originalPosition = GlobalPosition;
+        var tween = CreateTween();
+        tween.TweenProperty(this, "global_position", originalPosition + new Vector2(5, -5), 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
+        tween.TweenProperty(this, "global_position", originalPosition - new Vector2(5, -5), 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+        tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
+    }
+    
+    public async Task Attack(BaseCardTemplate targetCard)
+    {
+        await PlaySound("Attack");
+        
+        var originalPosition = GlobalPosition;
+        var directionToTarget = (targetCard.GlobalPosition - GlobalPosition).Normalized();
+        var attackPosition = originalPosition + directionToTarget * 20;
+        var tween = CreateTween();
+        tween.TweenProperty(this, "global_position", attackPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
+        tween.TweenCallback(Callable.From(() => 
+        {
+            targetCard.TakeDamage(attackManager?.Attack ?? 0);
+            _ = targetCard.PlaySound("Hurt");
+        }));
+        tween.TweenProperty(this, "global_position", originalPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
+        await ToSignal(tween, "finished");
+
+        await this.Wait(0.3f);
+    }
+
+    public bool ShouldDie()
+    {
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        return healthComponent.CurrentHealth <= 0;
+    }
+    
+    public async Task PlaySound(string soundName)
+    {
+        var soundPlayer = audioFolder?.GetNodeOrNull(soundName) as AudioStreamPlayer;
+        soundPlayer?.Play();
+        if (soundPlayer != null)
+        {
+            await ToSignal(soundPlayer, "finished");
+        }
     }
     
     private void UpdateVisuals()
@@ -192,19 +245,19 @@ public partial class BaseCardTemplate : Control
 
     public void onAreaEntered(Area2D area)  // when card colides with either player or enemy placable position
     {
-        if (area.IsInGroup("PlacablePosition") && turnManager.canPlayerPlaceCards) // <- we need canplayerplacecards for both player and enemy side of the board
+        if (area.IsInGroup("PlacablePosition"))
         {
-            whereIsAreaWePlaceOurCardIn = area.GlobalPosition;
             nameOfAreaPlaceOurCardIn = area.Name;
-            isCardPlayable = true;
-        } else isCardPlayable = false;
+            whereIsAreaWePlaceOurCardIn = area.GlobalPosition;
+        }
+        
+        isCardPlayable = turnManager.canPlayerPlaceCards;
     }
 
     public void onAreaExited(Area2D area)
     {
         if (area.IsInGroup("PlacablePosition"))
         {
-            
             isCardPlayable = false;
         }
     }

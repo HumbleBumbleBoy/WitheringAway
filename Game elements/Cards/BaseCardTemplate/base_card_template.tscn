@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=22 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -15,7 +15,10 @@
 [ext_resource type="Script" uid="uid://cytofhpvvwyp4" path="res://Game elements/components/DefenseComponent.cs" id="6_methn"]
 [ext_resource type="Texture2D" uid="uid://hjdy44pvmpxr" path="res://Game elements/Cards/BaseCardTemplate/InCombatOverlay.png" id="6_yht3s"]
 [ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
+[ext_resource type="AudioStream" uid="uid://bvwd3k4wxv4nk" path="res://Game elements/Cards/BaseCardTemplate/Audio/Hurt.wav" id="9_methn"]
 [ext_resource type="Script" uid="uid://c4ps8r2eainfc" path="res://Resources/CostManager.cs" id="9_qrnnt"]
+[ext_resource type="AudioStream" uid="uid://be72lsvfoslmt" path="res://Game elements/Cards/BaseCardTemplate/Audio/Attack.wav" id="10_oxapj"]
+[ext_resource type="AudioStream" uid="uid://c3tndebx2xbrn" path="res://Game elements/Cards/BaseCardTemplate/Audio/Death.wav" id="11_fsaho"]
 
 [sub_resource type="Resource" id="Resource_o8iy5"]
 script = ExtResource("2_7kkpe")
@@ -77,6 +80,18 @@ bus = &"SFX"
 
 [node name="PlaceDown" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_h4fyw")
+bus = &"SFX"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("9_methn")
+bus = &"SFX"
+
+[node name="Attack" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("10_oxapj")
+bus = &"SFX"
+
+[node name="Death" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("11_fsaho")
 bus = &"SFX"
 
 [node name="CardBackside" type="Sprite2D" parent="."]

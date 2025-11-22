@@ -70,7 +70,7 @@ enemyNode = NodePath("../Enemy")
 [node name="FieldData" type="Node" parent="."]
 script = ExtResource("2_wh43m")
 
-[node name="Field" parent="." instance=ExtResource("2_en8yc")]
+[node name="Field" parent="." groups=["GameField"] instance=ExtResource("2_en8yc")]
 
 [node name="Player" parent="." instance=ExtResource("2_ijnl5")]
 

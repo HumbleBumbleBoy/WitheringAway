@@ -2,8 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Witheringaway.Game_elements.components;
+using Witheringaway.Game_elements.lib.manager;
 
-public partial class EnemyHandManager : Control
+public partial class EnemyHandManager : HandManager
 {
     [Export] EnemyDeckManager? enemyDeckManager;
     private HBoxContainer? cardContainer;
@@ -12,47 +13,37 @@ public partial class EnemyHandManager : Control
     public override void _Ready()
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
-        GetTopCard();
-        GetTopCard();
-        GetTopCard();
-        GetTopCard();
     }
     
-    public void GetTopCard()
+    public override void GetTopCard()
     {
         if (enemyDeckManager?.enemyCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}
         if (enemyCardsInHand.Count >= 10) { GD.Print("Hand is full"); return; }
 
-        Node? cardInstance = enemyDeckManager?.enemyCardsInDeck[^1].Instantiate();
-        
-        if (cardInstance is BaseCardTemplate card)
-        {
-            GD.Print("Card added");
-            card.RemoveAllComponents<DraggableComponent>();
+        var cardInstance = enemyDeckManager?.enemyCardsInDeck[^1].Instantiate();
+
+        if (cardInstance is not BaseCardTemplate card) return;
+        GD.Print("Card added");
+        card.RemoveAllComponents<DraggableComponent>();
             
-            cardContainer?.AddChild(card);
-            enemyCardsInHand.Add(card);
+        cardContainer?.AddChild(card);
+        enemyCardsInHand.Add(card);
             
-            enemyDeckManager?.removeTopCardFromDeck();
-        }
+        enemyDeckManager?.removeTopCardFromDeck();
     }
 
-    public void RemoveCardFromHand(Node cardToRemove)  
+    public override void RemoveCardFromHand(BaseCardTemplate cardToRemove)
     {
-        if (cardToRemove is BaseCardTemplate card)
-        {
-            enemyCardsInHand.Remove(card);
-            cardContainer?.RemoveChild(card);
-        }
+        enemyCardsInHand.Remove(cardToRemove);
+        cardContainer?.RemoveChild(cardToRemove);
     }
 
-    public BaseCardTemplate? PlayCard(int soulsAvailable)
+    public override BaseCardTemplate? FindCard(int availableSouls)
     {
-        GetTopCard();
+        GetTopCard(); // TEMP
         foreach (var card in enemyCardsInHand)
         {
-            GD.Print(card.Name);
-            if (card.CardData != null && card.CardData.Cost <= soulsAvailable)
+            if (card.CardData != null && card.CardData.Cost <= availableSouls)
             {
                 return card;
             }

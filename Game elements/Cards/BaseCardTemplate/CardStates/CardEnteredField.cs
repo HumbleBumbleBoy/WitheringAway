@@ -1,39 +1,47 @@
 using Godot;
-using System;
-using System.Linq;
 using Witheringaway.Game_elements.lib;
+using Witheringaway.Game_elements.lib.manager;
 
-public class CardEnteredField : IState<BaseCardTemplate>
+public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
 {   
     public Node2D? Field;
     public int indexOfLane;
-    public PlayerHandManager? playerHandManager;
 
     public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
+        var handManager = isPlayer
+            ? card.GetTree().GetFirstNodeInGroup("PlayerHandManager") as HandManager
+            : card.GetTree().GetFirstNodeInGroup("EnemyHandManager") as HandManager;
+        
+        if (handManager == null)
+        {
+            GD.PrintErr("HandManager not found in the scene tree.");
+            return null;
+        }
+        
         GD.Print(card.Name + " entered field");
         card.isCardInField = true;
         card.audioFolder?.GetNode<AudioStreamPlayer>("PlaceDown").Play();
 
         // GET FIELD REFERENCE FIRST (while card still has parent)
-        Field = card.GetParent().GetParent().GetParent().GetParent().GetNode<Node2D>("Field");
-        
-        // GET HAND MANAGER FIRST (while card still has parent)
-        playerHandManager = card.GetParent().GetParent().GetParent().GetNode<PlayerHandManager>("PlayerHandManager");
+        Field = card.GetTree().GetFirstNodeInGroup("GameField") as Node2D;
         
         // REMOVE FROM HAND
-        playerHandManager.RemoveCardFromHand(card);
+        handManager.RemoveCardFromHand(card);
         
         // NOW reparent to field
         string areaName = card.nameOfAreaPlaceOurCardIn;
         string numberOnly = System.Text.RegularExpressions.Regex.Replace(areaName, @"[^\d]", "");
         indexOfLane = int.Parse(numberOnly)-1;
         
-        Field.GetNode<Control>("PlayerSide").GetNode<HBoxContainer>("PlayerArea").GetNode<VBoxContainer>("FrontLane").GetNode<Control>("Position" + numberOnly).AddChild(card);
+        var fieldSide = isPlayer ? "PlayerSide" : "EnemySide";
+        var fieldArea = isPlayer ? "PlayerArea" : "EnemyArea";
+        
+        Field.GetNode<Control>(fieldSide).GetNode<HBoxContainer>(fieldArea).GetNode<VBoxContainer>("FrontLane").GetNode<Control>("Position" + numberOnly).AddChild(card);
         card.Position = Vector2.Zero;
 
-        FieldData fieldData = card.GetNode<FieldData>("/root/GameScene/FieldData");
-        fieldData.PlayCardOnSpecificLane(indexOfLane, card, true);
+        var fieldData = card.GetNode<FieldData>("/root/GameScene/FieldData");
+        fieldData.PlayCardOnSpecificLane(indexOfLane, card, isPlayer);
 
         card.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
         card.cardArt.Scale = new Vector2(0.6f, 0.6f);

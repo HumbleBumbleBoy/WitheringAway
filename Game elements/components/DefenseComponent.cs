@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 
 namespace Witheringaway.Game_elements.components;
 
@@ -13,13 +14,11 @@ public partial class DefenseComponent : Component
         Defense = amount;
     }
     
-    public void ApplyDefenseOnDamage(ref int damage)
+    public int AbsorbDamage(int damage)
     {
         damage -= Defense;
-        if (damage < 0)
-        {
-            damage = 0;
-        }
+        
+        return Math.Clamp(damage, 0, int.MaxValue);
     }
     
 }

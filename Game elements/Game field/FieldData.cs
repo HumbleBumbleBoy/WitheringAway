@@ -12,7 +12,11 @@ public partial class FieldData : Node
         if (isPlayer)
         {
             playerCardsOnField[whichLane] = whichCard;
-        } else { enemyCardsOnField[whichLane] = whichCard; }
+        }
+        else
+        {
+            enemyCardsOnField[whichLane] = whichCard;
+        }
     }
 
     public void RemoveCardOnSpecificLane(int whichLane, bool isPlayer)
@@ -20,20 +24,21 @@ public partial class FieldData : Node
         if (isPlayer)
         {
             playerCardsOnField[whichLane] = null;
-        } else { enemyCardsOnField[whichLane] = null; }
+        }
+        else
+        {
+            enemyCardsOnField[whichLane] = null;
+        }
     }
 
-    public BaseCardTemplate? GetCardOnSpecificLane(int whichLane, bool isPlayer)
-    {
-        if (isPlayer) { return playerCardsOnField[whichLane]; } 
-        return enemyCardsOnField[whichLane];
-    }
+    public BaseCardTemplate? GetCardOnSpecificLane(int whichLane, bool isPlayer) =>
+        isPlayer ? playerCardsOnField[whichLane] : enemyCardsOnField[whichLane];
 
     public bool IsLaneOccupied(int whichLane, bool isPlayer)
     {
         if (isPlayer)
             return playerCardsOnField[whichLane] != null;
-        
+
         return enemyCardsOnField[whichLane] != null;
     }
 }

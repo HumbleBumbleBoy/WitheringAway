@@ -19,6 +19,7 @@ public partial class BaseCardTemplate : Control
     [Export] public Sprite2D? cardBackside;
     [Export] public RichTextLabel? cardName;
     [Export] public Node? audioFolder;
+    [Export] public Node? animationFolder;
     
     public StateMachine<BaseCardTemplate> StateMachine { get; }
     
@@ -55,6 +56,8 @@ public partial class BaseCardTemplate : Control
 
     public override void _Ready()
     {
+        cardOnFieldOverlay?.Hide();
+        
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
         attackManager = GetNode<AttackManager>("AttackManager");
@@ -113,7 +116,7 @@ public partial class BaseCardTemplate : Control
         tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
     }
     
-    public async Task Attack(BaseCardTemplate targetCard)
+    public async Task AttackOnce(BaseCardTemplate targetCard)
     {
         await PlaySound("Attack");
         
@@ -132,6 +135,14 @@ public partial class BaseCardTemplate : Control
 
         await this.Wait(0.3f);
     }
+    
+    public async Task Attack(BaseCardTemplate targetCard)
+    {
+        for (var i = 0; i < (attackManager?.HowManyAttacks ?? 1); i++)
+        {
+            await AttackOnce(targetCard);
+        }
+    }
 
     public bool ShouldDie()
     {
@@ -147,6 +158,31 @@ public partial class BaseCardTemplate : Control
         {
             await ToSignal(soundPlayer, "finished");
         }
+    }
+
+    public async Task PlayAnimation(string animationName, float delay = 0.0f)
+    {
+        if (animationFolder?.GetNodeOrNull(animationName) is AnimatedSprite2D animationPlayer)
+        {
+            if (delay > 0.0f)
+            {
+                await this.Wait(delay);
+            }
+            
+            animationPlayer.Show();
+            animationPlayer.Play("execute");
+            await ToSignal(animationPlayer, "animation_finished");
+            animationPlayer.Hide();
+        }
+    }
+
+    public void DisableArt()
+    {
+        cardArt?.Hide();
+        cardOnFieldOverlay?.Hide();
+        cardBackground?.Hide();
+        cardName?.Hide();
+        cardDescription?.Hide();
     }
     
     private void UpdateVisuals()

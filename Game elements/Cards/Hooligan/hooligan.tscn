@@ -21,10 +21,13 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 script = ExtResource("2_008ky")
 CardData = SubResource("Resource_jiby1")
 
-[node name="CardArt" parent="." index="4"]
+[node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_c0byb")
 
-[node name="NameLabel" parent="." index="7"]
+[node name="CardOnFieldOverlay" parent="." index="6"]
+visible = true
+
+[node name="NameLabel" parent="." index="8"]
 offset_left = 0.99999994
 offset_top = 22.0
 offset_right = 80.99999
@@ -32,7 +35,7 @@ offset_bottom = 47.0
 scale = Vector2(0.4, 0.4)
 vertical_alignment = 1
 
-[node name="CardDescription" parent="." index="8"]
+[node name="CardDescription" parent="." index="9"]
 position = Vector2(16.75, 24.25)
 scale = Vector2(1.1953125, 1.1953125)
 

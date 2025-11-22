@@ -63,15 +63,23 @@ public class Combat : IState<TurnManager>
 
         if (playerCard.ShouldDie())
         {
-            playerCard.Wait(0.2f).ContinueWith(task => playerCard.CallDeferred("hide"));
-            await playerCard.PlaySound("Death");
+            playerCard.Wait(0.2f).ContinueWith(_ => playerCard.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
+
+            await Task.WhenAll(
+                playerCard.PlayAnimation("Dying", 0.2f),
+                playerCard.PlaySound("Death")
+            );
             playerCard.QueueFree();
         }
         
         if (enemyCard.ShouldDie())
         {
-            enemyCard.Wait(0.2f).ContinueWith(task => enemyCard.CallDeferred("hide"));
-            await enemyCard.PlaySound("Death");
+            enemyCard.Wait(0.2f).ContinueWith(_ => enemyCard.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
+            
+            await Task.WhenAll(
+                playerCard.PlayAnimation("Dying", 0.2f),
+                playerCard.PlaySound("Death")
+            );
             enemyCard.QueueFree();
         }
     }

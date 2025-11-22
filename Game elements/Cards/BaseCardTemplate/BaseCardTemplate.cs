@@ -19,6 +19,7 @@ public partial class BaseCardTemplate : Control
     [Export] public Sprite2D? cardBackside;
     [Export] public RichTextLabel? cardName;
     [Export] public Node? audioFolder;
+    [Export] public Node? animationFolder;
     
     public StateMachine<BaseCardTemplate> StateMachine { get; }
     
@@ -38,6 +39,8 @@ public partial class BaseCardTemplate : Control
     private const float MOVE_TOLERANCE = 10f;
     // end of segment
     private TurnManager? turnManager;
+    
+    private float _timeSinceLastHealthUpdate = 0f;
 
     public BaseCardTemplate()
     {
@@ -53,6 +56,8 @@ public partial class BaseCardTemplate : Control
 
     public override void _Ready()
     {
+        cardOnFieldOverlay?.Hide();
+        
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
         attackManager = GetNode<AttackManager>("AttackManager");
@@ -111,7 +116,7 @@ public partial class BaseCardTemplate : Control
         tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
     }
     
-    public async Task Attack(BaseCardTemplate targetCard)
+    public async Task AttackOnce(BaseCardTemplate targetCard)
     {
         await PlaySound("Attack");
         
@@ -130,6 +135,14 @@ public partial class BaseCardTemplate : Control
 
         await this.Wait(0.3f);
     }
+    
+    public async Task Attack(BaseCardTemplate targetCard)
+    {
+        for (var i = 0; i < (attackManager?.HowManyAttacks ?? 1); i++)
+        {
+            await AttackOnce(targetCard);
+        }
+    }
 
     public bool ShouldDie()
     {
@@ -145,6 +158,31 @@ public partial class BaseCardTemplate : Control
         {
             await ToSignal(soundPlayer, "finished");
         }
+    }
+
+    public async Task PlayAnimation(string animationName, float delay = 0.0f)
+    {
+        if (animationFolder?.GetNodeOrNull(animationName) is AnimatedSprite2D animationPlayer)
+        {
+            if (delay > 0.0f)
+            {
+                await this.Wait(delay);
+            }
+            
+            animationPlayer.Show();
+            animationPlayer.Play("execute");
+            await ToSignal(animationPlayer, "animation_finished");
+            animationPlayer.Hide();
+        }
+    }
+
+    public void DisableArt()
+    {
+        cardArt?.Hide();
+        cardOnFieldOverlay?.Hide();
+        cardBackground?.Hide();
+        cardName?.Hide();
+        cardDescription?.Hide();
     }
     
     private void UpdateVisuals()
@@ -163,8 +201,34 @@ public partial class BaseCardTemplate : Control
     private void UpdateVisualHealth()
     {
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        cardOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
-        cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
+        
+        var healthLabel = cardOverlay.GetNode<RichTextLabel>("HealthLabel");
+        var healthOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel");
+        if (healthLabel.Text.Length == 0 || healthLabel.Text == "0")
+        {
+            healthLabel.Text = healthComponent.CurrentHealth.ToString();
+            healthOnFieldLabel.Text = healthComponent.CurrentHealth.ToString();
+            return;
+        }
+        
+        var currentHealthLabelValue = int.Parse(healthLabel.Text);
+        if (currentHealthLabelValue != healthComponent.CurrentHealth)
+        {
+            var difference = healthComponent.CurrentHealth - currentHealthLabelValue;
+            var speed = 0.2f - Mathf.Clamp(Mathf.Abs(difference) * 0.1f / 5.0f, 0.0f, 0.2f);
+            if (_timeSinceLastHealthUpdate >= speed)
+            {
+                var direction = Mathf.Sign(difference);
+                
+                currentHealthLabelValue += direction;
+                _timeSinceLastHealthUpdate = 0f;
+            }
+        }
+        
+        _timeSinceLastHealthUpdate += (float) GetProcessDeltaTime();
+        
+        healthLabel.Text = currentHealthLabelValue.ToString();
+        healthOnFieldLabel.Text = currentHealthLabelValue.ToString();
     }
     
     private void UpdateVisualDefense()

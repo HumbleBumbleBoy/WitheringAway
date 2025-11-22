@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib.manager;
@@ -14,7 +13,12 @@ public partial class EnemyHandManager : HandManager
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
     }
-    
+
+    public override bool HasMoreCards()
+    {
+        return enemyDeckManager?.enemyCardsInDeck.Count > 0;
+    }
+
     public override void GetTopCard()
     {
         if (enemyDeckManager?.enemyCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}
@@ -40,7 +44,6 @@ public partial class EnemyHandManager : HandManager
 
     public override BaseCardTemplate? FindCard(int availableSouls)
     {
-        GetTopCard(); // TEMP
         foreach (var card in enemyCardsInHand)
         {
             if (card.CardData != null && card.CardData.Cost <= availableSouls)

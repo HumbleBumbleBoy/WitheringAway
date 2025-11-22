@@ -13,7 +13,12 @@ public partial class PlayerHandManager : HandManager
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
     }
-    
+
+    public override bool HasMoreCards()
+    {
+        return playerDeckManager?.playerCardsInDeck.Count > 0;
+    }
+
     public override void GetTopCard()
     {
         if (playerDeckManager?.playerCardsInDeck.Count == 0) { /* i could make the game auto lose if this happens */ return;}

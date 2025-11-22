@@ -346,12 +346,14 @@ public partial class BaseCardTemplate : Control
     }
 
     private bool CheckIfValidDropPosition()
-{
+    {
         if (!isCardPlayable) return false;
         
         FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
         string numberOnly = Regex.Replace(nameOfAreaPlaceOurCardIn, @"[^\d]", "");
         int laneIndex = int.Parse(numberOnly) - 1;
+        
+        GD.Print("Checking lane " + laneIndex + " for validity.");
         
         return !fieldData.IsLaneOccupied(laneIndex, true);
     }

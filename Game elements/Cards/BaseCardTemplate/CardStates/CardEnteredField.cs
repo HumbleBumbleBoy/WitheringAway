@@ -59,6 +59,6 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         GD.Print(card.Name + "exited field");  // probably died
         card.isCardInField = false;
 
-        return new CardDied();
+        return new CardDied(isPlayer);
     }
 }

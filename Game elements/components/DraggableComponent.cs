@@ -103,8 +103,6 @@ public partial class DraggableComponent : Component
         
         if (@event is not InputEventMouseButton mouseEvent) return;
         
-        GD.Print($"Mouse event: ButtonIndex={mouseEvent.ButtonIndex}, Pressed={mouseEvent.Pressed}");
-        
         switch (mouseEvent.ButtonIndex)
         {
             case MouseButton.Left when mouseEvent.Pressed:
@@ -129,8 +127,6 @@ public partial class DraggableComponent : Component
         
         if (@event is not InputEventMouseMotion mouseMotion) return;
         
-        GD.Print("Mouse motion event detected during drag check.");
-
         var currentMousePosition = mouseMotion.GlobalPosition;
         
         if (_isDragging)

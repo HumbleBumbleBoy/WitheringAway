@@ -44,13 +44,13 @@ public partial class GameScene : Node2D
         FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
     
         // Get all non-null cards on field
-        var aliveCards = fieldData.playerCardsOnField.Where(card => card != null).ToList();
+        var aliveCards = fieldData.PlayerCardsOnField.Where(card => card != null).ToList();
         
         if (aliveCards.Count > 0)
         {
             // Pick a random card and kill it
             var randomCard = aliveCards[new Random().Next(0, aliveCards.Count)];
-            randomCard?.StateMachine.ChangeState(new CardDied());
+            randomCard?.StateMachine.ChangeState(new CardDied(true));
             GD.Print("Killed: " + randomCard?.Name);
         }
         else

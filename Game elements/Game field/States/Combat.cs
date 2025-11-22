@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Godot;
 using Witheringaway.Game_elements.lib;
 
 public class Combat : IState<TurnManager>
@@ -7,6 +8,7 @@ public class Combat : IState<TurnManager>
     
     public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
+        GD.Print("FIGHT!");
         turnManager.isCombatTime = true;
         
         fieldData = turnManager.GetNode<FieldData>("/root/GameScene/FieldData");
@@ -24,7 +26,7 @@ public class Combat : IState<TurnManager>
 
     private async void BeginCombat(TurnManager turnManager)
     {
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             await turnManager.Wait(0.5f);
             await Fight(turnManager, i);            
@@ -74,8 +76,8 @@ public class Combat : IState<TurnManager>
             enemyCard.Wait(0.2f).ContinueWith(_ => enemyCard.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
             
             await Task.WhenAll(
-                playerCard.PlayAnimation("Dying", 0.2f),
-                playerCard.PlaySound("Death")
+                enemyCard.PlayAnimation("Dying", 0.2f),
+                enemyCard.PlaySound("Death")
             );
             enemyCard.QueueFree();
         }

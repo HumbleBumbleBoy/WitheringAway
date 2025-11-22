@@ -7,6 +7,8 @@ public class Transition : IState<TurnManager>
 {
     public IState<TurnManager>? OnEnter(TurnManager context, IState<TurnManager>? previousState)
     {
+        GD.Print("Transition State: Decaying cards and drawing new ones.");
+        
         var enemyHand = context.GetTree().GetFirstNodeInGroup("EnemyHandManager") as HandManager;
         if (!enemyHand?.HasMoreCards() ?? true)
         {
@@ -14,6 +16,7 @@ public class Transition : IState<TurnManager>
             return null;
         }
         enemyHand.GetTopCard();
+        GD.Print("Enemy drew a card.");
         
         var playerHand = context.GetTree().GetFirstNodeInGroup("PlayerHandManager") as HandManager;
         if (!playerHand?.HasMoreCards() ?? true)
@@ -22,10 +25,11 @@ public class Transition : IState<TurnManager>
             return null;
         }
         playerHand.GetTopCard();
+        GD.Print("Player drew a card.");
         
         var fieldData = context.GetNode<FieldData>("/root/GameScene/FieldData");
-        _DecayCards(fieldData?.playerCardsOnField ?? []);
-        _DecayCards(fieldData?.enemyCardsOnField ?? []);
+        _DecayCards(fieldData?.PlayerCardsOnField ?? []);
+        _DecayCards(fieldData?.EnemyCardsOnField ?? []);
         
         context.GetTree().CreateTimer(5).Timeout += () =>
         {
@@ -42,6 +46,10 @@ public class Transition : IState<TurnManager>
     {
         foreach (var card in cards)
         {
+            if (!GodotObject.IsInstanceValid(card))
+            {
+                continue;
+            }
             var timeOnField = card?.FirstComponent<TimeOnFieldComponent>();
             timeOnField?.SubtractTimeOnField(1);
         }

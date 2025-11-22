@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using Godot;
 using Witheringaway.Game_elements.lib;
 
-public class CardDied : IState<BaseCardTemplate>
+public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
 {
     public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
@@ -12,7 +12,7 @@ public class CardDied : IState<BaseCardTemplate>
         string nameOfPosition = card.GetParent().Name;
         string positionNumber = Regex.Replace(nameOfPosition, @"[^\d]", "");
         int indexOfLane = int.Parse(positionNumber) - 1;
-        fieldData.RemoveCardOnSpecificLane(indexOfLane, true);
+        fieldData.RemoveCardOnSpecificLane(indexOfLane, isPlayer);
 
         card.GetParent().RemoveChild(card);
         card.QueueFree();

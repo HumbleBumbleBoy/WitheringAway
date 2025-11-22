@@ -5,12 +5,14 @@ using Witheringaway.Game_elements.lib;
 public class EnemyTurn : IState<TurnManager>
 {
     private EnemyHandManager? enemyHandManager;
+    private FieldData? fieldData;
 
     public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
         turnManager.canEnemyPlaceCards = true; // is even needed??
 
         enemyHandManager = turnManager.GetTree().GetFirstNodeInGroup("EnemyHandManager") as EnemyHandManager;
+        fieldData = turnManager.GetNode<FieldData>("/root/GameScene/FieldData");
 
         StartPlaying(turnManager);
 
@@ -56,7 +58,7 @@ public class EnemyTurn : IState<TurnManager>
         for (var i = 0; i < enemyPlacablePositions.Count; i++)
         {
             var position = enemyPlacablePositions[i];
-            var positionTaken = position.GetChildren().Any(child => child is BaseCardTemplate);
+            var positionTaken = fieldData?.IsLaneOccupied(i, false) ?? true;
 
             if (positionTaken) continue;
             
@@ -70,6 +72,14 @@ public class EnemyTurn : IState<TurnManager>
                 keepPlaying = PlaceSingleCard(turnManager, position);
             };
         }
+
+        turnManager.GetTree().CreateTimer(enemyPlacablePositions.Count * 0.15 + 0.5).Timeout += () =>
+        {
+            if (turnManager.StateMachine.CurrentState == this)
+            {
+                turnManager.StateMachine.ChangeState(new Combat());
+            }
+        };
     }
 
     private bool PlaceSingleCard(TurnManager turnManager, Node cardPosition)

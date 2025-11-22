@@ -1,21 +1,19 @@
 using Godot;
-using System;
-
 
 public partial class FieldData : Node
 {
-    public BaseCardTemplate?[] enemyCardsOnField = new BaseCardTemplate[5];
-    public BaseCardTemplate?[] playerCardsOnField = new BaseCardTemplate[5];
+    public readonly BaseCardTemplate?[] EnemyCardsOnField = new BaseCardTemplate[5];
+    public readonly BaseCardTemplate?[] PlayerCardsOnField = new BaseCardTemplate[5];
 
     public void PlayCardOnSpecificLane(int whichLane, BaseCardTemplate whichCard, bool isPlayer)
     {
         if (isPlayer)
         {
-            playerCardsOnField[whichLane] = whichCard;
+            PlayerCardsOnField[whichLane] = whichCard;
         }
         else
         {
-            enemyCardsOnField[whichLane] = whichCard;
+            EnemyCardsOnField[whichLane] = whichCard;
         }
     }
 
@@ -23,22 +21,49 @@ public partial class FieldData : Node
     {
         if (isPlayer)
         {
-            playerCardsOnField[whichLane] = null;
+            PlayerCardsOnField[whichLane] = null;
         }
         else
         {
-            enemyCardsOnField[whichLane] = null;
+            EnemyCardsOnField[whichLane] = null;
         }
     }
 
-    public BaseCardTemplate? GetCardOnSpecificLane(int whichLane, bool isPlayer) =>
-        isPlayer ? playerCardsOnField[whichLane] : enemyCardsOnField[whichLane];
+    public BaseCardTemplate? GetCardOnSpecificLane(int whichLane, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            var playerCard = PlayerCardsOnField[whichLane];
+            if (IsInstanceValid(playerCard)) return PlayerCardsOnField[whichLane];
+            
+            PlayerCardsOnField[whichLane] = null;
+            return null;
+        }
+        
+        var enemyCard = EnemyCardsOnField[whichLane];
+        if (IsInstanceValid(enemyCard)) return EnemyCardsOnField[whichLane];
+        
+        EnemyCardsOnField[whichLane] = null;
+        return null;
+    }
 
     public bool IsLaneOccupied(int whichLane, bool isPlayer)
     {
         if (isPlayer)
-            return playerCardsOnField[whichLane] != null;
+        {
+            var playerCard = PlayerCardsOnField[whichLane];
+            if (IsInstanceValid(playerCard)) return PlayerCardsOnField[whichLane] != null;
+            
+            PlayerCardsOnField[whichLane] = null;
+            return false;
 
-        return enemyCardsOnField[whichLane] != null;
+        }
+        
+        var enemyCard = EnemyCardsOnField[whichLane];
+        if (IsInstanceValid(enemyCard)) return EnemyCardsOnField[whichLane] != null;
+        
+        EnemyCardsOnField[whichLane] = null;
+        return false;
+
     }
 }

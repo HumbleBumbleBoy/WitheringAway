@@ -1,17 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dll2sitm1b08a"]
+[gd_scene load_steps=4 format=3 uid="uid://dll2sitm1b08a"]
 
 [ext_resource type="PackedScene" uid="uid://1xia3fwv3jf0" path="res://Game elements/Enemy/Hand/enemy_hand_manager.tscn" id="1_qxscf"]
 [ext_resource type="PackedScene" uid="uid://l2t8da7vubhb" path="res://Game elements/Enemy/Deck/enemy_deck_manager.tscn" id="2_ka80h"]
-[ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_2omue"]
-[ext_resource type="PackedScene" uid="uid://djepd3w03w68t" path="res://Game elements/Cards/Qman/q_man.tscn" id="4_o0bg0"]
-[ext_resource type="PackedScene" uid="uid://dtwm31d3iqt5m" path="res://Game elements/Cards/Undead/undead.tscn" id="5_2omue"]
-[ext_resource type="PackedScene" uid="uid://ylcpu7nkkbbl" path="res://Game elements/Cards/Crooked/crooked.tscn" id="5_8p2cr"]
 [ext_resource type="PackedScene" uid="uid://b87kmxjur3uaq" path="res://Game elements/Player/Deck/player_deck.tscn" id="5_bwjm8"]
-
-[sub_resource type="Resource" id="Resource_bwjm8"]
-script = ExtResource("4_2omue")
-Cards = [ExtResource("5_2omue"), ExtResource("5_2omue"), ExtResource("5_2omue"), ExtResource("4_o0bg0"), ExtResource("5_8p2cr")]
-metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Enemy" type="Node"]
 
@@ -26,7 +17,6 @@ grow_vertical = 1
 enemyDeckManager = NodePath("../EnemyDeckManager")
 
 [node name="EnemyDeckManager" parent="." instance=ExtResource("2_ka80h")]
-Decks = [SubResource("Resource_bwjm8")]
 
 [node name="EnemyDeck" parent="." instance=ExtResource("5_bwjm8")]
 offset_left = 45.0

@@ -34,7 +34,7 @@ public class EnemyTurn : IState<TurnManager>
                 firstRoundSetupDone.Name = "first_round_setup_done";
                 enemyHandManager?.AddChild(firstRoundSetupDone);
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     enemyHandManager?.GetTopCard();
                     await turnManager.Wait(0.2f);

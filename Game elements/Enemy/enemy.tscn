@@ -1,16 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://dll2sitm1b08a"]
+[gd_scene load_steps=17 format=3 uid="uid://dll2sitm1b08a"]
 
 [ext_resource type="PackedScene" uid="uid://1xia3fwv3jf0" path="res://Game elements/Enemy/Hand/enemy_hand_manager.tscn" id="1_qxscf"]
 [ext_resource type="PackedScene" uid="uid://l2t8da7vubhb" path="res://Game elements/Enemy/Deck/enemy_deck_manager.tscn" id="2_ka80h"]
+[ext_resource type="PackedScene" uid="uid://dnq2aayl77tw3" path="res://Game elements/Cards/Hitman/hitman.tscn" id="3_ptprs"]
 [ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_2omue"]
+[ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Murderer/murderer.tscn" id="4_15ykk"]
 [ext_resource type="PackedScene" uid="uid://djepd3w03w68t" path="res://Game elements/Cards/Qman/q_man.tscn" id="4_o0bg0"]
-[ext_resource type="PackedScene" uid="uid://dtwm31d3iqt5m" path="res://Game elements/Cards/Undead/undead.tscn" id="5_2omue"]
+[ext_resource type="PackedScene" uid="uid://c66npy1kffppd" path="res://Game elements/Cards/TimeKeeper/time_keeper.tscn" id="5_4o1hh"]
 [ext_resource type="PackedScene" uid="uid://ylcpu7nkkbbl" path="res://Game elements/Cards/Crooked/crooked.tscn" id="5_8p2cr"]
 [ext_resource type="PackedScene" uid="uid://b87kmxjur3uaq" path="res://Game elements/Player/Deck/player_deck.tscn" id="5_bwjm8"]
+[ext_resource type="PackedScene" uid="uid://jro0pvtbpgkh" path="res://Game elements/Cards/Rats/rats.tscn" id="7_rsype"]
+[ext_resource type="PackedScene" uid="uid://dj1wb3aypjg2k" path="res://Game elements/Cards/Beast/beast.tscn" id="8_602gf"]
+[ext_resource type="PackedScene" uid="uid://clb0fduewg5qm" path="res://Game elements/Cards/Bird/bird.tscn" id="9_cc71r"]
+[ext_resource type="PackedScene" uid="uid://dm72ydm4xjfj1" path="res://Game elements/Cards/Snow/snow.tscn" id="10_v10ll"]
+[ext_resource type="PackedScene" uid="uid://bxolknj8a772a" path="res://Game elements/Cards/Surgeon/surgeon.tscn" id="11_1mhqi"]
+[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Bandit/bandit.tscn" id="12_mjftn"]
 
-[sub_resource type="Resource" id="Resource_bwjm8"]
+[sub_resource type="Resource" id="Resource_2www7"]
 script = ExtResource("4_2omue")
-Cards = [ExtResource("5_2omue"), ExtResource("5_2omue"), ExtResource("5_2omue"), ExtResource("4_o0bg0"), ExtResource("5_8p2cr")]
+Cards = [ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0")]
 metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Enemy" type="Node"]
@@ -26,7 +34,7 @@ grow_vertical = 1
 enemyDeckManager = NodePath("../EnemyDeckManager")
 
 [node name="EnemyDeckManager" parent="." instance=ExtResource("2_ka80h")]
-Decks = [SubResource("Resource_bwjm8")]
+Decks = [SubResource("Resource_2www7")]
 
 [node name="EnemyDeck" parent="." instance=ExtResource("5_bwjm8")]
 offset_left = 45.0

@@ -1,9 +1,7 @@
 using Godot;
-using System;
-using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 
-public partial class DraggingCard : IState<BaseCardTemplate>
+public class DraggingCard : IState<BaseCardTemplate>
 {
     private Vector2 _originalPosition;
 
@@ -30,6 +28,8 @@ public partial class DraggingCard : IState<BaseCardTemplate>
 
     public IState<BaseCardTemplate>? OnUpdate(BaseCardTemplate card, double deltaTime)
     {
+        GD.Print("dragging update " + card.Name);
+        
         card.GlobalPosition = card.GetGlobalMousePosition() - card.GetGlobalRect().Size / 2;
         
         return null;

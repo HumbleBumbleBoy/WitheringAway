@@ -39,9 +39,9 @@ public partial class StateMachine<TValue>(TValue context) : Node
         currentState = null;
     }
 
-    public override void _Ready()
+    public override void _Process(double delta)
     {
-        var result = CurrentState?.OnUpdate(GetContext(), GetProcessDeltaTime());
+        var result = CurrentState?.OnUpdate(GetContext(), delta);
         if (result != null)
         {
             ChangeState(result);

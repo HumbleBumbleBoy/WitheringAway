@@ -11,9 +11,9 @@ public class EnemyTurn : IState<TurnManager>
     private Node? enemyDeckManager;
     private HBoxContainer? enemyCardContainer;
     private TurnManager? _turnManager;
-    private CancellationTokenSource? tokenSource = new();
+    private CancellationTokenSource tokenSource = new();
 
-    public async Task OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
+    public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
         _turnManager = turnManager;
         turnManager.canEnemyPlaceCards = true; // is even needed??
@@ -24,8 +24,10 @@ public class EnemyTurn : IState<TurnManager>
 
         try
         {
-            await PlayCards(tokenSource.Token);
-        } catch (OperationCanceledException _){} 
+            PlayCards(tokenSource.Token);
+        } catch (OperationCanceledException _){}
+
+        return null;
     }
 
     public IState<TurnManager>? OnExit(TurnManager turnManager, IState<TurnManager>? nextState)
@@ -35,22 +37,22 @@ public class EnemyTurn : IState<TurnManager>
         return null;
     }
 
-    private async Task PlayCards(CancellationToken cancellationToken)
+    private void PlayCards(CancellationToken cancellationToken)
     {
         var enemyPlacablePositions = _turnManager.GetTree().GetNodesInGroup("EnemyPlacablePosition");
-        foreach (var position in enemyPlacablePositions)
+        for (var i = 0; i < enemyPlacablePositions.Count; i++)
         {
-            var positionTaken = position.GetChildren().Where(child => child is BaseCardTemplate).Any();
+            var position = enemyPlacablePositions[i];
+            var positionTaken = position.GetChildren().Any(child => child is BaseCardTemplate);
 
             if (!positionTaken)
             {
-                await position.ToSignal(position.GetTree().CreateTimer(.1), "timeout");
-                await PlaceSingleCard(cancellationToken, position);
+                position.GetTree().CreateTimer((i + 1) * 0.1).Timeout += () => { PlaceSingleCard(cancellationToken, position); };
             }
         }
     }
 
-    private async Task PlaceSingleCard(CancellationToken cancellationToken, Node cardPosition)
+    private void PlaceSingleCard(CancellationToken cancellationToken, Node cardPosition)
     {
         if (cancellationToken.IsCancellationRequested)
         {

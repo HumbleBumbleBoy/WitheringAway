@@ -7,7 +7,7 @@ public partial class EnemyHandManager : Control
 {
     [Export] EnemyDeckManager? enemyDeckManager;
     private HBoxContainer? cardContainer;
-    public List<Node> enemyCardsInHand = [];
+    public List<BaseCardTemplate> enemyCardsInHand = [];
 
     public override void _Ready()
     {
@@ -46,13 +46,13 @@ public partial class EnemyHandManager : Control
         }
     }
 
-    public BaseCardTemplate PlayCard(int soulsAvailable)
+    public BaseCardTemplate? PlayCard(int soulsAvailable)
     {
         GetTopCard();
-        foreach (BaseCardTemplate card in enemyCardsInHand)
+        foreach (var card in enemyCardsInHand)
         {
             GD.Print(card.Name);
-            if (card.CardData.Cost <= soulsAvailable)
+            if (card.CardData != null && card.CardData.Cost <= soulsAvailable)
             {
                 return card;
             }

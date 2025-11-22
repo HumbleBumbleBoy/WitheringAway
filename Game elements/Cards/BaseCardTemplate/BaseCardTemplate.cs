@@ -19,7 +19,7 @@ public partial class BaseCardTemplate : Control
     [Export] public RichTextLabel? cardName;
     [Export] public Node? audioFolder;
     
-    public StateMachine<BaseCardTemplate> StateMachine = null!;
+    public StateMachine<BaseCardTemplate> StateMachine { get; }
     
     private bool isHovering;
     public bool isFlipped;
@@ -38,12 +38,15 @@ public partial class BaseCardTemplate : Control
     // end of segment
     private TurnManager? turnManager;
 
+    public BaseCardTemplate()
+    {
+        StateMachine = this.CreateStateMachine(this);
+    }
+
     public override void _Process(double delta)
     {
         CheckForHold();
         CheckApperance();
-
-        StateMachine = this.CreateStateMachine(this);
     }
 
     public override void _Ready()

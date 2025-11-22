@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj1wb3aypjg2k"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/BaseCardTemplate/base_card_template.tscn" id="1_fmn7p"]
+[ext_resource type="Script" uid="uid://drdtxxn8uugvu" path="res://Game elements/Cards/Beast/Beast.cs" id="2_nhk4b"]
+[ext_resource type="Texture2D" uid="uid://81vb011h87l1" path="res://Game elements/Cards/Beast/Beast.png" id="3_60lfd"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="3_nhk4b"]
+
+[sub_resource type="Resource" id="Resource_60lfd"]
+script = ExtResource("3_nhk4b")
+Art = ExtResource("3_60lfd")
+Name = "Beast"
+Description = "It towers over you, feasts on eaten souls (Heal for 2HP on kill if it survives)"
+TimeLeftOnField = 6
+Cost = 6
+Health = 6
+Defense = 2
+Attack = 6
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Beast" instance=ExtResource("1_fmn7p")]
+script = ExtResource("2_nhk4b")
+CardData = SubResource("Resource_60lfd")
+
+[node name="CardArt" parent="." index="4"]
+texture = ExtResource("3_60lfd")

@@ -11,7 +11,7 @@ public static class ComponentExtensions
     
     public static void RemoveAllComponents<T>(this Node node) where T : Component => Component.RemoveAllIn<T>(node);
     
-    public static void AddComponent<T>(this Node node) where T : Component, new()
+    public static T AddComponent<T>(this Node node) where T : Component, new()
     {
         var component = new T();
         
@@ -23,14 +23,12 @@ public static class ComponentExtensions
         }
         
         node.AddChild(component);
+        return component;
     }
     
-    public static void GetOrAddComponent<T>(this Node node) where T : Component, new()
+    public static T GetOrAddComponent<T>(this Node node) where T : Component, new()
     {
         var existingComponent = node.FirstComponent<T>();
-        if (existingComponent == null)
-        {
-            node.AddComponent<T>();
-        }
+        return existingComponent ?? node.AddComponent<T>();
     }
 }

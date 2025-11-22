@@ -33,7 +33,7 @@ public class CardEnteredField : IState<BaseCardTemplate>
         card.Position = Vector2.Zero;
 
         FieldData fieldData = card.GetNode<FieldData>("/root/GameScene/FieldData");
-        fieldData.playCardOnSpecificLane(indexOfLane, card, true);
+        fieldData.PlayCardOnSpecificLane(indexOfLane, card, true);
 
         card.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
         card.cardArt.Scale = new Vector2(0.6f, 0.6f);

@@ -7,7 +7,7 @@ public partial class FieldData : Node
     public BaseCardTemplate?[] enemyCardsOnField = new BaseCardTemplate[5];
     public BaseCardTemplate?[] playerCardsOnField = new BaseCardTemplate[5];
 
-    public void playCardOnSpecificLane(int whichLane, BaseCardTemplate whichCard, bool isPlayer)
+    public void PlayCardOnSpecificLane(int whichLane, BaseCardTemplate whichCard, bool isPlayer)
     {
         if (isPlayer)
         {
@@ -15,7 +15,7 @@ public partial class FieldData : Node
         } else { enemyCardsOnField[whichLane] = whichCard; }
     }
 
-    public void removeCardOnSpecificLane(int whichLane, bool isPlayer)
+    public void RemoveCardOnSpecificLane(int whichLane, bool isPlayer)
     {
         if (isPlayer)
         {
@@ -23,7 +23,7 @@ public partial class FieldData : Node
         } else { enemyCardsOnField[whichLane] = null; }
     }
 
-    public BaseCardTemplate? getCardOnSpecificLane(int whichLane, bool isPlayer)
+    public BaseCardTemplate? GetCardOnSpecificLane(int whichLane, bool isPlayer)
     {
         if (isPlayer) { return playerCardsOnField[whichLane]; } 
         return enemyCardsOnField[whichLane];
@@ -33,7 +33,7 @@ public partial class FieldData : Node
     {
         if (isPlayer)
             return playerCardsOnField[whichLane] != null;
-        else
-            return enemyCardsOnField[whichLane] != null;
+        
+        return enemyCardsOnField[whichLane] != null;
     }
 }

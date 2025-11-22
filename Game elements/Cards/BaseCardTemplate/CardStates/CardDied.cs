@@ -12,7 +12,7 @@ public class CardDied : IState<BaseCardTemplate>
         string nameOfPosition = card.GetParent().Name;
         string positionNumber = Regex.Replace(nameOfPosition, @"[^\d]", "");
         int indexOfLane = int.Parse(positionNumber) - 1;
-        fieldData.removeCardOnSpecificLane(indexOfLane, true);
+        fieldData.RemoveCardOnSpecificLane(indexOfLane, true);
 
         card.GetParent().RemoveChild(card);
         card.QueueFree();

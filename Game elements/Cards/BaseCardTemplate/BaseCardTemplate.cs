@@ -7,7 +7,6 @@ using Witheringaway.Game_elements.lib;
 public partial class BaseCardTemplate : Control
 {
     [Export] public BaseCard? CardData { get; set; }
-    [Export] public HealthManager? healthManager;
     [Export] public AttackManager? attackManager; 
     [Export] public CostManager? costManager;
     [Export] public Sprite2D? cardOverlay;
@@ -47,20 +46,27 @@ public partial class BaseCardTemplate : Control
     {
         CheckForHold();
         CheckApperance();
+        UpdateVisuals();
     }
 
     public override void _Ready()
     {
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
-        healthManager = GetNode<HealthManager>("HealthManager");
         attackManager = GetNode<AttackManager>("AttackManager");
         costManager = GetNode<CostManager>("CostManager");
 
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        healthComponent.SetMaxHealth(CardData?.Health ?? healthComponent.MaxHealth);
+        
+        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
+        defenseComponent.SetDefense(CardData?.Defense ?? defenseComponent.Defense);
+
+        /*
         healthManager.Health = CardData?.Health??0;
         healthManager.Defense = CardData?.Defense??0;
         healthManager.TimeLeftOnField = CardData?.TimeLeftOnField??0;
-        healthManager.Initialize();
+        healthManager.Initialize();*/
         
         attackManager.Attack = CardData?.Attack??0;
         attackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
@@ -90,13 +96,29 @@ public partial class BaseCardTemplate : Control
     
     private void UpdateVisuals()
     {
-        healthManager?.UpdateLabels();
+        UpdateVisualHealth();
+        UpdateVisualDefense();
+        
         attackManager?.UpdateLabels(); 
         if (!isCardInField) { costManager?.UpdateLabels(); }
 
         cardName.Text = CardData?.Name ?? "";
         cardArt.Texture = CardData?.Art;
         cardDescription.GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description;
+    }
+
+    private void UpdateVisualHealth()
+    {
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        cardOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
+        cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
+    }
+    
+    private void UpdateVisualDefense()
+    {
+        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
+        cardOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = defenseComponent.Defense.ToString();
+        cardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = defenseComponent.Defense.ToString();
     }
 
     private void CheckForHold()

@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Enemy" type="Node"]
 
-[node name="EnemyHandManager" parent="." node_paths=PackedStringArray("enemyDeckManager") instance=ExtResource("1_qxscf")]
+[node name="EnemyHandManager" parent="." node_paths=PackedStringArray("enemyDeckManager") groups=["EnemyHandManager"] instance=ExtResource("1_qxscf")]
 anchors_preset = 10
 anchor_bottom = 0.0
 offset_left = 100.0

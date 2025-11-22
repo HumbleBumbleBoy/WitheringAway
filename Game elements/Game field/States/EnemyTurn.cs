@@ -9,8 +9,8 @@ public class EnemyTurn : IState<TurnManager>
     public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
         turnManager.canEnemyPlaceCards = true; // is even needed??
-        
-        enemyHandManager = turnManager.GetParent().GetNode<Node>("Enemy").GetNode<EnemyHandManager>("EnemyHandManager");
+
+        enemyHandManager = turnManager.GetTree().GetFirstNodeInGroup("EnemyHandManager") as EnemyHandManager;
 
         PlayCards(turnManager);
 

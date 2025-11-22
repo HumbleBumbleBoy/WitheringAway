@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.lib;
 
-public class EnemyTurn : State<TurnManager>
+public class EnemyTurn : IState<TurnManager>
 {
     private EnemyHandManager? enemyHandManager;
     private Node? enemyDeckManager;
@@ -13,7 +13,7 @@ public class EnemyTurn : State<TurnManager>
     private TurnManager? _turnManager;
     private CancellationTokenSource? tokenSource = new();
 
-    public async Task OnEnter(TurnManager turnManager, State<TurnManager>? previousState)
+    public async Task OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
         _turnManager = turnManager;
         turnManager.canEnemyPlaceCards = true; // is even needed??
@@ -28,7 +28,7 @@ public class EnemyTurn : State<TurnManager>
         } catch (OperationCanceledException _){} 
     }
 
-    public State<TurnManager>? OnExit(TurnManager turnManager, State<TurnManager>? nextState)
+    public IState<TurnManager>? OnExit(TurnManager turnManager, IState<TurnManager>? nextState)
     {
         turnManager.canEnemyPlaceCards = false;
         tokenSource.Dispose();

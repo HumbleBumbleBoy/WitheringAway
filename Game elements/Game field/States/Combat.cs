@@ -1,14 +1,14 @@
 using Witheringaway.Game_elements.lib;
 
-public class Combat : State<TurnManager>
+public class Combat : IState<TurnManager>
 {
-    public State<TurnManager>? OnEnter(TurnManager context, State<TurnManager>? previousState)
+    public IState<TurnManager>? OnEnter(TurnManager context, IState<TurnManager>? previousState)
     {
         context.isCombatTime = true;
         return null;
     }
 
-    public State<TurnManager>? OnExit(TurnManager context, State<TurnManager>? nextState)
+    public IState<TurnManager>? OnExit(TurnManager context, IState<TurnManager>? nextState)
     {
         context.isCombatTime = false;
         return null;

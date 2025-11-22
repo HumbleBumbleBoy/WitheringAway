@@ -4,12 +4,12 @@ namespace Witheringaway.Game_elements.lib;
 
 public partial class StateMachine<TValue>(TValue context) : Node
 {
-    private State<TValue>? currentState;
+    private IState<TValue>? currentState;
     
-    public State<TValue>? CurrentState => currentState;
+    public IState<TValue>? CurrentState => currentState;
     public TValue GetContext() => context;
 
-    public void ChangeState(State<TValue>? newState)
+    public void ChangeState(IState<TValue>? newState)
     {
         var exitResult = currentState?.OnExit(GetContext(), newState);
         if (exitResult != null)

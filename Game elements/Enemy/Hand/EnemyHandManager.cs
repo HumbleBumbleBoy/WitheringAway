@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Witheringaway.Game_elements.components;
 
 public partial class EnemyHandManager : Control
 {
@@ -27,6 +28,8 @@ public partial class EnemyHandManager : Control
         if (cardInstance is BaseCardTemplate card)
         {
             GD.Print("Card added");
+            card.RemoveAllComponents<DraggableComponent>();
+            
             cardContainer?.AddChild(card);
             enemyCardsInHand.Add(card);
             

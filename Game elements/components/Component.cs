@@ -50,4 +50,13 @@ public partial class Component : Node
         
         return null;
     }
+    
+    public static void RemoveAllIn<T>(Node node) where T : Component
+    {
+        var components = AllIn<T>(node);
+        foreach (var component in components)
+        {
+            component.QueueFree();
+        }
+    }
 }

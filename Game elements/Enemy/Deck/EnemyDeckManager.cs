@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Witheringaway.Game_elements.components;
 
 public partial class EnemyDeckManager : Node
 {
@@ -44,6 +45,8 @@ public partial class EnemyDeckManager : Node
         {
             cardInDeck.ChangeState(new CardInDeck());
         }
+        
+        cardInstance.RemoveAllComponents<DraggableComponent>();
         cardsInDeckContainer?.AddChild(cardInstance);
     }
 

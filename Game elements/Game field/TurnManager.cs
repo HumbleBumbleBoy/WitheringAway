@@ -1,35 +1,21 @@
 using Godot;
+using Witheringaway.Game_elements.lib;
 
 public partial class TurnManager : Node
 {
     [Export] TextureButton? passTurnButton;
     [Export] Node? enemyNode;
 
-    protected TurnState? currentState;
+    public StateMachine<TurnManager> StateMachine = null!;
+    
     public bool canPlayerPlaceCards;
     public bool canEnemyPlaceCards;
     public bool isCombatTime;
 
     public override void _Ready()
     {
-        ChangeState(new PlayerTurn());
-    }
-
-    public void ChangeState(TurnState newState)
-    {
-        GD.Print($"Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
-        
-        currentState?.Exit(this);
-        currentState = newState;
-        currentState?.Enter(this);
-        
-        GD.Print($"Current state is now: {currentState?.GetType().Name}");
-    }
-
-    public void ExitCurrentState()
-    {
-        currentState?.Exit(this);
-        currentState = null;
+        StateMachine = new StateMachine<TurnManager>(this);
+        StateMachine.ChangeState(new PlayerTurn());
     }
 
     public void EnablePassTurnButton()

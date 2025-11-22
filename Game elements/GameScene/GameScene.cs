@@ -62,6 +62,6 @@ public partial class GameScene : Node2D
     private void OnPassTurnButtonPressed()
     {
         GetNode<AudioStreamPlayer>("Click").Play();
-        turnManager?.ChangeState(new EnemyTurn());
+        turnManager?.StateMachine.ChangeState(new EnemyTurn());
     }
 }

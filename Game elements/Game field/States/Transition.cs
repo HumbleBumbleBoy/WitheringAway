@@ -1,15 +1,5 @@
-using Godot;
-using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class Transition : TurnState
+public class Transition : State<TurnManager>
 {
-    public override void Enter(TurnManager turnManager)
-    {
-        
-    }
-
-    public override void Exit(TurnManager turnManager)
-    {
-        
-    }
 }

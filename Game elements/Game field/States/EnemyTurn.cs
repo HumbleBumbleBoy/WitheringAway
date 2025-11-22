@@ -1,10 +1,11 @@
-using Godot;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Godot;
+using Witheringaway.Game_elements.lib;
 
-public partial class EnemyTurn : TurnState
+public class EnemyTurn : State<TurnManager>
 {
     private EnemyHandManager? enemyHandManager;
     private Node? enemyDeckManager;
@@ -12,7 +13,7 @@ public partial class EnemyTurn : TurnState
     private TurnManager? _turnManager;
     private CancellationTokenSource? tokenSource = new();
 
-    public override async void Enter(TurnManager turnManager)
+    public async Task OnEnter(TurnManager turnManager, State<TurnManager>? previousState)
     {
         _turnManager = turnManager;
         turnManager.canEnemyPlaceCards = true; // is even needed??
@@ -27,10 +28,11 @@ public partial class EnemyTurn : TurnState
         } catch (OperationCanceledException _){} 
     }
 
-    public override void Exit(TurnManager turnManager)
+    public State<TurnManager>? OnExit(TurnManager turnManager, State<TurnManager>? nextState)
     {
         turnManager.canEnemyPlaceCards = false;
         tokenSource.Dispose();
+        return null;
     }
 
     private async Task PlayCards(CancellationToken cancellationToken)
@@ -61,7 +63,7 @@ public partial class EnemyTurn : TurnState
         if (card == null) 
         { 
             tokenSource.Cancel();
-            _turnManager.ChangeState(new Combat());
+            _turnManager.StateMachine.ChangeState(new Combat());
             return;
         }
 

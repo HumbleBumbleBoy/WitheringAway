@@ -1,17 +1,19 @@
-using Godot;
-using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class PlayerTurn : TurnState
+public class PlayerTurn : State<TurnManager>
 {
-    public override void Enter(TurnManager turnManager)
+    public State<TurnManager>? OnEnter(TurnManager context, State<TurnManager>? previousState)
     {
-        turnManager.canPlayerPlaceCards = true;
-        turnManager.EnablePassTurnButton();
+        context.canPlayerPlaceCards = true;
+        context.EnablePassTurnButton();
+        return null;
     }
 
-    public override void Exit(TurnManager turnManager)
+    public State<TurnManager>? OnExit(TurnManager context, State<TurnManager>? nextState)
     {
-        turnManager.DisalePassTurnButton();
-        turnManager.canPlayerPlaceCards = false;
+        context.DisalePassTurnButton();
+        context.canPlayerPlaceCards = false;
+        return null;
     }
+
 }

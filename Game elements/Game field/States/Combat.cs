@@ -1,15 +1,16 @@
-using Godot;
-using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class Combat : TurnState
+public class Combat : State<TurnManager>
 {
-    public override void Enter(TurnManager turnManager)
+    public State<TurnManager>? OnEnter(TurnManager context, State<TurnManager>? previousState)
     {
-        turnManager.isCombatTime = true;
+        context.isCombatTime = true;
+        return null;
     }
 
-    public override void Exit(TurnManager turnManager)
+    public State<TurnManager>? OnExit(TurnManager context, State<TurnManager>? nextState)
     {
-        turnManager.isCombatTime = false;
+        context.isCombatTime = false;
+        return null;
     }
 }

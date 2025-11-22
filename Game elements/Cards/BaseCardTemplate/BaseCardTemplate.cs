@@ -38,6 +38,8 @@ public partial class BaseCardTemplate : Control
     private const float MOVE_TOLERANCE = 10f;
     // end of segment
     private TurnManager? turnManager;
+    
+    private float _timeSinceLastHealthUpdate = 0f;
 
     public BaseCardTemplate()
     {
@@ -163,8 +165,34 @@ public partial class BaseCardTemplate : Control
     private void UpdateVisualHealth()
     {
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        cardOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
-        cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel").Text = healthComponent.CurrentHealth.ToString();
+        
+        var healthLabel = cardOverlay.GetNode<RichTextLabel>("HealthLabel");
+        var healthOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel");
+        if (healthLabel.Text.Length == 0 || healthLabel.Text == "0")
+        {
+            healthLabel.Text = healthComponent.CurrentHealth.ToString();
+            healthOnFieldLabel.Text = healthComponent.CurrentHealth.ToString();
+            return;
+        }
+        
+        var currentHealthLabelValue = int.Parse(healthLabel.Text);
+        if (currentHealthLabelValue != healthComponent.CurrentHealth)
+        {
+            var difference = healthComponent.CurrentHealth - currentHealthLabelValue;
+            var speed = 0.2f - Mathf.Clamp(Mathf.Abs(difference) * 0.1f / 5.0f, 0.0f, 0.2f);
+            if (_timeSinceLastHealthUpdate >= speed)
+            {
+                var direction = Mathf.Sign(difference);
+                
+                currentHealthLabelValue += direction;
+                _timeSinceLastHealthUpdate = 0f;
+            }
+        }
+        
+        _timeSinceLastHealthUpdate += (float) GetProcessDeltaTime();
+        
+        healthLabel.Text = currentHealthLabelValue.ToString();
+        healthOnFieldLabel.Text = currentHealthLabelValue.ToString();
     }
     
     private void UpdateVisualDefense()

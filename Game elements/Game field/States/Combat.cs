@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Godot;
 using Witheringaway.Game_elements.lib;
 
 public class Combat : IState<TurnManager>
@@ -46,13 +45,11 @@ public class Combat : IState<TurnManager>
 
         if (playerCard == null)
         {
-            GD.Print("Damaging player!");
             return; // damage player
         }
 
         if (enemyCard == null)
         {
-            GD.Print("Damaging enemy!");
             return; // damage enemy
         }
 

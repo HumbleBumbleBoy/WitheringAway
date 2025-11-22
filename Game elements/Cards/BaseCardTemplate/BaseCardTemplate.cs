@@ -40,7 +40,9 @@ public partial class BaseCardTemplate : Control
     // end of segment
     private TurnManager? turnManager;
     
-    private float _timeSinceLastHealthUpdate = 0f;
+    private float _timeSinceLastHealthUpdate;
+    private float _timeSinceLastDefenseUpdate;
+    private float _timeSinceLastTimeOnFieldUpdate;
 
     public BaseCardTemplate()
     {
@@ -69,11 +71,8 @@ public partial class BaseCardTemplate : Control
         var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
         defenseComponent.SetDefense(CardData?.Defense ?? defenseComponent.Defense);
 
-        /*
-        healthManager.Health = CardData?.Health??0;
-        healthManager.Defense = CardData?.Defense??0;
-        healthManager.TimeLeftOnField = CardData?.TimeLeftOnField??0;
-        healthManager.Initialize();*/
+        var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
+        timeOnFieldComponent.SetTimeOnField(CardData?.TimeLeftOnField ?? timeOnFieldComponent.TimeOnField);
         
         attackManager.Attack = CardData?.Attack??0;
         attackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
@@ -189,6 +188,7 @@ public partial class BaseCardTemplate : Control
     {
         UpdateVisualHealth();
         UpdateVisualDefense();
+        UpdateVisualTimeOnField();
         
         attackManager?.UpdateLabels(); 
         if (!isCardInField) { costManager?.UpdateLabels(); }
@@ -204,38 +204,57 @@ public partial class BaseCardTemplate : Control
         
         var healthLabel = cardOverlay.GetNode<RichTextLabel>("HealthLabel");
         var healthOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel");
-        if (healthLabel.Text.Length == 0 || healthLabel.Text == "0")
-        {
-            healthLabel.Text = healthComponent.CurrentHealth.ToString();
-            healthOnFieldLabel.Text = healthComponent.CurrentHealth.ToString();
-            return;
-        }
         
-        var currentHealthLabelValue = int.Parse(healthLabel.Text);
-        if (currentHealthLabelValue != healthComponent.CurrentHealth)
-        {
-            var difference = healthComponent.CurrentHealth - currentHealthLabelValue;
-            var speed = 0.2f - Mathf.Clamp(Mathf.Abs(difference) * 0.1f / 5.0f, 0.0f, 0.2f);
-            if (_timeSinceLastHealthUpdate >= speed)
-            {
-                var direction = Mathf.Sign(difference);
-                
-                currentHealthLabelValue += direction;
-                _timeSinceLastHealthUpdate = 0f;
-            }
-        }
-        
-        _timeSinceLastHealthUpdate += (float) GetProcessDeltaTime();
-        
-        healthLabel.Text = currentHealthLabelValue.ToString();
-        healthOnFieldLabel.Text = currentHealthLabelValue.ToString();
+        _UpdateTextLabels(healthLabel, healthOnFieldLabel, healthComponent.CurrentHealth, ref _timeSinceLastHealthUpdate);
     }
     
     private void UpdateVisualDefense()
     {
         var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
-        cardOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = defenseComponent.Defense.ToString();
-        cardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = defenseComponent.Defense.ToString();
+        
+        var defenseLabel = cardOverlay.GetNode<RichTextLabel>("DefenseLabel");
+        var defenseOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel");
+        
+        _UpdateTextLabels(defenseLabel, defenseOnFieldLabel, defenseComponent.Defense, ref _timeSinceLastDefenseUpdate);
+    }
+    
+    private void UpdateVisualTimeOnField()
+    {
+        var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
+        
+        var timeOnFieldLabel = cardOverlay.GetNode<RichTextLabel>("TimeLeftLabel");
+        var timeOnFieldOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("TimeLeftLabel");
+        
+        _UpdateTextLabels(timeOnFieldLabel, timeOnFieldOnFieldLabel, timeOnFieldComponent.TimeOnField, ref _timeSinceLastTimeOnFieldUpdate);
+    }
+
+    private void _UpdateTextLabels(RichTextLabel overlayLabel, RichTextLabel fieldLabel, int value, ref float timeElapsed)
+    {
+        if (overlayLabel.Text.Length == 0 || overlayLabel.Text == "0")
+        {
+            overlayLabel.Text = value.ToString();
+            fieldLabel.Text = value.ToString();
+            return;
+        }
+        
+        var currentLabelValue = int.Parse(overlayLabel.Text);
+        if (currentLabelValue != value)
+        {
+            var difference = value - currentLabelValue;
+            var speed = 0.2f - Mathf.Clamp(Mathf.Abs(difference) * 0.1f / 5.0f, 0.0f, 0.2f);
+            if (timeElapsed >= speed)
+            {
+                var direction = Mathf.Sign(difference);
+                
+                currentLabelValue += direction;
+                timeElapsed = 0f;
+            }
+        }
+        
+        timeElapsed += (float) GetProcessDeltaTime();
+        
+        overlayLabel.Text = currentLabelValue.ToString();
+        fieldLabel.Text = currentLabelValue.ToString();
     }
 
     private void CheckForHold()

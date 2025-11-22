@@ -1,4 +1,5 @@
 using Godot;
+using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 
@@ -22,6 +23,10 @@ public class Transition : IState<TurnManager>
         }
         playerHand.GetTopCard();
         
+        var fieldData = context.GetNode<FieldData>("/root/GameScene/FieldData");
+        _DecayCards(fieldData?.playerCardsOnField ?? []);
+        _DecayCards(fieldData?.enemyCardsOnField ?? []);
+        
         context.GetTree().CreateTimer(5).Timeout += () =>
         {
             if (context.StateMachine.CurrentState == this)
@@ -31,5 +36,14 @@ public class Transition : IState<TurnManager>
         };
         
         return null;
+    }
+    
+    private void _DecayCards(BaseCardTemplate?[] cards)
+    {
+        foreach (var card in cards)
+        {
+            var timeOnField = card?.FirstComponent<TimeOnFieldComponent>();
+            timeOnField?.SubtractTimeOnField(1);
+        }
     }
 }

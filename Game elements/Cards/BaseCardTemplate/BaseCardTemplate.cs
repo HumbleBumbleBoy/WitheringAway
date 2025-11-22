@@ -116,19 +116,19 @@ public partial class BaseCardTemplate : Control
         tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
     }
     
-    public async Task AttackOnce(BaseCardTemplate targetCard)
+    public async Task AttackOnce(BaseCardTemplate targetCard, Callable? onMidAttack = null)
     {
-        await PlaySound("Attack");
-        
         var originalPosition = GlobalPosition;
         var directionToTarget = (targetCard.GlobalPosition - GlobalPosition).Normalized();
         var attackPosition = originalPosition + directionToTarget * 20;
         var tween = CreateTween();
         tween.TweenProperty(this, "global_position", attackPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
-        tween.TweenCallback(Callable.From(() => 
+        tween.TweenCallback(onMidAttack ?? Callable.From(() => 
         {
+            _ = PlaySound("Attack");
             targetCard.TakeDamage(attackManager?.Attack ?? 0);
             _ = targetCard.PlaySound("Hurt");
+            _ = targetCard.PlayAnimation("Hurt");
         }));
         tween.TweenProperty(this, "global_position", originalPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
         await ToSignal(tween, "finished");
@@ -136,11 +136,11 @@ public partial class BaseCardTemplate : Control
         await this.Wait(0.3f);
     }
     
-    public async Task Attack(BaseCardTemplate targetCard)
+    public async Task Attack(BaseCardTemplate targetCard, Callable? onMidAttack = null)
     {
         for (var i = 0; i < (attackManager?.HowManyAttacks ?? 1); i++)
         {
-            await AttackOnce(targetCard);
+            await AttackOnce(targetCard, onMidAttack);
         }
     }
 

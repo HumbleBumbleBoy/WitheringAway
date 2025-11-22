@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=35 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -15,10 +15,16 @@
 [ext_resource type="Script" uid="uid://cytofhpvvwyp4" path="res://Game elements/components/DefenseComponent.cs" id="6_methn"]
 [ext_resource type="Texture2D" uid="uid://hjdy44pvmpxr" path="res://Game elements/Cards/BaseCardTemplate/InCombatOverlay.png" id="6_yht3s"]
 [ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
+[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="9_dnwhm"]
 [ext_resource type="AudioStream" uid="uid://bvwd3k4wxv4nk" path="res://Game elements/Cards/BaseCardTemplate/Audio/Hurt.wav" id="9_methn"]
 [ext_resource type="Script" uid="uid://c4ps8r2eainfc" path="res://Resources/CostManager.cs" id="9_qrnnt"]
+[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="10_718wa"]
 [ext_resource type="AudioStream" uid="uid://be72lsvfoslmt" path="res://Game elements/Cards/BaseCardTemplate/Audio/Attack.wav" id="10_oxapj"]
 [ext_resource type="AudioStream" uid="uid://c3tndebx2xbrn" path="res://Game elements/Cards/BaseCardTemplate/Audio/Death.wav" id="11_fsaho"]
+[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="11_oxmxe"]
+[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="12_u31ds"]
+[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="13_w21m4"]
+[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="14_ojnya"]
 [ext_resource type="Texture2D" uid="uid://ce3mibcvapueh" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes1.png" id="20_s87ag"]
 [ext_resource type="Texture2D" uid="uid://bjsejw128o0t5" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes2.png" id="21_5lrgv"]
 [ext_resource type="Texture2D" uid="uid://bfg6sbkw24r5b" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes3.png" id="22_760eh"]
@@ -61,6 +67,32 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_s87ag"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_dnwhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_718wa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_oxmxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_u31ds")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_w21m4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ojnya")
+}],
+"loop": false,
+"name": &"execute",
+"speed": 15.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
@@ -92,6 +124,14 @@ z_index = 10
 position = Vector2(16, 13.000001)
 scale = Vector2(0.528, 0.49)
 sprite_frames = SubResource("SpriteFrames_0b8ph")
+animation = &"execute"
+
+[node name="Hurt" type="AnimatedSprite2D" parent="animations"]
+visible = false
+z_index = 10
+position = Vector2(16, 13)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_s87ag")
 animation = &"execute"
 
 [node name="components" type="Node" parent="."]

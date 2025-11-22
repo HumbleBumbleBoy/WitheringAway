@@ -71,6 +71,7 @@ enemyNode = NodePath("../Enemy")
 script = ExtResource("2_wh43m")
 
 [node name="Field" parent="." groups=["GameField"] instance=ExtResource("2_en8yc")]
+position = Vector2(7, 33)
 
 [node name="Player" parent="." instance=ExtResource("2_ijnl5")]
 

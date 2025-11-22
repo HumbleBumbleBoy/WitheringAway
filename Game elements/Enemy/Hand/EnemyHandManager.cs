@@ -29,6 +29,8 @@ public partial class EnemyHandManager : HandManager
         if (cardInstance is not BaseCardTemplate card) return;
         GD.Print("Card added");
         card.RemoveAllComponents<DraggableComponent>();
+        
+        card.isFlipped = true;
             
         cardContainer?.AddChild(card);
         enemyCardsInHand.Add(card);
@@ -38,6 +40,7 @@ public partial class EnemyHandManager : HandManager
 
     public override void RemoveCardFromHand(BaseCardTemplate cardToRemove)
     {
+        cardToRemove.isFlipped = false;
         enemyCardsInHand.Remove(cardToRemove);
         cardContainer?.RemoveChild(cardToRemove);
     }

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://clb0fduewg5qm"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/BaseCardTemplate/base_card_template.tscn" id="1_hrhhd"]
+[ext_resource type="Script" uid="uid://mw3imo2en0ma" path="res://Game elements/Cards/Bird/Bird.cs" id="2_smoif"]
+[ext_resource type="Texture2D" uid="uid://by5xjjqhtgxj1" path="res://Game elements/Cards/Bird/Bird.png" id="3_jxl13"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="3_smoif"]
+
+[sub_resource type="Resource" id="Resource_jxl13"]
+script = ExtResource("3_smoif")
+Art = ExtResource("3_jxl13")
+Name = "Bird"
+Description = "It might have the flu"
+TimeLeftOnField = 4
+Cost = 2
+Health = 2
+Attack = 3
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Bird" instance=ExtResource("1_hrhhd")]
+script = ExtResource("2_smoif")
+CardData = SubResource("Resource_jxl13")
+
+[node name="CardArt" parent="." index="4"]
+texture = ExtResource("3_jxl13")

@@ -1,14 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6phh5bua1n3g"]
+[gd_scene load_steps=17 format=3 uid="uid://c6phh5bua1n3g"]
 
 [ext_resource type="PackedScene" uid="uid://diy7abvrjl5ar" path="res://Game elements/Player/Hand/player_hand_manager.tscn" id="1_s3ool"]
 [ext_resource type="PackedScene" uid="uid://b62t4dg6vrbm" path="res://Game elements/Player/Deck/player_deck_manager.tscn" id="2_2t7hi"]
+[ext_resource type="PackedScene" uid="uid://dnq2aayl77tw3" path="res://Game elements/Cards/Hitman/hitman.tscn" id="3_ayd8a"]
+[ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Murderer/murderer.tscn" id="4_5i0mf"]
 [ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_240if"]
+[ext_resource type="PackedScene" uid="uid://c66npy1kffppd" path="res://Game elements/Cards/TimeKeeper/time_keeper.tscn" id="5_0xitl"]
 [ext_resource type="PackedScene" uid="uid://b87kmxjur3uaq" path="res://Game elements/Player/Deck/player_deck.tscn" id="5_1phct"]
-[ext_resource type="PackedScene" uid="uid://dmgh2loabw462" path="res://Game elements/Cards/Hooligan/hooligan.tscn" id="7_k0wrq"]
+[ext_resource type="PackedScene" uid="uid://dj1wb3aypjg2k" path="res://Game elements/Cards/Beast/beast.tscn" id="5_l0a8p"]
+[ext_resource type="PackedScene" uid="uid://ylcpu7nkkbbl" path="res://Game elements/Cards/Crooked/crooked.tscn" id="6_nqvxn"]
+[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Bandit/bandit.tscn" id="6_pg2xs"]
+[ext_resource type="PackedScene" uid="uid://jro0pvtbpgkh" path="res://Game elements/Cards/Rats/rats.tscn" id="7_hyqwp"]
+[ext_resource type="PackedScene" uid="uid://clb0fduewg5qm" path="res://Game elements/Cards/Bird/bird.tscn" id="9_m8fq4"]
+[ext_resource type="PackedScene" uid="uid://dm72ydm4xjfj1" path="res://Game elements/Cards/Snow/snow.tscn" id="10_opayj"]
+[ext_resource type="PackedScene" uid="uid://bxolknj8a772a" path="res://Game elements/Cards/Surgeon/surgeon.tscn" id="11_wh0qd"]
+[ext_resource type="PackedScene" uid="uid://djepd3w03w68t" path="res://Game elements/Cards/Qman/q_man.tscn" id="13_khx0i"]
 
 [sub_resource type="Resource" id="Resource_1phct"]
 script = ExtResource("4_240if")
-Cards = [ExtResource("7_k0wrq"), ExtResource("7_k0wrq"), ExtResource("7_k0wrq")]
+Cards = [ExtResource("3_ayd8a"), ExtResource("3_ayd8a"), ExtResource("3_ayd8a"), ExtResource("3_ayd8a"), ExtResource("4_5i0mf"), ExtResource("4_5i0mf"), ExtResource("4_5i0mf"), ExtResource("4_5i0mf"), ExtResource("5_0xitl"), ExtResource("5_0xitl"), ExtResource("5_0xitl"), ExtResource("5_0xitl"), ExtResource("6_nqvxn"), ExtResource("6_nqvxn"), ExtResource("6_nqvxn"), ExtResource("6_nqvxn"), ExtResource("7_hyqwp"), ExtResource("7_hyqwp"), ExtResource("7_hyqwp"), ExtResource("7_hyqwp"), ExtResource("5_l0a8p"), ExtResource("5_l0a8p"), ExtResource("5_l0a8p"), ExtResource("5_l0a8p"), ExtResource("9_m8fq4"), ExtResource("9_m8fq4"), ExtResource("9_m8fq4"), ExtResource("10_opayj"), ExtResource("10_opayj"), ExtResource("10_opayj"), ExtResource("11_wh0qd"), ExtResource("11_wh0qd"), ExtResource("11_wh0qd"), ExtResource("6_pg2xs"), ExtResource("6_pg2xs"), ExtResource("6_pg2xs"), ExtResource("13_khx0i"), ExtResource("13_khx0i"), ExtResource("13_khx0i"), ExtResource("13_khx0i")]
 metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Player" type="Node"]

@@ -1,13 +1,15 @@
 using Godot;
 using System;
 using System.Linq;
+using Witheringaway.Game_elements.lib;
 
-public partial class CardEnteredField : CardState
+public class CardEnteredField : IState<BaseCardTemplate>
 {   
     public Node2D? Field;
     public int indexOfLane;
     public PlayerHandManager? playerHandManager;
-    public override void Enter(BaseCardTemplate card, ref CardState? optionalState)  // FIX CARD COMING BACK TO HAND AFTER DRAWING
+
+    public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
         GD.Print(card.Name + " entered field");
         card.isCardInField = true;
@@ -40,12 +42,15 @@ public partial class CardEnteredField : CardState
         card.cardBackground?.Hide();
         card.cardOverlay?.Hide();
         card.cardName?.Hide();
+        
+        return null;
     }
 
-    public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnExit(BaseCardTemplate card, IState<BaseCardTemplate>? nextState)
     {
         GD.Print(card.Name + "exited field");  // probably died
         card.isCardInField = false;
-        optionalState = new CardDied();
+
+        return new CardDied();
     }
 }

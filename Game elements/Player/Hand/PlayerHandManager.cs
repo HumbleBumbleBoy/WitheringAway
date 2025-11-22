@@ -25,7 +25,7 @@ public partial class PlayerHandManager : Control
         {
             card.GetOrAddComponent<DraggableComponent>();
             
-            card.ChangeState(new CardInHand());
+            card.StateMachine.ChangeState(new CardInHand());
             cardContainer?.AddChild(card);
             playerCardsInHand.Add(card);
             

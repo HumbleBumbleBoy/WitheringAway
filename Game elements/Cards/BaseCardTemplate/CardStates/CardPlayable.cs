@@ -1,17 +1,23 @@
 using Godot;
 using System;
+using Witheringaway.Game_elements.lib;
 
-public partial class CardPlayable : CardState
+public class CardPlayable : IState<BaseCardTemplate>
 {
-    public override void Enter(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate context, IState<BaseCardTemplate>? previousState)
     {
-        GD.Print(card.Name + " is playable");
-        card.isCardPlayable = true;
+        GD.Print(context.Name + " is playable");
+        context.isCardPlayable = true;
+        
+        return null;
     }
 
-    public override void Exit(BaseCardTemplate card, ref CardState? optionalState)
+    public IState<BaseCardTemplate>? OnExit(BaseCardTemplate context, IState<BaseCardTemplate>? nextState)
     {
-        GD.Print(card.Name + " no longer playable");
-        card.isCardPlayable = false;
+        GD.Print(context.Name + " no longer playable");
+        context.isCardPlayable = false;
+        
+        return null;
     }
+
 }

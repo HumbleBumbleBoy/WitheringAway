@@ -14,7 +14,7 @@ public partial class TurnManager : Node
 
     public override void _Ready()
     {
-        StateMachine = new StateMachine<TurnManager>(this);
+        StateMachine = this.CreateStateMachine(this);
         StateMachine.ChangeState(new PlayerTurn());
     }
 

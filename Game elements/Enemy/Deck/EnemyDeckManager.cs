@@ -43,7 +43,7 @@ public partial class EnemyDeckManager : Node
         Node cardInstance = cardScene.Instantiate();
         if (cardInstance is BaseCardTemplate cardInDeck)
         {
-            cardInDeck.ChangeState(new CardInDeck());
+            cardInDeck.StateMachine.ChangeState(new CardInDeck());
         }
         
         cardInstance.RemoveAllComponents<DraggableComponent>();

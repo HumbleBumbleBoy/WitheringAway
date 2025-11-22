@@ -14,6 +14,7 @@ TimeLeftOnField = 1
 Cost = 2
 Health = 1
 Attack = 5
+HowManyAttacks = 1
 metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 
 [node name="Hitman" instance=ExtResource("1_aqjnr")]

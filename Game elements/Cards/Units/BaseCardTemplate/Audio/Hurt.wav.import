@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bvwd3k4wxv4nk"
+path="res://.godot/imported/Hurt.wav-3ba044a8465e12aad7444a73e71569b3.sample"
+
+[deps]
+
+source_file="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Hurt.wav"
+dest_files=["res://.godot/imported/Hurt.wav-3ba044a8465e12aad7444a73e71569b3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

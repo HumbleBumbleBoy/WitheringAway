@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://djjbthd3uuk4e"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_uisbq"]
+[ext_resource type="Script" uid="uid://cj7rxaagvc2fc" path="res://Game elements/Cards/Units/Baker/Baker.cs" id="2_ma0qs"]
+[ext_resource type="Texture2D" uid="uid://dkekixe3s8ujx" path="res://Game elements/Cards/Units/Baker/Baker.png" id="3_aejsj"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="3_ma0qs"]
+
+[sub_resource type="Resource" id="Resource_aejsj"]
+script = ExtResource("3_ma0qs")
+Art = ExtResource("3_aejsj")
+Name = "Baker"
+Description = "Has a soft spot for... some (on end combat, give +1/+1 to a random friendly unit)"
+TimeLeftOnField = 4
+Cost = 3
+Health = 3
+Attack = 2
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Baker" instance=ExtResource("1_uisbq")]
+script = ExtResource("2_ma0qs")
+CardData = SubResource("Resource_aejsj")
+
+[node name="CardArt" parent="." index="5"]
+texture = ExtResource("3_aejsj")

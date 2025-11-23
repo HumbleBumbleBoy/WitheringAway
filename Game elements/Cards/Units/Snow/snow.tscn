@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://dm72ydm4xjfj1"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_nkohb"]
+[ext_resource type="Script" uid="uid://b6w3vhkgoyvi" path="res://Game elements/Cards/Units/Snow/Snow.cs" id="2_sj2gr"]
+[ext_resource type="Texture2D" uid="uid://ddduin3357tof" path="res://Game elements/Cards/Units/Snow/Snow.png" id="3_pkihh"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_7geho"]
+
+[sub_resource type="Resource" id="Resource_nvc2i"]
+script = ExtResource("4_7geho")
+Art = ExtResource("3_pkihh")
+Name = "Snow"
+Description = "Cold soul (freeze enemy on hit)"
+TimeLeftOnField = 5
+Cost = 4
+Health = 3
+Defense = 1
+Attack = 2
+HowManyAttacks = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Snow" instance=ExtResource("1_nkohb")]
+script = ExtResource("2_sj2gr")
+CardData = SubResource("Resource_nvc2i")
+
+[node name="CardArt" parent="." index="4"]
+texture = ExtResource("3_pkihh")

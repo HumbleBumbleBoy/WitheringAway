@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bjigqmmtxvnja"
+path="res://.godot/imported/PlaceDown.wav-f42305bde3e90479081bdd37dab14e0a.sample"
+
+[deps]
+
+source_file="res://Game elements/Cards/Units/BaseCardTemplate/Audio/PlaceDown.wav"
+dest_files=["res://.godot/imported/PlaceDown.wav-f42305bde3e90479081bdd37dab14e0a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

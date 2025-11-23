@@ -1,0 +1,435 @@
+[gd_scene load_steps=36 format=3 uid="uid://27v8hfhp36xr"]
+
+[ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/Units/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
+[ext_resource type="Texture2D" uid="uid://c1qcyoosuijwq" path="res://Game elements/Cards/Units/BaseCardTemplate/CardBackground.png" id="3_o8iy5"]
+[ext_resource type="Texture2D" uid="uid://bs8oembj5pxwv" path="res://Game elements/Cards/Units/BaseCardTemplate/CardBackside.png" id="4_gdwny"]
+[ext_resource type="AudioStream" uid="uid://uao0u0y3mlo3" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/PickUp.wav" id="4_h4fyw"]
+[ext_resource type="Texture2D" uid="uid://cunihs4iteotc" path="res://Game elements/Cards/Units/BaseCardTemplate/PlaceHolderCardArt.png" id="4_o8iy5"]
+[ext_resource type="Texture2D" uid="uid://mjd20mpdhyyj" path="res://Game elements/Cards/Units/BaseCardTemplate/CardDescription.png" id="4_umt7n"]
+[ext_resource type="Script" uid="uid://b54ni8h41tvj1" path="res://Game elements/components/DraggableComponent.cs" id="4_vhxup"]
+[ext_resource type="Texture2D" uid="uid://bodaa62ki1bld" path="res://Game elements/Cards/Units/BaseCardTemplate/Overlay.png" id="5_0kbbq"]
+[ext_resource type="Script" uid="uid://bdwv0wmnddn21" path="res://Game elements/components/HealthComponent.cs" id="5_8dfm0"]
+[ext_resource type="AudioStream" uid="uid://bjigqmmtxvnja" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/PlaceDown.wav" id="5_h4fyw"]
+[ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="5_yp28l"]
+[ext_resource type="Script" uid="uid://cytofhpvvwyp4" path="res://Game elements/components/DefenseComponent.cs" id="6_methn"]
+[ext_resource type="Texture2D" uid="uid://hjdy44pvmpxr" path="res://Game elements/Cards/Units/BaseCardTemplate/InCombatOverlay.png" id="6_yht3s"]
+[ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
+[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="9_dnwhm"]
+[ext_resource type="AudioStream" uid="uid://bvwd3k4wxv4nk" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Hurt.wav" id="9_methn"]
+[ext_resource type="Script" uid="uid://c4ps8r2eainfc" path="res://Resources/CostManager.cs" id="9_qrnnt"]
+[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="10_718wa"]
+[ext_resource type="AudioStream" uid="uid://be72lsvfoslmt" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Attack.wav" id="10_oxapj"]
+[ext_resource type="AudioStream" uid="uid://c3tndebx2xbrn" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Death.wav" id="11_fsaho"]
+[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="11_oxmxe"]
+[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="12_u31ds"]
+[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="13_w21m4"]
+[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="14_ojnya"]
+[ext_resource type="Script" uid="uid://xkosvej57tpy" path="res://Game elements/components/TimeOnFieldComponent.cs" id="18_718wa"]
+[ext_resource type="Texture2D" uid="uid://ce3mibcvapueh" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes1.png" id="20_s87ag"]
+[ext_resource type="Texture2D" uid="uid://bjsejw128o0t5" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes2.png" id="21_5lrgv"]
+[ext_resource type="Texture2D" uid="uid://bfg6sbkw24r5b" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes3.png" id="22_760eh"]
+[ext_resource type="Texture2D" uid="uid://d078f87b6inbk" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes4.png" id="23_64roj"]
+[ext_resource type="Texture2D" uid="uid://qinn3qpn8vmv" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes5.png" id="24_na3e1"]
+
+[sub_resource type="Resource" id="Resource_o8iy5"]
+script = ExtResource("2_7kkpe")
+Art = ExtResource("4_o8iy5")
+Name = "Fella"
+Description = "Very present and exisitng description"
+TimeLeftOnField = 1
+Cost = 1
+Health = 1
+Defense = 1
+Attack = 1
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0b8ph"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_s87ag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_5lrgv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_760eh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_64roj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_na3e1")
+}],
+"loop": false,
+"name": &"execute",
+"speed": 15.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s87ag"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_dnwhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_718wa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_oxmxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_u31ds")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_w21m4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ojnya")
+}],
+"loop": false,
+"name": &"execute",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
+size = Vector2(20, 20.25)
+
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("AttackManager", "CostManager", "CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 48.0
+scale = Vector2(4, 4)
+script = ExtResource("1_8dryo")
+CardData = SubResource("Resource_o8iy5")
+AttackManager = NodePath("AttackManager")
+CostManager = NodePath("CostManager")
+CardOverlay = NodePath("CardOverlay")
+CardArt = NodePath("CardArt")
+CardOnFieldOverlay = NodePath("CardOnFieldOverlay")
+CardDescription = NodePath("CardDescription")
+CardBackground = NodePath("CardBackgroundArt")
+CardBackside = NodePath("CardBackside")
+CardName = NodePath("NameLabel")
+AudioFolder = NodePath("Audio")
+AnimationFolder = NodePath("animations")
+
+[node name="animations" type="Node2D" parent="."]
+
+[node name="Dying" type="AnimatedSprite2D" parent="animations"]
+visible = false
+z_index = 10
+position = Vector2(16, 13.000001)
+scale = Vector2(0.528, 0.49)
+sprite_frames = SubResource("SpriteFrames_0b8ph")
+animation = &"execute"
+
+[node name="Hurt" type="AnimatedSprite2D" parent="animations"]
+visible = false
+z_index = 10
+position = Vector2(16, 13)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_s87ag")
+animation = &"execute"
+
+[node name="components" type="Node" parent="."]
+
+[node name="DraggableComponent" type="Node" parent="components"]
+script = ExtResource("4_vhxup")
+DragSecondsThreshold = 0.0
+DragDistanceThreshold = 0.0
+_dragContainerPath = NodePath("../..")
+metadata/_custom_type_script = "uid://b54ni8h41tvj1"
+
+[node name="HealthComponent" type="Node" parent="components"]
+script = ExtResource("5_8dfm0")
+metadata/_custom_type_script = "uid://bdwv0wmnddn21"
+
+[node name="DefenseComponent" type="Node" parent="components"]
+script = ExtResource("6_methn")
+metadata/_custom_type_script = "uid://cytofhpvvwyp4"
+
+[node name="TimeOnFieldComponent" type="Node" parent="components"]
+script = ExtResource("18_718wa")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="PickUp" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_h4fyw")
+bus = &"SFX"
+
+[node name="PlaceDown" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_h4fyw")
+bus = &"SFX"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("9_methn")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="Attack" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("10_oxapj")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="Death" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("11_fsaho")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="CardBackside" type="Sprite2D" parent="."]
+visible = false
+z_index = 3
+position = Vector2(17, 24)
+texture = ExtResource("4_gdwny")
+
+[node name="CardBackgroundArt" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(17, 24)
+texture = ExtResource("3_o8iy5")
+
+[node name="CardArt" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(16, 13)
+scale = Vector2(0.3333333, 0.3333333)
+texture = ExtResource("4_o8iy5")
+
+[node name="CardOnFieldOverlay" type="Sprite2D" parent="."]
+visible = false
+z_index = 3
+position = Vector2(17.25, 9)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_yht3s")
+
+[node name="AttackLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 5.833333
+offset_top = 12.500001
+offset_right = 19.833332
+offset_bottom = 30.500004
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="AttackAmountLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 14.583335
+offset_top = 13.750001
+offset_right = 39.583332
+offset_bottom = 31.750004
+scale = Vector2(0.35, 0.35)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -17.916666
+offset_top = 10.833334
+offset_right = 4.749998
+offset_bottom = 28.833334
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="TimeLeftLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -15.833332
+offset_top = -8.333333
+offset_right = 7.777794
+offset_bottom = 9.666667
+scale = Vector2(0.6, 0.6)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="DefenseLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -25.416664
+offset_top = 11.25
+offset_right = -11.416664
+offset_bottom = 29.249998
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="CardOverlay" type="Sprite2D" parent="."]
+visible = false
+z_index = 4
+position = Vector2(18, 26)
+texture = ExtResource("5_0kbbq")
+
+[node name="AttackLabel" type="RichTextLabel" parent="CardOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 10.0
+offset_top = 18.0
+offset_right = 24.0
+offset_bottom = 36.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="AttackAmountLabel" type="RichTextLabel" parent="CardOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 20.499998
+offset_top = 20.0
+offset_right = 39.071434
+offset_bottom = 38.0
+scale = Vector2(0.35, 0.35)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthLabel" type="RichTextLabel" parent="CardOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -15.0
+offset_top = 16.0
+offset_right = 1.0
+offset_bottom = 34.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="TimeLeftLabel" type="RichTextLabel" parent="CardOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = 24.0
+offset_top = -28.0
+offset_right = 38.0
+offset_bottom = -10.0
+scale = Vector2(0.6, 0.6)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="DefenseLabel" type="RichTextLabel" parent="CardOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -22.0
+offset_top = 16.0
+offset_right = -8.0
+offset_bottom = 34.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="CostLabel" type="RichTextLabel" parent="CardOverlay"]
+z_index = 2
+clip_contents = false
+offset_left = -27.0
+offset_top = -28.0
+offset_right = -13.0
+offset_bottom = -10.0
+scale = Vector2(0.6, 0.6)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="NameLabel" type="RichTextLabel" parent="."]
+z_index = 1
+clip_contents = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = 23.0
+offset_right = 52.0
+offset_bottom = 41.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "name"
+horizontal_alignment = 1
+
+[node name="CardDescription" type="Sprite2D" parent="."]
+visible = false
+z_index = 11
+position = Vector2(16.5, 24.25)
+texture = ExtResource("4_umt7n")
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="CardDescription"]
+z_index = 1
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -53.0
+offset_right = 48.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="AttackManager" type="Node" parent="."]
+script = ExtResource("8_yp28l")
+
+[node name="CostManager" type="Node" parent="."]
+script = ExtResource("9_qrnnt")
+
+[node name="DetectionArea" type="Area2D" parent="." groups=["CardCollisionArea"]]
+position = Vector2(0, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(16, 23.5)
+shape = SubResource("RectangleShape2D_gdwny")
+metadata/_edit_lock_ = true
+
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="area_entered" from="DetectionArea" to="." method="onAreaEntered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="onAreaExited"]

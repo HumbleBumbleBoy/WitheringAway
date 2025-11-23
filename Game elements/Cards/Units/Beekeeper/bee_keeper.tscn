@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://g73m314tg2pp"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_25k2v"]
+[ext_resource type="Script" uid="uid://mfnl3qesvy0a" path="res://Game elements/Cards/Units/Beekeeper/BeeKeeper.cs" id="2_6lct5"]
+[ext_resource type="Texture2D" uid="uid://h3i0bnk1ootp" path="res://Game elements/Cards/Units/Beekeeper/Beekeeper.png" id="3_d5qun"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="3_fvhqr"]
+
+[sub_resource type="Resource" id="Resource_d5qun"]
+script = ExtResource("3_fvhqr")
+Art = ExtResource("3_d5qun")
+Name = "Beekeeper"
+Description = "Uses his hive in an unconventional way (spawn 2 bee swarms in random places on played)"
+TimeLeftOnField = 3
+Cost = 3
+Health = 2
+Attack = 2
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="BeeKeeper" instance=ExtResource("1_25k2v")]
+script = ExtResource("2_6lct5")
+CardData = SubResource("Resource_d5qun")
+
+[node name="CardArt" parent="." index="5"]
+texture = ExtResource("3_d5qun")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 5.0
+offset_top = 23.5
+offset_right = 78.12499
+offset_bottom = 43.499996
+scale = Vector2(0.3, 0.3)
+text = "Beekeeper"
+vertical_alignment = 1

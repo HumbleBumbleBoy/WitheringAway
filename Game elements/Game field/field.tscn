@@ -15,12 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://721x23xdooqh" path="res://Game elements/GameScene/EnemyHeroAnimation/Enemy4.png" id="8_e0nab"]
 [ext_resource type="Texture2D" uid="uid://ck51cbdckhrsp" path="res://Game elements/GameScene/EnemyHeroAnimation/Enemy1.png" id="9_gj65n"]
 [ext_resource type="Texture2D" uid="uid://dk87dqaejnbl6" path="res://Game elements/GameScene/Block/Block0.png" id="10_6wm5a"]
-[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="10_il5rd"]
-[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="11_u54p7"]
-[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="12_bul8f"]
-[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
-[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
-[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
+[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="10_il5rd"]
+[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="11_u54p7"]
+[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="12_bul8f"]
+[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
+[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
+[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw8lp"]
 animations = [{

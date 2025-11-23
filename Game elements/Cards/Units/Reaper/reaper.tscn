@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfpj2wwkwmmj8"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_2ngwo"]
+[ext_resource type="Script" uid="uid://baghm42bpgaye" path="res://Game elements/Cards/Units/Reaper/Reaper.cs" id="2_fuwvq"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="3_fjcqi"]
+[ext_resource type="Texture2D" uid="uid://cgpshj3pv3k1g" path="res://Game elements/Cards/Units/Reaper/Reaper.png" id="3_fuwvq"]
+
+[sub_resource type="Resource" id="Resource_wf5jl"]
+script = ExtResource("3_fjcqi")
+Art = ExtResource("3_fuwvq")
+Name = "Reaper"
+Description = "Bringer of peace (takes 1 time on field away from a random enemy card on end of combat)"
+TimeLeftOnField = 99
+Cost = 3
+Health = 2
+Defense = 1
+Attack = 2
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Reaper" instance=ExtResource("1_2ngwo")]
+script = ExtResource("2_fuwvq")
+CardData = SubResource("Resource_wf5jl")
+
+[node name="CardArt" parent="." index="4"]
+texture = ExtResource("3_fuwvq")
+
+[node name="TimeLeftLabel" parent="CardOnFieldOverlay" index="3"]
+offset_left = -17.083332
+offset_right = 3.75
+scale = Vector2(0.5, 0.5)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLeftLabel" parent="CardOverlay" index="3"]
+offset_left = 21.499996
+offset_right = 42.000004
+scale = Vector2(0.5, 0.5)
+horizontal_alignment = 1
+vertical_alignment = 1

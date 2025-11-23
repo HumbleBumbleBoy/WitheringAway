@@ -7,7 +7,10 @@ public static class NodeExtensions
 {
     public static async Task Wait(this Node node, float seconds)
     {
-        await node.ToSignal(node.GetTree().CreateTimer(seconds), "timeout");
+        var timer = node.GetTree().CreateTimer(seconds);
+        await node.ToSignal(timer, "timeout");
+        
+        timer.Dispose();
     }
     
     public static T? FindNodeByType<T>(this Node parent) where T : Node

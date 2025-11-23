@@ -52,7 +52,7 @@ public class Combat : IState<TurnManager>
         {
             Debug.Assert(enemyCard != null, nameof(enemyCard) + " != null");
             
-            var playerDuelist = (turnManager.GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist)!;
+            var playerDuelist = Duelist.PlayerDuelist;
             await enemyCard.Attack(playerDuelist, Callable.From(() =>
             {
                 _ = enemyCard.PlaySound("Attack");
@@ -66,7 +66,7 @@ public class Combat : IState<TurnManager>
         {
             Debug.Assert(playerCard != null, nameof(playerCard) + " != null");
             
-            var enemyDuelist = (turnManager.GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist)!;
+            var enemyDuelist = Duelist.EnemyDuelist;
             await playerCard.Attack(enemyDuelist, Callable.From(() =>
             {
                 _ = playerCard.PlaySound("Attack");

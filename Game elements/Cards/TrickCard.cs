@@ -13,16 +13,18 @@ public partial class TrickCard : BaseCardTemplate
     
     [Export] public bool CanPlaceOnPlayer;
     [Export] public bool CanPlaceOnEnemy;
-
+    
+    [Export] public bool IsGeneralEffect;
+    
     [Export] public TrickEffect[] TrickEffects = [];
     
-    public void ApplyEffect(Duelist duelist, int round)
+    public bool ApplyEffect(Duelist duelist, int round)
     {
         switch (duelist.IsPlayer)
         {
             case true when !CanPlaceOnPlayer:
             case false when !CanPlaceOnEnemy:
-                return;
+                return false;
             default:
             {
                 var effect = FindEffect(round);
@@ -30,15 +32,17 @@ public partial class TrickCard : BaseCardTemplate
                 break;
             }
         }
+
+        return true;
     }
     
-    public void ApplyEffect(BaseCardTemplate card, int round, bool isPlayer)
+    public bool ApplyEffect(BaseCardTemplate card, int round, bool isPlayer)
     {
         switch (isPlayer)
         {
             case true when !CanPlaceOnFriendlyField:
             case false when !CanPlaceOnEnemyField:
-                return;
+                return false;
             default:
             {
                 var effect = FindEffect(round);
@@ -46,10 +50,17 @@ public partial class TrickCard : BaseCardTemplate
                 break;
             }
         }
+
+        return true;
     }
 
-    public void ApplyGeneralEffect(int round, bool isPlayer)
+    public bool ApplyGeneralEffect(int round, bool isPlayer)
     {
+        if (!IsGeneralEffect)
+        {
+            return false;
+        }
+        
         var effect = FindEffect(round);
         
         var handManager = isPlayer
@@ -60,6 +71,8 @@ public partial class TrickCard : BaseCardTemplate
         {
             handManager?.GetTopCard();
         }
+
+        return true;
     }
 
     protected override bool IsValidDropPosition()
@@ -69,29 +82,42 @@ public partial class TrickCard : BaseCardTemplate
 
     protected override void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
     {
+        GD.Print("Dropped on card: " + (card?.Name ?? "null"));
         if (card is null)
         {
             base.DropOnCard(card, isPlayer, laneIndex);
             return;
         }
+
+        if (ApplyEffect(card, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
+        {
+            Kill();
+            return;
+        }
         
-        ApplyEffect(card, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer);
-        
-        Kill();
+        base.DropOnCard(card, isPlayer, laneIndex);
     }
 
     protected override void DropOnDuelist(Duelist duelist)
     {
-        ApplyEffect(duelist, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound);
-
-        Kill();
+        if (ApplyEffect(duelist, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound))
+        {
+            Kill();
+            return;
+        }
+        
+        base.DropOnDuelist(duelist);
     }
 
     protected override void Drop(bool isPlayer)
     {
-        ApplyGeneralEffect(GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer);
-
-        Kill();
+        if (ApplyGeneralEffect(GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
+        {
+            Kill();
+            return;
+        }
+        
+        base.Drop(isPlayer);
     }
 
     private TrickEffect? FindEffect(int round)

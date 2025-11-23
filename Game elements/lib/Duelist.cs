@@ -7,6 +7,10 @@ namespace Witheringaway.Game_elements.lib;
 [GlobalClass]
 public partial class Duelist : Control
 {
+
+    public static Duelist PlayerDuelist = null!;
+    public static Duelist EnemyDuelist = null!;
+    
     [Export] public RichTextLabel HealthLabel = null!;
     
     [Export] public AnimatedSprite2D HurtAnimation = null!;
@@ -26,6 +30,15 @@ public partial class Duelist : Control
 
     public override void _Ready()
     {
+        if (IsPlayer)
+        {
+            PlayerDuelist = this;
+        }
+        else
+        {
+            EnemyDuelist = this;
+        }
+        
         MaxSouls = StartingSouls;
         CurrentSouls = StartingSouls;
         
@@ -35,7 +48,19 @@ public partial class Duelist : Control
         
         RefreshSouls();
     }
-    
+
+    public override void _ExitTree()
+    {
+        if (IsPlayer)
+        {
+            PlayerDuelist = null!;
+        }
+        else
+        {
+            EnemyDuelist = null!;
+        }
+    }
+
     public int GetCurrentHealth()
     {
         var healthComponent = this.GetOrAddComponent<HealthComponent>();

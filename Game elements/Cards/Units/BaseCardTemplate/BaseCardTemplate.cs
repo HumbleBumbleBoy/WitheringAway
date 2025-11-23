@@ -520,6 +520,9 @@ public partial class BaseCardTemplate : Control
         {
             IsCardPlayable = false;
         }
+        
+        PlacedAreaName = null;
+        PlacedAreaLocation = Vector2.Zero;
     }
 
     protected virtual bool IsValidDropPosition()

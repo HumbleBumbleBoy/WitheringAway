@@ -21,11 +21,24 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 script = ExtResource("2_vp3ta")
 CardData = SubResource("Resource_o6a0f")
 
-[node name="CardArt" parent="." index="4"]
+[node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_vp3ta")
 
-[node name="NameLabel" parent="." index="7"]
+[node name="NameLabel" parent="." index="8"]
 offset_right = 65.87499
 offset_bottom = 42.999996
 scale = Vector2(0.4, 0.4)
 vertical_alignment = 1
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+anchors_preset = -1
+anchor_left = 0.3671875
+anchor_top = 0.37109375
+anchor_right = 0.75
+anchor_bottom = 0.79296875
+offset_left = -49.25
+offset_top = -46.25
+offset_right = 56.75
+offset_bottom = 39.75
+scale = Vector2(0.4, 0.4)
+text = "That was not medicine... (when played select a unit to heal for 3HP but lose 1ATK)"

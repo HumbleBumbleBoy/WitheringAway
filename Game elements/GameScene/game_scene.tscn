@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://c01af30pkl82d" path="res://Game elements/Game field/NextTurnDisabled.png" id="18_5scjv"]
 [ext_resource type="AudioStream" uid="uid://cmu4vftolr7uv" path="res://General assets/SFXnMusic/Project_CG.F.mp3" id="21_u6v7y"]
 [ext_resource type="Texture2D" uid="uid://doeurq5pyw7y8" path="res://Game elements/GameScene/SoulsContainer.png" id="22_ft36r"]
-[ext_resource type="AudioStream" uid="uid://wn4uls5t34l7" path="res://assets/audio/TurnChange.wav" id="22_pjt2c"]
+[ext_resource type="AudioStream" uid="uid://nfar3gbqoxbv" path="res://assets/audio/TurnChange.wav" id="22_pjt2c"]
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="23_qwd4a"]
 [ext_resource type="Texture2D" uid="uid://ccu7fmw27mvw" path="res://General assets/MenuAssets/SettingsOptionsBackground.png" id="24_u3130"]
 [ext_resource type="Texture2D" uid="uid://bbbinaw0r8jtr" path="res://Game elements/GameScene/PlayerWon/PlayerWon1.png" id="25_pjt2c"]
@@ -264,6 +264,7 @@ parameters/looping = true
 
 [node name="TurnChange" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_pjt2c")
+bus = &"SFX"
 
 [node name="SoulsContainer" type="Sprite2D" parent="."]
 texture_filter = 1

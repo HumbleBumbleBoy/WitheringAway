@@ -161,6 +161,7 @@ bus = &"SFX"
 
 [node name="PlaceDown" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_h4fyw")
+volume_db = 5.0
 bus = &"SFX"
 
 [node name="Hurt" type="AudioStreamPlayer" parent="Audio"]
@@ -180,6 +181,8 @@ bus = &"SFX"
 
 [node name="FailedToPlace" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("24_lw6tc")
+volume_db = -5.0
+bus = &"SFX"
 
 [node name="CardBackside" type="Sprite2D" parent="."]
 visible = false

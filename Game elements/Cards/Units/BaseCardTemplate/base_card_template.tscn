@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
 [ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="9_dnwhm"]
 [ext_resource type="AudioStream" uid="uid://bvwd3k4wxv4nk" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Hurt.wav" id="9_methn"]
-[ext_resource type="Script" uid="uid://c4ps8r2eainfc" path="res://Resources/CostManager.cs" id="9_qrnnt"]
+[ext_resource type="Script" path="res://Resources/CostManager.cs" id="9_qrnnt"]
 [ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="10_718wa"]
 [ext_resource type="AudioStream" uid="uid://be72lsvfoslmt" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Attack.wav" id="10_oxapj"]
 [ext_resource type="AudioStream" uid="uid://c3tndebx2xbrn" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Death.wav" id="11_fsaho"]
@@ -97,7 +97,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
-[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("AttackManager", "CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
@@ -105,7 +105,6 @@ offset_bottom = 48.0
 scale = Vector2(4, 4)
 script = ExtResource("1_8dryo")
 CardData = SubResource("Resource_o8iy5")
-AttackManager = NodePath("AttackManager")
 CardOverlay = NodePath("CardOverlay")
 CardArt = NodePath("CardArt")
 CardOnFieldOverlay = NodePath("CardOnFieldOverlay")

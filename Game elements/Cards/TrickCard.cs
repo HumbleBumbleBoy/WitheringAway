@@ -10,9 +10,9 @@ public partial class TrickCard : BaseCardTemplate
 {
     [Export] public bool CanPlaceOnFriendlyField;
     [Export] public bool CanPlaceOnEnemyField;
-
-    [Export] public bool CanPlaceOnEnemy;
+    
     [Export] public bool CanPlaceOnPlayer;
+    [Export] public bool CanPlaceOnEnemy;
 
     [Export] public TrickEffect[] TrickEffects = [];
     

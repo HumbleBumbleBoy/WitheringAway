@@ -95,6 +95,7 @@ public partial class BaseCardTemplate : Control
         attackComponent.SetAttackCount(CardData?.HowManyAttacks ?? attackComponent.AttackCount);
         
         CustomMinimumSize = new Vector2(32, 48);
+        CheckAppearance();
         UpdateVisuals();
 
         var draggable = this.FirstComponent<DraggableComponent>();
@@ -152,7 +153,13 @@ public partial class BaseCardTemplate : Control
         };
     }
 
-    public virtual async Task Kill()
+    public void SetFlipped(bool flipped)
+    {
+        IsFlipped = flipped;
+        CheckAppearance();
+    }
+
+    public async Task Kill()
     {
         await Task.WhenAll(
             PlayAnimation("Dying", 0.2f),
@@ -465,8 +472,8 @@ public partial class BaseCardTemplate : Control
         foreach (var node in tree.GetNodesInGroup("PlacablePosition"))
         {
             if (node is not Node2D placeablePosition) continue;
-            var area2D = placeablePosition.GetNode<Area2D>("Area2D");
-            if (!area2D.OverlapsArea(GetNode<Area2D>("Area2D"))) continue;
+            var area2D = placeablePosition.FindNodeByType<Area2D>();
+            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == false) return null; 
             
             var numberOnly = NumberRegex().Replace(placeablePosition.Name, "");
             var laneIndex = int.Parse(numberOnly) - 1;
@@ -482,8 +489,8 @@ public partial class BaseCardTemplate : Control
         foreach (var node in tree.GetNodesInGroup("EnemyPlacablePosition"))
         {
             if (node is not Node2D placeablePosition) continue;
-            var area2D = placeablePosition.GetNode<Area2D>("Area2D");
-            if (!area2D.OverlapsArea(GetNode<Area2D>("Area2D"))) continue;
+            var area2D = placeablePosition.FindNodeByType<Area2D>();
+            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == false) return null; 
             
             var numberOnly = NumberRegex().Replace(placeablePosition.Name, "");
             var laneIndex = int.Parse(numberOnly) - 1;
@@ -500,8 +507,8 @@ public partial class BaseCardTemplate : Control
         
         if (playerDuelist != null)
         {
-            var area2D = playerDuelist.GetNode<Area2D>("Area2D");
-            if (area2D.OverlapsArea(GetNode<Area2D>("Area2D")))
+            var area2D = enemyDuelist.FindNodeByType<Area2D>();
+            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == true)
             {
                 return GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
             }
@@ -509,8 +516,8 @@ public partial class BaseCardTemplate : Control
         
         if (enemyDuelist != null)
         {
-            var area2D = enemyDuelist.GetNode<Area2D>("Area2D");
-            if (area2D.OverlapsArea(GetNode<Area2D>("Area2D")))
+            var area2D = enemyDuelist.FindNodeByType<Area2D>();
+            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == true)
             {
                 return GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist;
             }

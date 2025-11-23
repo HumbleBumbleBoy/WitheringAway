@@ -17,7 +17,14 @@ public partial class TrickCard : BaseCardTemplate
     [Export] public bool IsGeneralEffect;
     
     [Export] public TrickEffect[] TrickEffects = [];
-    
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        GetNodeOrNull<Sprite2D>("Trick")?.Show();
+    }
+
     public bool ApplyEffect(Duelist duelist, int round)
     {
         switch (duelist.IsPlayer)

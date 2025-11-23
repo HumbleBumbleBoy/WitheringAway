@@ -221,15 +221,6 @@ position = Vector2(-2, -24)
 
 [node name="Enemy" parent="." instance=ExtResource("3_u4udh")]
 
-[node name="SummonCardButton" type="Button" parent="."]
-z_index = 4096
-offset_left = 70.0
-offset_top = 916.0
-offset_right = 270.0
-offset_bottom = 991.0
-mouse_default_cursor_shape = 2
-text = "Summon a card"
-
 [node name="PassTurnButton" type="TextureButton" parent="."]
 z_index = 2000
 offset_left = 1696.0
@@ -338,7 +329,8 @@ visible = false
 position = Vector2(-155, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_usuic")
-frame_progress = 0.6292163
+autoplay = "default"
+frame_progress = 0.22336783
 
 [node name="WinMessage" type="RichTextLabel" parent="WinScreen/PlayerWon"]
 z_index = 1
@@ -362,7 +354,8 @@ visible = false
 position = Vector2(-155, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_5l4il")
-frame_progress = 0.9050951
+autoplay = "default"
+frame_progress = 0.49924543
 
 [node name="WinMessage" type="RichTextLabel" parent="WinScreen/EnemyWon"]
 z_index = 1
@@ -410,7 +403,6 @@ text = "MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="PassTurnButton" to="." method="OnPassTurnButtonPressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="OnSettingsButtonPressed"]
 [connection signal="pressed" from="WinScreen/BackToMainMenuButton" to="." method="OnBackToMainMenuButtonPressed"]

@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://133pfhkev847"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_yr44g"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_2iara"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_veje0"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_ehwoi"]
+[ext_resource type="Texture2D" uid="uid://clokgbpopf11c" path="res://Game elements/Cards/Tricks/Baricade/Baricade.png" id="4_lx3jw"]
+
+[sub_resource type="Resource" id="Resource_lx3jw"]
+script = ExtResource("3_veje0")
+BonusHealth = 2
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_8ci8r"]
+script = ExtResource("4_ehwoi")
+Art = ExtResource("4_lx3jw")
+Name = "Baricade"
+Description = "Sturdy wall of random objects (all friednly cards gain +2HP)"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Baricade" instance=ExtResource("1_yr44g")]
+script = ExtResource("2_2iara")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_lx3jw")]
+CardData = SubResource("Resource_8ci8r")
+
+[node name="CardArt" parent="." index="5"]
+texture = ExtResource("4_lx3jw")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 2.25
+offset_top = 24.25
+offset_right = 71.62499
+offset_bottom = 42.25
+scale = Vector2(0.4, 0.4)
+text = "Baricade"

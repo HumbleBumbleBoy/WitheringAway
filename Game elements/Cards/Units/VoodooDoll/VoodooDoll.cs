@@ -11,7 +11,7 @@ public partial class VoodooDoll : BaseCardTemplate
         var oldDamage = GetAttackDamage();
         SetAttackDamage(damage);
         
-        Attack(attacker, isPlayer: isPlayer);
+        AttackOnce(attacker, isPlayer: isPlayer);
             
         SetAttackDamage(oldDamage);
     }

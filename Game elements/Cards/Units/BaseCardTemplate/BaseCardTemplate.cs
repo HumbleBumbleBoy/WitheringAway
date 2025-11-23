@@ -519,10 +519,9 @@ public partial class BaseCardTemplate : Control
         if (area.IsInGroup("PlacablePosition"))
         {
             IsCardPlayable = false;
+            PlacedAreaName = null;
+            PlacedAreaLocation = Vector2.Zero;
         }
-        
-        PlacedAreaName = null;
-        PlacedAreaLocation = Vector2.Zero;
     }
 
     protected virtual bool IsValidDropPosition()

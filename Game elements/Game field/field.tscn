@@ -281,7 +281,7 @@ offset_top = 158.0
 offset_right = 1919.0
 offset_bottom = 795.0
 
-[node name="EnemyArea" type="HBoxContainer" parent="EnemySide"]
+[node name="EnemyArea" type="HBoxContainer" parent="EnemySide" groups=["EnemyPassed"]]
 layout_mode = 0
 offset_left = 90.0
 offset_top = -56.0

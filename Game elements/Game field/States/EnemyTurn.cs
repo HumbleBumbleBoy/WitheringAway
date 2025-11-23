@@ -59,13 +59,15 @@ public class EnemyTurn : IState<TurnManager>
         try
         {
             await PlaceAllCards(turnManager);
-            if (turnManager.StateMachine.CurrentState == this)
-            {
-                turnManager.StateMachine.ChangeState(new Combat());
-            }
         } catch (Exception e)
         {
             GD.PrintErr("Error while placing enemy cards: " + e.Message);
+            GD.PrintErr(e.ToString());
+        }
+        
+        if (turnManager.StateMachine.CurrentState == this)
+        {
+            turnManager.StateMachine.ChangeState(new Combat());
         }
     }
 

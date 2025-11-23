@@ -297,8 +297,8 @@ public partial class BaseCardTemplate : Control
         tween.TweenProperty(this, "global_position", originalPosition - new Vector2(5, -5), 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
         tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
         
-        PlaySound("Hurt");
-        PlayAnimation("Hurt");
+        _ = PlaySound("Hurt");
+        _ = PlayAnimation("Hurt");
         OnDamageTaken(attacker, damage, isPlayer);
         
         tween.TweenCallback(Callable.From(() => tween.Dispose()));
@@ -587,19 +587,19 @@ public partial class BaseCardTemplate : Control
     protected virtual void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
     {
         StateMachine.ChangeState(new CardInHand());
-        PlaySound("FailedToPlace");
+        _ = PlaySound("FailedToPlace");
     }
     
     protected virtual void DropOnDuelist(Duelist duelis, bool isPlayer)
     {
         StateMachine.ChangeState(new CardInHand());
-        PlaySound("FailedToPlace");
+        _ = PlaySound("FailedToPlace");
     }
 
     protected virtual void Drop(bool isPlayer)
     {
         StateMachine.ChangeState(new CardInHand());
-        PlaySound("FailedToPlace");
+        _ = PlaySound("FailedToPlace");
     }
 
     private (Node2D position, int lane)? GetHoveredFriendlyPlaceable()

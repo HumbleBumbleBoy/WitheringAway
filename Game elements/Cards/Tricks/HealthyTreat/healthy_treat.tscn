@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://0lxc363tq1od"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_8uxnm"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_7hfu6"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_aely1"]
+[ext_resource type="Texture2D" uid="uid://dhix6cnkh0ff" path="res://Game elements/Cards/Tricks/HealthyTreat/HealthyTreat.png" id="4_7hfu6"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_xp7xv"]
+
+[sub_resource type="Resource" id="Resource_5d4dt"]
+script = ExtResource("3_aely1")
+BonusHealth = 3
+BonusDamage = 1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_c10so"]
+script = ExtResource("4_xp7xv")
+Art = ExtResource("4_7hfu6")
+Name = "Healthy treat"
+Description = "Tastes well (+3/+1)"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="HealthyTreat" instance=ExtResource("1_8uxnm")]
+script = ExtResource("2_7hfu6")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_5d4dt")]
+CardData = SubResource("Resource_c10so")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 5.0
+offset_top = 22.0
+offset_right = 92.49999
+offset_bottom = 40.0
+scale = Vector2(0.3, 0.3)
+text = "Healthy treat"

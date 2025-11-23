@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://bat53jrc6bk6n"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_56gk1"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_41qn3"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_exqw2"]
+[ext_resource type="Texture2D" uid="uid://bhdhrb60hl8l4" path="res://Game elements/Cards/Tricks/Rot/Rot.png" id="4_vcha3"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_7o4ix"]
+
+[sub_resource type="Resource" id="Resource_gbbtg"]
+script = ExtResource("3_exqw2")
+BonusHealth = -2
+BonusDamage = -1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_7vr5e"]
+script = ExtResource("5_7o4ix")
+Art = ExtResource("4_vcha3")
+Name = "Rot"
+Description = "Destroys (-2/-1)"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Rot" instance=ExtResource("1_56gk1")]
+script = ExtResource("2_41qn3")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_gbbtg")]
+CardData = SubResource("Resource_7vr5e")

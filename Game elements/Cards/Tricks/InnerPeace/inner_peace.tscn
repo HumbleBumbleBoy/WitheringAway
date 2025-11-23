@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2v6b6audb5ak"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_y4ses"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_hxfag"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_fb8oa"]
+[ext_resource type="Texture2D" uid="uid://cxd8xmb7lega8" path="res://Game elements/Cards/Tricks/InnerPeace/InnerPEace.png" id="4_nmouc"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_g6h3v"]
+
+[sub_resource type="Resource" id="Resource_0fots"]
+script = ExtResource("3_fb8oa")
+ExtraCardsToDraw = 3
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_2jd6x"]
+script = ExtResource("5_g6h3v")
+Art = ExtResource("4_nmouc")
+Name = "Inner peace"
+Description = "Reach nirvana (draw 3 cards)"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="InnerPeace" instance=ExtResource("1_y4ses")]
+script = ExtResource("2_hxfag")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_0fots")]
+CardData = SubResource("Resource_2jd6x")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = -0.25
+offset_top = 24.25
+offset_right = 111.416664
+offset_bottom = 51.75
+scale = Vector2(0.3, 0.3)
+text = "Inner peace"

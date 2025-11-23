@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvqfc0k1e3s2c"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_1ftl2"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_k1rfa"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_ldsq5"]
+[ext_resource type="Texture2D" uid="uid://d1whcu4haac45" path="res://Game elements/Cards/Tricks/Rage/Rage.png" id="4_k1rfa"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_t4e5f"]
+
+[sub_resource type="Resource" id="Resource_yyk1u"]
+script = ExtResource("3_ldsq5")
+BonusHealth = 1
+BonusDamage = 1
+BonusAttacks = 1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_ytedt"]
+script = ExtResource("4_t4e5f")
+Art = ExtResource("4_k1rfa")
+Name = "Rage"
+Description = "Hatered (+1/+1 and a bonus attack)"
+Cost = 4
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Rage" instance=ExtResource("1_1ftl2")]
+script = ExtResource("2_k1rfa")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_yyk1u")]
+CardData = SubResource("Resource_ytedt")

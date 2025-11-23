@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Godot;
+using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.components;
+using Witheringaway.Game_elements.Game_field.States;
 
 namespace Witheringaway.Game_elements.lib;
 
@@ -10,6 +12,11 @@ public partial class Duelist : Control
 
     public static Duelist PlayerDuelist = null!;
     public static Duelist EnemyDuelist = null!;
+    
+    public static Duelist GetDuelist(bool isPlayer)
+    {
+        return isPlayer ? PlayerDuelist : EnemyDuelist;
+    }
     
     [Export] public RichTextLabel HealthLabel = null!;
     
@@ -108,6 +115,49 @@ public partial class Duelist : Control
         await ToSignal(HurtAnimation, "animation_finished");
         HurtAnimation.Hide();
 
+        if (healthComponent.CurrentHealth <= 0)
+        {
+            var turnManager = GetNode<TurnManager>("/root/GameScene/TurnManager");
+            turnManager.StateMachine.ChangeState(new GameEnded());
+            
+            var music = GetNode<AudioStreamPlayer>("/root/GameScene/Music");
+            music.SetStreamPaused(true); // pause the music
+            
+            var fields = GetNode<FieldData>("/root/GameScene/FieldData");
+            foreach (var card in fields.PlayerCardsOnField)
+            {
+                if (!IsInstanceValid(card))
+                {
+                    continue;
+                }
+                
+                card.Wait(0.2f).ContinueWith(_ => card.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
+                
+                await card.Kill();
+            }
+            
+            foreach (var card in fields.EnemyCardsOnField)
+            {
+                if (!IsInstanceValid(card))
+                {
+                    continue;
+                }
+                
+                card.Wait(0.2f).ContinueWith(_ => card.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
+                
+                await card.Kill();
+            }
+            
+            var winScreen = GetNode<Node2D>("/root/GameScene/WinScreen");
+            var winSprite = IsPlayer ? "EnemyWon" : "PlayerWon";
+            
+            var winNode = winScreen.GetNode<Node2D>(winSprite);
+            
+            winNode.Show();
+            winScreen.Show();
+            
+            music.SetStreamPaused(false);
+        }
     }
     
     public void GiveSouls(int amount)

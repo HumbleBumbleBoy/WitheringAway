@@ -22,7 +22,7 @@ public partial class TrickCard : BaseCardTemplate
     {
         base.CheckAppearance();
 
-        if (IsCardInField)
+        if (IsCardInField || GetCurrentHealth() <= 0)
         {
             return;
         }
@@ -102,7 +102,7 @@ public partial class TrickCard : BaseCardTemplate
     protected override void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
     {
         GD.Print("Dropped on card: " + (card?.Name ?? "null"));
-        if (card is null)
+        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost() || card is null)
         {
             base.DropOnCard(card, isPlayer, laneIndex);
             return;
@@ -110,6 +110,7 @@ public partial class TrickCard : BaseCardTemplate
 
         if (ApplyEffect(card, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
         {
+            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost());
             Kill();
             return;
         }
@@ -117,21 +118,37 @@ public partial class TrickCard : BaseCardTemplate
         base.DropOnCard(card, isPlayer, laneIndex);
     }
 
-    protected override void DropOnDuelist(Duelist duelist)
+    protected override void DropOnDuelist(Duelist duelist, bool isPlayer)
     {
+        GD.Print("Dropped on duelist: " + duelist.Name);
+        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost())
+        {
+            base.DropOnDuelist(duelist, isPlayer);
+            return;
+        }
+        
         if (ApplyEffect(duelist, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound))
         {
+            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost());
             Kill();
             return;
         }
         
-        base.DropOnDuelist(duelist);
+        base.DropOnDuelist(duelist, isPlayer);
     }
 
     protected override void Drop(bool isPlayer)
     {
+        GD.Print("Dropped on empty space");
+        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost())
+        {
+            base.Drop(isPlayer);
+            return;
+        }
+        
         if (ApplyGeneralEffect(GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
         {
+            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost());
             Kill();
             return;
         }

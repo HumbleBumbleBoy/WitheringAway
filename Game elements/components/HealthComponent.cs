@@ -35,8 +35,7 @@ public partial class HealthComponent : Component
     
     public void SetHealth(int amount)
     {
-        if (amount < 0) amount = 0;
-        if (amount > MaxHealth) amount = MaxHealth;
+        amount = Mathf.Clamp(amount, 0, MaxHealth);
         
         var oldHealth = CurrentHealth;
         CurrentHealth = amount;

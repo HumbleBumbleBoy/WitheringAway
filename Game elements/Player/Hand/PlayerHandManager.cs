@@ -43,8 +43,8 @@ public partial class PlayerHandManager : HandManager
         });
         
         cardContainer?.AddChild(card);
-        cardContainer?.MoveChild(card, playerCardsInHand.IndexOf(card));
-            
+        cardContainer?.MoveChild(card, Math.Min(playerCardsInHand.IndexOf(card), cardContainer.GetChildCount() - 1));
+        
         playerDeckManager?.RemoveTopCardFromDeck();
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Witheringaway.Game_elements.Cards;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib.manager;
@@ -43,7 +44,7 @@ public partial class EnemyHandManager : HandManager
         });
         
         cardContainer?.AddChild(card);
-        cardContainer?.MoveChild(card, enemyCardsInHand.IndexOf(card));
+        cardContainer?.MoveChild(card, Math.Min(enemyCardsInHand.IndexOf(card), cardContainer.GetChildCount() - 1));
             
         enemyDeckManager?.removeTopCardFromDeck();
     }
@@ -59,6 +60,11 @@ public partial class EnemyHandManager : HandManager
     {
         foreach (var card in enemyCardsInHand.Where(card => additionalCondition == null || additionalCondition(card)))
         {
+            if (card is TrickCard)
+            {
+                continue;
+            }
+            
             if (card.CardData != null && card.CardData.Cost <= availableSouls)
             {
                 return card;

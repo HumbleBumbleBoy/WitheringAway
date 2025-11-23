@@ -31,6 +31,11 @@ public class Combat : IState<TurnManager>
     {
         for (var i = 0; i < 5; i++)
         {
+            if (turnManager.StateMachine.CurrentState != this)
+            {
+                return;
+            }
+            
             await turnManager.Wait(0.5f);
             await Fight(turnManager, i);            
         }
@@ -40,6 +45,11 @@ public class Combat : IState<TurnManager>
 
     private async Task Fight(TurnManager turnManager, int lane)
     {
+        if (turnManager.StateMachine.CurrentState != this)
+        {
+            return;
+        }
+        
         var playerCard = fieldData?.GetCardOnSpecificLane(lane, true);
         var enemyCard = fieldData?.GetCardOnSpecificLane(lane, false);
 

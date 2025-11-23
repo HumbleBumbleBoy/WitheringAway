@@ -52,11 +52,11 @@ public partial class BaseCardTemplate : Control
     private (RichTextLabel hand, RichTextLabel field) _visualAttackLabels = (default, default);
     private (RichTextLabel hand, RichTextLabel field) _visualAttackAmountLabels = (default, default);
     
-    private HealthComponent _healthComponent = null!;
-    private DefenseComponent _defenseComponent = null!;
-    private TimeOnFieldComponent _timeOnFieldComponent = null!;
-    private AttackComponent _attackComponent = null!;
-    private CostComponent _costComponent = null!;
+    private HealthComponent _healthComponent = new();
+    private DefenseComponent _defenseComponent = new();
+    private TimeOnFieldComponent _timeOnFieldComponent = new();
+    private AttackComponent _attackComponent = new();
+    private CostComponent _costComponent = new();
 
     public BaseCardTemplate()
     {
@@ -160,7 +160,7 @@ public partial class BaseCardTemplate : Control
                 var duelistHovered = GetHoveredDuelist();
                 if (duelistHovered != null)
                 {
-                    DropOnDuelist(duelistHovered);
+                    DropOnDuelist(duelistHovered, true);
                     return;
                 }
                 
@@ -198,6 +198,11 @@ public partial class BaseCardTemplate : Control
     public int GetAttackCount()
     {
         return _attackComponent.AttackCount;
+    }
+    
+    public int GetCost()
+    {
+        return _costComponent.Cost;
     }
     
     public void TakeDamage(int damage)
@@ -451,7 +456,7 @@ public partial class BaseCardTemplate : Control
         StateMachine.ChangeState(new CardInHand());
     }
     
-    protected virtual void DropOnDuelist(Duelist duelist)
+    protected virtual void DropOnDuelist(Duelist duelis, bool isPlayer)
     {
         StateMachine.ChangeState(new CardInHand());
     }

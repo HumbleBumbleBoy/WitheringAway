@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b62t4dg6vrbm"]
 
 [ext_resource type="Script" uid="uid://bbs8g4ju6n1ci" path="res://Game elements/Player/Deck/PlayerDeckManager.cs" id="1_sifh3"]
-[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Bandit/bandit.tscn" id="2_fmh7b"]
-[ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Murderer/murderer.tscn" id="3_7u8l8"]
+[ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Units/Bandit/bandit.tscn" id="2_fmh7b"]
+[ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Units/Murderer/murderer.tscn" id="3_7u8l8"]
 
 [node name="PlayerDeckManager" type="Node"]
 script = ExtResource("1_sifh3")

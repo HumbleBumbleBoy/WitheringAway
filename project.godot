@@ -28,6 +28,13 @@ window/size/mode=3
 
 project/assembly_name="Withering away"
 
+[file_customization]
+
+folder_colors={
+"res://Game elements/Cards/Tricks/": "red",
+"res://Game elements/Cards/Units/": "green"
+}
+
 [global_group]
 
 PlacablePosition=""

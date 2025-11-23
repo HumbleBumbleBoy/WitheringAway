@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://djepd3w03w68t"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_5rcpw"]
+[ext_resource type="Script" uid="uid://cj1io1rkqla24" path="res://Game elements/Cards/Units/Qman/QMan.cs" id="2_v0p8v"]
+[ext_resource type="Texture2D" uid="uid://hvbj4dsggtln" path="res://Game elements/Cards/Units/Qman/Qman.png" id="3_8pcqr"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="3_v0p8v"]
+
+[sub_resource type="Resource" id="Resource_8pcqr"]
+script = ExtResource("3_v0p8v")
+Art = ExtResource("3_8pcqr")
+Name = "Q man"
+Description = "Tough farmer (choose a lane to spawn a bird in [2HP/3ATK])"
+TimeLeftOnField = 9
+Cost = 6
+Health = 6
+Defense = 1
+Attack = 6
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Q man" instance=ExtResource("1_5rcpw")]
+script = ExtResource("2_v0p8v")
+CardData = SubResource("Resource_8pcqr")
+
+[node name="CardArt" parent="." index="4"]
+texture = ExtResource("3_8pcqr")

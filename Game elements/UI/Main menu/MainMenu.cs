@@ -5,6 +5,7 @@ public partial class MainMenu : CanvasLayer
 {
     [Export] private HBoxContainer? mainMenu;
     [Export] private HBoxContainer? settings;
+    [Export] private HBoxContainer? help;
 
     private void OnPlayButtonPressed()
     {
@@ -30,5 +31,17 @@ public partial class MainMenu : CanvasLayer
     {
         GetNode<AudioStreamPlayer>("Click").Play();
         GetTree().Quit();
+    }
+
+    private void OnHelpButtonPressed()
+    {
+        settings?.Hide();
+        help?.Show();
+    }
+
+    private void OnHelpBackButtonPressed()
+    {
+        settings?.Show();
+        help?.Hide();
     }
 }

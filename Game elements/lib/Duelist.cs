@@ -81,8 +81,7 @@ public partial class Duelist : Control
             WouldYouLookAtTheTime++;
             UpdateBlockSprite(WouldYouLookAtTheTime);
 
-            var field = GetNode<FieldData>("/root/GameScene/FieldData");
-            var cards = IsPlayer ? field.PlayerCardsOnField : field.EnemyCardsOnField;
+            var cards = FieldData.Instance.GetCardsOnField(IsPlayer);
             foreach (var playerCard in cards)
             {
                 if (!IsInstanceValid(playerCard))

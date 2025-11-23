@@ -27,7 +27,7 @@ public partial class PlayerHandManager : HandManager
         {
             var instantiatedCard = card.Instantiate();
 
-            if (instantiatedCard is not Hooligan) continue;
+            if (instantiatedCard is not BeeKeeper) continue;
             instantiatedCard.QueueFree();
                     
             var topCard = playerDeckManager.PlayerCardsInDeck[^1];
@@ -82,7 +82,11 @@ public partial class PlayerHandManager : HandManager
     public override void RemoveCardFromHand(BaseCardTemplate cardToRemove)
     {
         playerCardsInHand.Remove(cardToRemove);
-        cardContainer?.RemoveChild(cardToRemove);
+        
+        if (cardToRemove.GetParent() == cardContainer)
+        {
+            cardContainer?.RemoveChild(cardToRemove);   
+        }
     }
     
     public override BaseCardTemplate? FindCard(int availableSouls, Predicate<BaseCardTemplate>? additionalCondition = null)

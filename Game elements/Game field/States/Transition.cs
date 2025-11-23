@@ -32,9 +32,8 @@ public class Transition : IState<TurnManager>
         playerDuelist.RefreshSouls();
         enemyDuelist.RefreshSouls();
         
-        var fieldData = context.GetNode<FieldData>("/root/GameScene/FieldData");
-        _DecayCards(fieldData?.PlayerCardsOnField ?? [], true);
-        _DecayCards(fieldData?.EnemyCardsOnField ?? [], false);
+        _DecayCards(FieldData.Instance.GetCardsOnField(true), true);
+        _DecayCards(FieldData.Instance.GetCardsOnField(false), false);
         
         context.GetTree().CreateTimer(2).Timeout += () =>
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
+using Witheringaway.Game_elements.lib.manager;
 
 public partial class FieldData : Node
 {
@@ -12,10 +13,19 @@ public partial class FieldData : Node
     public readonly BaseCardTemplate?[] EnemyCardsOnField = new BaseCardTemplate[5];
     public readonly BaseCardTemplate?[] PlayerCardsOnField = new BaseCardTemplate[5];
     
-
     public BaseCardTemplate?[] GetCardsOnField(bool isPlayer)
     {
-        return isPlayer ? PlayerCardsOnField : EnemyCardsOnField;
+        var array = isPlayer ? PlayerCardsOnField : EnemyCardsOnField;
+        
+        for (var lane = 0; lane < array.Length; lane++)
+        {
+            var card = array[lane];
+            if (IsInstanceValid(card)) continue;
+            
+            array[lane] = null;
+        }
+        
+        return array;
     }
     
     public BaseCardTemplate? RandomCardOnField(bool isPlayer, BaseCardTemplate? exceptCard = null)
@@ -30,6 +40,75 @@ public partial class FieldData : Node
 
         var randomIndex = new Random().Next(validCards.Count);
         return validCards[randomIndex];
+    }
+    
+    public void SpawnOnLane(int whichLane, BaseCardTemplate whichCard, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            PlayerCardsOnField[whichLane] = whichCard;
+        }
+        else
+        {
+            EnemyCardsOnField[whichLane] = whichCard;
+        }
+        
+        whichCard.PlacedAreaName = "Position" + whichLane;
+        
+        var Field = GetTree().GetFirstNodeInGroup("GameField") as Node2D;
+        
+        var fieldSide = isPlayer ? "PlayerSide" : "EnemySide";
+        var fieldArea = isPlayer ? "PlayerArea" : "EnemyArea";
+        Field.GetNode<Control>(fieldSide).GetNode<HBoxContainer>(fieldArea).GetNode<VBoxContainer>("FrontLane").GetNode<Control>("Position" + (whichLane + 1)).AddChild(whichCard);
+        
+        whichCard.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
+        whichCard.CardArt.Scale = new Vector2(0.6f, 0.6f);
+        whichCard.CardOnFieldOverlay.Scale = new Vector2(1.0f, 1.0f);
+        whichCard.CardOnFieldOverlay?.Show();
+        whichCard.CardBackground?.Hide();
+        whichCard.CardOverlay?.Hide();
+        whichCard.CardName?.Hide();
+
+        whichCard.OnSelfEnterField(isPlayer);
+
+        var friendlies = GetCardsOnField(isPlayer);
+        for (var lane = 0; lane < friendlies.Length; lane++)
+        {
+            var friendly = friendlies[lane];
+            friendly?.OnFriendlyEnterField(whichCard, lane);
+        }
+
+        var enemies = GetCardsOnField(!isPlayer);
+        for (var lane = 0; lane < enemies.Length; lane++)
+        {
+            var enemy = enemies[lane];
+            enemy?.OnEnemyEnterField(whichCard, lane);
+        }
+    }
+    
+    public bool SpawnOnRandomLane(BaseCardTemplate whichCard, bool isPlayer)
+    {
+        var cardsOnField = GetCardsOnField(isPlayer);
+        var emptyLanes = new List<int>();
+
+        for (var lane = 0; lane < cardsOnField.Length; lane++)
+        {
+            if (cardsOnField[lane] == null)
+            {
+                emptyLanes.Add(lane);
+            }
+        }
+
+        if (emptyLanes.Count == 0)
+        {
+            return false;
+        }
+
+        var randomIndex = new Random().Next(emptyLanes.Count);
+        var selectedLane = emptyLanes[randomIndex];
+
+        SpawnOnLane(selectedLane, whichCard, isPlayer);
+        return true;
     }
     
     public IEnumerable<(BaseCardTemplate? card, int lane, bool isPlayer)> GetAllCardsOnField()

@@ -61,8 +61,13 @@ public partial class EnemyHandManager : HandManager
     public override void RemoveCardFromHand(BaseCardTemplate cardToRemove)
     {
         cardToRemove.SetFlipped(false);
+
         enemyCardsInHand.Remove(cardToRemove);
-        cardContainer?.RemoveChild(cardToRemove);
+
+        if (cardToRemove.GetParent() == cardContainer)
+        {
+            cardContainer?.RemoveChild(cardToRemove);   
+        }
     }
 
     public override BaseCardTemplate? FindCard(int availableSouls, Predicate<BaseCardTemplate>? additionalCondition = null)

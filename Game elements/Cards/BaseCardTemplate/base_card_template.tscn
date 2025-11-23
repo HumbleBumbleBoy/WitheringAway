@@ -97,7 +97,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
-[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("AttackManager", "CostManager", "CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("AttackManager", "CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
@@ -106,7 +106,6 @@ scale = Vector2(4, 4)
 script = ExtResource("1_8dryo")
 CardData = SubResource("Resource_o8iy5")
 AttackManager = NodePath("AttackManager")
-CostManager = NodePath("CostManager")
 CardOverlay = NodePath("CardOverlay")
 CardArt = NodePath("CardArt")
 CardOnFieldOverlay = NodePath("CardOnFieldOverlay")

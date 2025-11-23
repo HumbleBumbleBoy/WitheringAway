@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Witheringaway.Game_elements.Cards.BaseCardTemplate;
 using Witheringaway.Game_elements.components;
@@ -46,15 +48,16 @@ public partial class EnemyHandManager : HandManager
         cardContainer?.RemoveChild(cardToRemove);
     }
 
-    public override BaseCardTemplate? FindCard(int availableSouls)
+    public override BaseCardTemplate? FindCard(int availableSouls, Predicate<BaseCardTemplate>? additionalCondition = null)
     {
-        foreach (var card in enemyCardsInHand)
+        foreach (var card in enemyCardsInHand.Where(card => additionalCondition == null || additionalCondition(card)))
         {
             if (card.CardData != null && card.CardData.Cost <= availableSouls)
             {
                 return card;
             }
         }
+        
         return null;
     }
 }

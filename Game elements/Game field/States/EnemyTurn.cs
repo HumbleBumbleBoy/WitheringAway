@@ -1,5 +1,8 @@
-using System.Linq;
+using System;
+using System.Threading.Tasks;
 using Godot;
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 
 public class EnemyTurn : IState<TurnManager>
@@ -24,7 +27,7 @@ public class EnemyTurn : IState<TurnManager>
         turnManager.canEnemyPlaceCards = false;
         return null;
     }
-    
+
     private async void StartPlaying(TurnManager turnManager)
     {
         try
@@ -36,57 +39,140 @@ public class EnemyTurn : IState<TurnManager>
                 firstRoundSetupDone.Name = "first_round_setup_done";
                 enemyHandManager?.AddChild(firstRoundSetupDone);
 
-                for (int i = 0; i < 5; i++)
+                for (var i = 0; i < 5; i++)
                 {
                     enemyHandManager?.GetTopCard();
                     await turnManager.Wait(0.2f);
                 }
             }
 
-            PlayCards(turnManager);
-        } catch (System.Exception e)
+            Play(turnManager);
+        }
+        catch (Exception e)
         {
             GD.PrintErr("Error during enemy turn: " + e.Message);
         }
     }
 
-    private void PlayCards(TurnManager turnManager)
+    private async void Play(TurnManager turnManager)
     {
-        var keepPlaying = true;
-        
-        var enemyPlacablePositions = turnManager.GetTree().GetNodesInGroup("EnemyPlacablePosition");
-        for (var i = 0; i < enemyPlacablePositions.Count; i++)
+        try
         {
-            var position = enemyPlacablePositions[i];
-            var positionTaken = fieldData?.IsLaneOccupied(i, false) ?? true;
-
-            if (positionTaken) continue;
-            
-            position.GetTree().CreateTimer((i + 1) * 1.0).Timeout += () =>
-            {
-                if (!keepPlaying)
-                {
-                    return;
-                }
-                    
-                keepPlaying = PlaceSingleCard(turnManager, position);
-            };
-        }
-
-        turnManager.GetTree().CreateTimer(enemyPlacablePositions.Count * 0.15 + 5.0).Timeout += () =>
-        {
+            await PlaceAllCards(turnManager);
             if (turnManager.StateMachine.CurrentState == this)
             {
                 turnManager.StateMachine.ChangeState(new Combat());
             }
-        };
+        } catch (Exception e)
+        {
+            GD.PrintErr("Error while placing enemy cards: " + e.Message);
+        }
     }
 
-    private bool PlaceSingleCard(TurnManager turnManager, Node cardPosition)
+    private async Task PlaceAllCards(TurnManager turnManager)
     {
-        var card = enemyHandManager.FindCard(100); // so rich
+        var enemyPlacablePositions = turnManager.GetTree().GetNodesInGroup("EnemyPlacablePosition");
+        var playerDuelist = (turnManager.GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist)!;
+        var enemyDuelist = (turnManager.GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist)!;
         
-        if (card == null) 
+        {
+            // When the player's health is low, try to kill them as fast as possible
+            if (playerDuelist.GetCurrentHealth() < 5)
+            {
+                 for (var i = 0; i < enemyPlacablePositions.Count; i++)
+                 {
+                     var playerCard = fieldData?.GetCardOnSpecificLane(i, true);
+                     if (playerCard != null) continue;
+                     
+                     var enemyCard = fieldData?.GetCardOnSpecificLane(i, false);
+                     if (enemyCard != null) continue;
+                     
+                     // Try to find a card that can kill the player directly
+                     var cardToPlay = enemyHandManager?.FindCard(
+                         enemyDuelist.CurrentSouls,
+                         cardPredicate =>
+                         {
+                             var cardDamage = cardPredicate.AttackManager?.Attack ?? 0;
+                             return cardDamage >= playerDuelist.GetCurrentHealth();
+                         }
+                     );
+                     
+                     await turnManager.Wait(0.2f);
+                     if (!PlaceSingleCard(turnManager, enemyPlacablePositions[i], enemyDuelist, cardToPlay))
+                     {
+                         return;
+                     }
+                 }
+            }
+        }
+        
+        {
+            // Try blocking the player cards
+            for (var i = 0; i < enemyPlacablePositions.Count; i++)
+            {
+                var playerCard = fieldData?.GetCardOnSpecificLane(i, true);
+                if (playerCard == null) continue;
+
+                var enemyCard = fieldData?.GetCardOnSpecificLane(i, false);
+                if (enemyCard != null) continue;
+
+                var cardToPlay = enemyHandManager?.FindCard(
+                    enemyDuelist.CurrentSouls,
+                    cardPredicate =>
+                    {
+                        var playerHealth = playerCard.GetCurrentHealth();
+                        var cardHealth = cardPredicate.GetCurrentHealth();
+                        
+                        var playerDamage = playerCard.AttackManager?.Attack ?? 0;
+                        var cardDamage = cardPredicate.AttackManager?.Attack ?? 0;
+
+                        if (cardHealth - playerDamage > 0)
+                        {
+                            return true;
+                        }
+                        
+                        if (playerHealth - cardDamage <= 0)
+                        {
+                            return true;
+                        }
+                        
+                        return enemyDuelist.GetCurrentHealth() < 10;
+                    }
+                );
+                
+                if (cardToPlay == null) continue;
+                
+                await turnManager.Wait(0.2f);
+                if (!PlaceSingleCard(turnManager, enemyPlacablePositions[i], enemyDuelist, cardToPlay))
+                {
+                    return;
+                }
+            }
+        }
+
+        {
+            // Place on any free lane
+            for (var i = 0; i < enemyPlacablePositions.Count; i++)
+            {
+                var position = enemyPlacablePositions[i];
+                var positionTaken = fieldData?.IsLaneOccupied(i, false) ?? true;
+
+                if (positionTaken) continue;
+
+                await turnManager.Wait(0.2f);
+                if (!PlaceSingleCard(turnManager, position, enemyDuelist))
+                {
+                    return;
+                }
+            }
+        }
+    }
+
+    private bool PlaceSingleCard(TurnManager turnManager, Node cardPosition, Duelist enemyDuelist, BaseCardTemplate? card = null)
+    {
+        card ??= enemyHandManager?.FindCard(enemyDuelist.CurrentSouls);
+
+        if (card == null)
         {
             turnManager.StateMachine.ChangeState(new Combat());
             return false;
@@ -96,11 +182,14 @@ public class EnemyTurn : IState<TurnManager>
 
         if (cardPosition is Node2D node)
         {
-            card.PlacedAreaLocation = node.GlobalPosition;   
+            card.PlacedAreaLocation = node.GlobalPosition;
         }
-        
+
+        var cost = card.FirstComponent<CostComponent>();
+
+        enemyDuelist.TakeSouls(cost?.Cost ?? 0);
         card.StateMachine.ChangeState(new CardEnteredField(false));
-        
+
         return true;
     }
 }

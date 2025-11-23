@@ -7,7 +7,7 @@ namespace Witheringaway.Game_elements.components;
 public partial class DefenseComponent : Component
 {
     
-    public delegate void DefenseChangedEventHandler(int oldTimeOnField, int currentTimeOnField);
+    public delegate void DefenseChangedEventHandler(int oldDefense, int currentDefense);
     
     public event DefenseChangedEventHandler? OnDefenseChanged;
     

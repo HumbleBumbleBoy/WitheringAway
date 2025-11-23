@@ -29,6 +29,15 @@ public class Transition : IState<TurnManager>
         playerHand.GetTopCard();
         GD.Print("Player drew a card.");
         
+        var playerDuelist = (context.GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist)!;
+        var enemyDuelist = (context.GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist)!;
+        
+        playerDuelist.GiveSouls(1);
+        enemyDuelist.GiveSouls(1);
+        
+        playerDuelist.RefreshSouls();
+        enemyDuelist.RefreshSouls();
+        
         var fieldData = context.GetNode<FieldData>("/root/GameScene/FieldData");
         _DecayCards(fieldData?.PlayerCardsOnField ?? [], true);
         _DecayCards(fieldData?.EnemyCardsOnField ?? [], false);

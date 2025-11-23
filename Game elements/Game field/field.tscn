@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ca7dwerbds5x4"]
+[gd_scene load_steps=34 format=3 uid="uid://ca7dwerbds5x4"]
 
 [ext_resource type="Texture2D" uid="uid://cxxelvkw43fvc" path="res://Game elements/GameScene/Field/Field1.png" id="1_e0nab"]
 [ext_resource type="Texture2D" uid="uid://cps7lp5eg0cvf" path="res://Game elements/GameScene/PlayerHeroAnimation/Player1.png" id="2_foqq5"]
@@ -21,6 +21,13 @@
 [ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
 [ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
 [ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
+[ext_resource type="Script" uid="uid://cibcsysyk5auq" path="res://Game elements/lib/Duelist.cs" id="18_u54p7"]
+[ext_resource type="Script" uid="uid://bdwv0wmnddn21" path="res://Game elements/components/HealthComponent.cs" id="19_bul8f"]
+[ext_resource type="Texture2D" uid="uid://bwoh5qp8ggnq7" path="res://Game elements/GameScene/Block/Block1.png" id="19_vck3y"]
+[ext_resource type="Texture2D" uid="uid://bipp2fe2glao3" path="res://Game elements/GameScene/Block/Block2.png" id="20_f5nbi"]
+[ext_resource type="Texture2D" uid="uid://dhlui5ex5r0ou" path="res://Game elements/GameScene/Block/Block3.png" id="21_spw73"]
+[ext_resource type="Texture2D" uid="uid://dxy4h54e0y1x7" path="res://Game elements/GameScene/Block/Block4.png" id="22_idrk5"]
+[ext_resource type="AudioStream" uid="uid://baxfbo52qe2dn" path="res://assets/audio/Blocked.wav" id="24_a8yk8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw8lp"]
 animations = [{
@@ -200,9 +207,11 @@ texture = ExtResource("10_6wm5a")
 position = Vector2(-1.9073486e-06, -0.7499962)
 scale = Vector2(0.7820436, 0.7820437)
 sprite_frames = SubResource("SpriteFrames_idrk5")
-frame = 5
-frame_progress = 1.0
 speed_scale = 2.0
+
+[node name="BlockSound" type="AudioStreamPlayer2D" parent="PlayerSide/Player/BlockMeter"]
+position = Vector2(-42, -74.75)
+stream = ExtResource("24_a8yk8")
 
 [node name="Health" type="Sprite2D" parent="PlayerSide/Player/BlockMeter"]
 position = Vector2(0.25, 0.75)
@@ -233,6 +242,27 @@ text = "20"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="Duelist" type="Control" parent="PlayerSide/Player/BlockMeter" node_paths=PackedStringArray("HealthLabel", "HurtAnimation", "HurtSoundPlayer", "BlockSprite") groups=["PlayerDuelist"]]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -42.0
+offset_top = -74.75
+offset_right = 45.5
+offset_bottom = 20.75
+script = ExtResource("18_u54p7")
+HealthLabel = NodePath("../Health/HealthLabel")
+HurtAnimation = NodePath("../Hurt")
+HurtSoundPlayer = NodePath("../BlockSound")
+BlockSprite = NodePath("..")
+BlockSprites = Array[Texture2D]([ExtResource("10_6wm5a"), ExtResource("19_vck3y"), ExtResource("20_f5nbi"), ExtResource("21_spw73"), ExtResource("22_idrk5")])
+IsPlayer = true
+metadata/_custom_type_script = "uid://cibcsysyk5auq"
+
+[node name="HealthComponent" type="Node" parent="PlayerSide/Player/BlockMeter/Duelist"]
+script = ExtResource("19_bul8f")
+MaxHealth = 20
+metadata/_custom_type_script = "uid://bdwv0wmnddn21"
 
 [node name="EnemySide" type="Control" parent="."]
 layout_mode = 3
@@ -318,6 +348,10 @@ frame = 5
 frame_progress = 1.0
 speed_scale = 2.0
 
+[node name="BlockSound" type="AudioStreamPlayer2D" parent="EnemySide/Enemy/BlockMeter"]
+position = Vector2(-42, -74.75)
+stream = ExtResource("24_a8yk8")
+
 [node name="Health" type="Sprite2D" parent="EnemySide/Enemy/BlockMeter"]
 position = Vector2(0.25, 0.75)
 scale = Vector2(0.9375, 0.9375)
@@ -346,3 +380,21 @@ text = "20"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="Duelist" type="Control" parent="EnemySide/Enemy/BlockMeter" node_paths=PackedStringArray("HealthLabel", "HurtAnimation", "HurtSoundPlayer", "BlockSprite") groups=["EnemyDuelist"]]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("18_u54p7")
+HealthLabel = NodePath("../Health/HealthLabel")
+HurtAnimation = NodePath("../Hurt")
+HurtSoundPlayer = NodePath("../BlockSound")
+BlockSprite = NodePath("..")
+BlockSprites = Array[Texture2D]([ExtResource("10_6wm5a"), ExtResource("19_vck3y"), ExtResource("20_f5nbi"), ExtResource("21_spw73"), ExtResource("22_idrk5")])
+metadata/_custom_type_script = "uid://cibcsysyk5auq"
+
+[node name="HealthComponent" type="Node" parent="EnemySide/Enemy/BlockMeter/Duelist"]
+script = ExtResource("19_bul8f")
+MaxHealth = 20
+metadata/_custom_type_script = "uid://bdwv0wmnddn21"

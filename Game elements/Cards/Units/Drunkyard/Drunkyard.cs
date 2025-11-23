@@ -10,8 +10,6 @@ public partial class Drunkyard : Witheringaway.Game_elements.Cards.Units.BaseCar
     {
         base.OnAttackLanded(target, isPlayer);
         
-        if (target == null || !IsInstanceValid(target)) return;
-        
         BuffAttackDamage(1);
     }
 }

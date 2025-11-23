@@ -114,7 +114,7 @@ animations = [{
 [node name="Field" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(949, 481)
+position = Vector2(943, 475)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_rw8lp")
 autoplay = "default"

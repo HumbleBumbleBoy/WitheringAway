@@ -428,7 +428,7 @@ public partial class BaseCardTemplate : Control
         }
     }
 
-    private bool IsValidDropPosition()
+    protected virtual bool IsValidDropPosition()
     {
         if (!IsCardPlayable) return false;
         if (PlacedAreaName is null) return false;

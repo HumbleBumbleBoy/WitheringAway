@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Godot;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.lib;
@@ -61,6 +60,11 @@ public partial class TrickCard : BaseCardTemplate
         {
             handManager?.GetTopCard();
         }
+    }
+
+    protected override bool IsValidDropPosition()
+    {
+        return false; // Trick cards cannot be placed on the field
     }
 
     protected override void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)

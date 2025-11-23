@@ -174,6 +174,11 @@ public partial class BaseCardTemplate : Control
         };
     }
     
+    public virtual bool ShouldKeepDragging()
+    {
+        return true;
+    }
+    
     public void AddTimeOnField(int amount)
     {
         _timeOnFieldComponent.AddTimeOnField(amount);

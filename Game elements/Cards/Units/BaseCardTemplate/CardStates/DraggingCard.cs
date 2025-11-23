@@ -26,6 +26,11 @@ public class DraggingCard : IState<BaseCardTemplate>
 
     public IState<BaseCardTemplate>? OnUpdate(BaseCardTemplate card, double deltaTime)
     {
+        if (!card.ShouldKeepDragging())
+        {
+            return null;
+        }
+        
         card.GlobalPosition = card.GetGlobalMousePosition() - card.GetGlobalRect().Size / 2;
         
         return null;

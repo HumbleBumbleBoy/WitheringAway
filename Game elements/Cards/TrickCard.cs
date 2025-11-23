@@ -18,6 +18,8 @@ public partial class TrickCard : BaseCardTemplate
     
     [Export] public TrickEffect[] TrickEffects = [];
 
+    private bool _shouldKeepDragging;
+
     protected override void CheckAppearance()
     {
         base.CheckAppearance();
@@ -35,6 +37,11 @@ public partial class TrickCard : BaseCardTemplate
         {
             GetNodeOrNull<Sprite2D>("Trick")?.Show();
         }
+    }
+
+    public override bool ShouldKeepDragging()
+    {
+        return _shouldKeepDragging;
     }
 
     public bool ApplyEffect(Duelist duelist, int round)
@@ -110,6 +117,7 @@ public partial class TrickCard : BaseCardTemplate
 
         if (ApplyEffect(card, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
         {
+            _shouldKeepDragging = false;
             Duelist.GetDuelist(isPlayer).TakeSouls(GetCost(isPlayer));
             Kill();
             return;
@@ -129,6 +137,7 @@ public partial class TrickCard : BaseCardTemplate
         
         if (ApplyEffect(duelist, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound))
         {
+            _shouldKeepDragging = false;
             Duelist.GetDuelist(isPlayer).TakeSouls(GetCost(isPlayer));
             Kill();
             return;
@@ -148,6 +157,7 @@ public partial class TrickCard : BaseCardTemplate
         
         if (ApplyGeneralEffect(GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
         {
+            _shouldKeepDragging = false;
             Duelist.GetDuelist(isPlayer).TakeSouls(GetCost(isPlayer));
             Kill();
             return;

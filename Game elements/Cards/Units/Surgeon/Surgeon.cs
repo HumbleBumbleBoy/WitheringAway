@@ -10,8 +10,7 @@ public partial class Surgeon : BaseCardTemplate
         base.OnSelfEnterField(isPlayer);
 
         var targetCard = FieldData.Instance.RandomCardOnField(isPlayer, this);
-
-        targetCard!.Heal(3);
-        targetCard.DebuffAttackDamage(1);
+        targetCard?.Heal(3);
+        targetCard?.DebuffAttackDamage(1);
     }
 }

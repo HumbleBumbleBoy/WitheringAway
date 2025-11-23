@@ -7,8 +7,6 @@ public partial class Reaper : BaseCardTemplate
     public override void OnCombatStart(int lane, bool isPlayer)
     {
         var targetCard = FieldData.Instance.RandomCardOnField(!isPlayer, this);
-        if (targetCard is null) return;
-        
-        targetCard.SubtractTimeOnField(1);
+        targetCard?.SubtractTimeOnField(1);
     }
 }

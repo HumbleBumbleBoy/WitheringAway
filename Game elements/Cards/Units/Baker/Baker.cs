@@ -9,9 +9,7 @@ public partial class Baker : BaseCardTemplate
         base.OnCombatEnd(lane, isPlayer);
         
         var targetCard = FieldData.Instance.RandomCardOnField(isPlayer, this);
-        if (targetCard is null) return;
-        
-        targetCard.BuffAttackDamage(1);
-        targetCard.BuffHealth(1);
+        targetCard?.BuffAttackDamage(1);
+        targetCard?.BuffHealth(1);
     }
 }

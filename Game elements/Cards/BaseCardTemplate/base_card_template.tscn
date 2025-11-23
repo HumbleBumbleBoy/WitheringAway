@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="12_u31ds"]
 [ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="13_w21m4"]
 [ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="14_ojnya"]
-[ext_resource type="Script" uid="uid://xkosvej57tpy" path="res://Game elements/components/TimeOnFieldComponent.cs" id="18_718wa"]
+[ext_resource type="Script" uid="uid://ckbdphqd33w2u" path="res://Game elements/components/TimeOnFieldComponent.cs" id="18_718wa"]
 [ext_resource type="Texture2D" uid="uid://ce3mibcvapueh" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes1.png" id="20_s87ag"]
 [ext_resource type="Texture2D" uid="uid://bjsejw128o0t5" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes2.png" id="21_5lrgv"]
 [ext_resource type="Texture2D" uid="uid://bfg6sbkw24r5b" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes3.png" id="22_760eh"]
@@ -154,7 +154,6 @@ metadata/_custom_type_script = "uid://cytofhpvvwyp4"
 
 [node name="TimeOnFieldComponent" type="Node" parent="components"]
 script = ExtResource("18_718wa")
-metadata/_custom_type_script = "uid://xkosvej57tpy"
 
 [node name="Audio" type="Node" parent="."]
 
@@ -420,7 +419,7 @@ script = ExtResource("8_yp28l")
 script = ExtResource("9_qrnnt")
 
 [node name="DetectionArea" type="Area2D" parent="." groups=["CardCollisionArea"]]
-metadata/_edit_lock_ = true
+position = Vector2(0, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 position = Vector2(16, 23.5)

@@ -71,7 +71,7 @@ enemyNode = NodePath("../Enemy")
 script = ExtResource("2_wh43m")
 
 [node name="Field" parent="." groups=["GameField"] instance=ExtResource("2_en8yc")]
-position = Vector2(7, 33)
+position = Vector2(-2, -24)
 
 [node name="Player" parent="." instance=ExtResource("2_ijnl5")]
 
@@ -79,38 +79,19 @@ position = Vector2(7, 33)
 
 [node name="SummonCardButton" type="Button" parent="."]
 z_index = 4096
-offset_left = 18.0
-offset_top = 44.0
-offset_right = 218.0
-offset_bottom = 119.0
+offset_left = 70.0
+offset_top = 916.0
+offset_right = 270.0
+offset_bottom = 991.0
 mouse_default_cursor_shape = 2
 text = "Summon a card"
-
-[node name="SpawnDeckButton" type="Button" parent="."]
-z_index = 4096
-offset_left = 259.0
-offset_top = 44.0
-offset_right = 459.0
-offset_bottom = 119.0
-mouse_default_cursor_shape = 2
-text = "Spawn deck
-"
-
-[node name="KillCardOnFieldButton" type="Button" parent="."]
-z_index = 4096
-offset_left = 516.0
-offset_top = 44.0
-offset_right = 716.0
-offset_bottom = 119.0
-mouse_default_cursor_shape = 2
-text = "Kill a card on field"
 
 [node name="PassTurnButton" type="TextureButton" parent="."]
 z_index = 2000
 offset_left = 1696.0
-offset_top = 842.00006
+offset_top = 863.0
 offset_right = 1760.0
-offset_bottom = 906.00006
+offset_bottom = 927.0
 scale = Vector2(3, 3)
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("17_f45hw")
@@ -126,9 +107,9 @@ offset_right = 1919.0
 [node name="SettingsButton" type="TextureButton" parent="."]
 z_index = 999
 custom_minimum_size = Vector2(4, 4)
-offset_left = 1784.0
+offset_left = 1780.0
 offset_top = 11.0
-offset_right = 1816.0
+offset_right = 1812.0
 offset_bottom = 43.0
 scale = Vector2(4, 4)
 mouse_default_cursor_shape = 2
@@ -140,7 +121,5 @@ stream = ExtResource("16_0bjk3")
 bus = &"SFX"
 
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
-[connection signal="pressed" from="SpawnDeckButton" to="." method="onSpawnDeckButtonPressed"]
-[connection signal="pressed" from="KillCardOnFieldButton" to="." method="onKillCardOnFieldButton"]
 [connection signal="pressed" from="PassTurnButton" to="." method="OnPassTurnButtonPressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="OnSettingsButtonPressed"]

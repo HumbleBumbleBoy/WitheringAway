@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=61 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
@@ -23,6 +23,40 @@
 [ext_resource type="AudioStream" uid="uid://cmu4vftolr7uv" path="res://General assets/SFXnMusic/Project_CG.F.mp3" id="21_u6v7y"]
 [ext_resource type="Texture2D" uid="uid://doeurq5pyw7y8" path="res://Game elements/GameScene/SoulsContainer.png" id="22_ft36r"]
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="23_qwd4a"]
+[ext_resource type="Texture2D" uid="uid://ccu7fmw27mvw" path="res://General assets/MenuAssets/SettingsOptionsBackground.png" id="24_u3130"]
+[ext_resource type="Texture2D" uid="uid://bbbinaw0r8jtr" path="res://Game elements/GameScene/PlayerWon/PlayerWon1.png" id="25_pjt2c"]
+[ext_resource type="Texture2D" uid="uid://d4k352hmhcvg4" path="res://Game elements/GameScene/PlayerWon/PlayerWon2.png" id="26_ctb35"]
+[ext_resource type="Texture2D" uid="uid://oji1v8vd601d" path="res://Game elements/GameScene/PlayerWon/PlayerWon3.png" id="27_8e0y3"]
+[ext_resource type="Texture2D" uid="uid://cyyqcss53vkqi" path="res://Game elements/GameScene/PlayerWon/PlayerWon4.png" id="28_05vcj"]
+[ext_resource type="Texture2D" uid="uid://vyvbycw5vj2j" path="res://Game elements/GameScene/PlayerWon/PlayerWon5.png" id="29_i76km"]
+[ext_resource type="Texture2D" uid="uid://bfe5c6xsntsqg" path="res://Game elements/GameScene/PlayerWon/PlayerWon6.png" id="30_65s3g"]
+[ext_resource type="Texture2D" uid="uid://dsxnspy7ya676" path="res://Game elements/GameScene/PlayerWon/PlayerWon7.png" id="31_xkco5"]
+[ext_resource type="Texture2D" uid="uid://dj8tak06ypep7" path="res://Game elements/GameScene/PlayerWon/PlayerWon8.png" id="32_6edu4"]
+[ext_resource type="Texture2D" uid="uid://dlyh6oyjoiuty" path="res://Game elements/GameScene/PlayerWon/PlayerWon9.png" id="33_8jv16"]
+[ext_resource type="Texture2D" uid="uid://4roetifnca5l" path="res://Game elements/GameScene/PlayerWon/PlayerWon10.png" id="34_ky33y"]
+[ext_resource type="Texture2D" uid="uid://bdvvffmf27uhu" path="res://Game elements/GameScene/PlayerWon/PlayerWon11.png" id="35_13pis"]
+[ext_resource type="Texture2D" uid="uid://4v8wgd1sqarx" path="res://Game elements/GameScene/PlayerWon/PlayerWon12.png" id="36_qlxky"]
+[ext_resource type="Texture2D" uid="uid://dnxw0uq7at3lw" path="res://Game elements/GameScene/PlayerWon/PlayerWon13.png" id="37_ji2ev"]
+[ext_resource type="Texture2D" uid="uid://bq2ehw2dq3i2l" path="res://Game elements/GameScene/PlayerWon/PlayerWon14.png" id="38_pbyv3"]
+[ext_resource type="Texture2D" uid="uid://c0b3ihffbspli" path="res://Game elements/GameScene/PlayerWon/PlayerWon15.png" id="39_67g5i"]
+[ext_resource type="Texture2D" uid="uid://cyv4jl237j58c" path="res://Game elements/GameScene/EnemyWon/EnemyWon1.png" id="40_8wpfu"]
+[ext_resource type="Texture2D" uid="uid://bgu7l6wnwryav" path="res://Game elements/GameScene/EnemyWon/EnemyWon2.png" id="41_v6wnj"]
+[ext_resource type="Texture2D" uid="uid://bqg6pt6sr0e71" path="res://Game elements/GameScene/EnemyWon/EnemyWon3.png" id="42_8rt7e"]
+[ext_resource type="Texture2D" uid="uid://c7y7we1k044bs" path="res://Game elements/GameScene/EnemyWon/EnemyWon4.png" id="43_wngi8"]
+[ext_resource type="Texture2D" uid="uid://mgng55dwd2rj" path="res://Game elements/GameScene/EnemyWon/EnemyWon5.png" id="44_lgxo5"]
+[ext_resource type="Texture2D" uid="uid://cccwf20m3u3y6" path="res://Game elements/GameScene/EnemyWon/EnemyWon6.png" id="45_k2v57"]
+[ext_resource type="Texture2D" uid="uid://didjolkdgbwjd" path="res://Game elements/GameScene/EnemyWon/EnemyWon7.png" id="46_54d8h"]
+[ext_resource type="Texture2D" uid="uid://djd2ppw11bxa4" path="res://Game elements/GameScene/EnemyWon/EnemyWon8.png" id="47_tc3kp"]
+[ext_resource type="Texture2D" uid="uid://d3n3yd2oj3ibb" path="res://Game elements/GameScene/EnemyWon/EnemyWon9.png" id="48_leir2"]
+[ext_resource type="Texture2D" uid="uid://cgbkbvgvfnx5" path="res://Game elements/GameScene/EnemyWon/EnemyWon10.png" id="49_aecc2"]
+[ext_resource type="Texture2D" uid="uid://bck6koq4ukydk" path="res://Game elements/GameScene/EnemyWon/EnemyWon11.png" id="50_vxvh7"]
+[ext_resource type="Texture2D" uid="uid://bvmbp0d41tke3" path="res://Game elements/GameScene/EnemyWon/EnemyWon12.png" id="51_gdxnt"]
+[ext_resource type="Texture2D" uid="uid://dcg76vuu3isgl" path="res://Game elements/GameScene/EnemyWon/EnemyWon13.png" id="52_uw7ke"]
+[ext_resource type="Texture2D" uid="uid://bbygfv2qfp7ns" path="res://Game elements/GameScene/EnemyWon/EnemyWon14.png" id="53_esj3d"]
+[ext_resource type="Texture2D" uid="uid://cscivt0j58s4r" path="res://Game elements/GameScene/EnemyWon/EnemyWon15.png" id="54_g88ip"]
+[ext_resource type="Texture2D" uid="uid://dqtmnnkf0yles" path="res://General assets/MenuAssets/Button.png" id="55_04o71"]
+[ext_resource type="Texture2D" uid="uid://d35jclnbmq2wp" path="res://General assets/MenuAssets/ButtonPressed.png" id="56_rteyf"]
+[ext_resource type="Texture2D" uid="uid://dunsv37by0ob0" path="res://General assets/MenuAssets/ButtonHover.png" id="57_cavc0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5scjv"]
 animations = [{
@@ -53,10 +87,117 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="GameScene" type="Node2D" node_paths=PackedStringArray("inGameMenu", "turnManager")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_usuic"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_pjt2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ctb35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_8e0y3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_05vcj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_i76km")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_65s3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_xkco5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_6edu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_8jv16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_ky33y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_13pis")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_qlxky")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_ji2ev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_pbyv3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_67g5i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5l4il"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("40_8wpfu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_v6wnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_8rt7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_wngi8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_lgxo5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_k2v57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_54d8h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_tc3kp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_leir2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_aecc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_vxvh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_gdxnt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_uw7ke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_esj3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_g88ip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("inGameMenu", "turnManager", "winScreen")]
 script = ExtResource("1_ijnl5")
 inGameMenu = NodePath("InGameMenu")
 turnManager = NodePath("TurnManager")
+winScreen = NodePath("WinScreen")
 
 [node name="Background" type="AnimatedSprite2D" parent="."]
 position = Vector2(959.99994, 540)
@@ -185,6 +326,91 @@ theme_override_font_sizes/normal_font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="WinScreen" type="Sprite2D" parent="."]
+visible = false
+z_index = 4096
+position = Vector2(964.0001, 496.00006)
+scale = Vector2(3.1000004, 3.1000004)
+texture = ExtResource("24_u3130")
+
+[node name="PlayerWon" type="AnimatedSprite2D" parent="WinScreen"]
+visible = false
+position = Vector2(-155, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_usuic")
+frame_progress = 0.6292163
+
+[node name="WinMessage" type="RichTextLabel" parent="WinScreen/PlayerWon"]
+z_index = 1
+clip_contents = false
+offset_left = 62.989296
+offset_top = -69.68503
+offset_right = 904.9893
+offset_bottom = 461.72897
+scale = Vector2(0.175, 0.175)
+mouse_filter = 2
+theme_override_constants/line_separation = 10
+theme_override_constants/outline_size = 64
+theme_override_fonts/normal_font = ExtResource("23_qwd4a")
+theme_override_font_sizes/normal_font_size = 256
+text = "YOU WIN!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyWon" type="AnimatedSprite2D" parent="WinScreen"]
+visible = false
+position = Vector2(-155, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_5l4il")
+frame_progress = 0.9050951
+
+[node name="WinMessage" type="RichTextLabel" parent="WinScreen/EnemyWon"]
+z_index = 1
+clip_contents = false
+offset_left = 62.989296
+offset_top = -69.68503
+offset_right = 904.9893
+offset_bottom = 461.72897
+scale = Vector2(0.175, 0.175)
+mouse_filter = 2
+theme_override_constants/line_separation = 10
+theme_override_constants/outline_size = 64
+theme_override_fonts/normal_font = ExtResource("23_qwd4a")
+theme_override_font_sizes/normal_font_size = 256
+text = "YOU LOSE!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackToMainMenuButton" type="TextureButton" parent="WinScreen"]
+offset_left = -4.196167e-05
+offset_top = 49.94375
+offset_right = 219.99995
+offset_bottom = 119.94375
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("55_04o71")
+texture_pressed = ExtResource("56_rteyf")
+texture_hover = ExtResource("57_cavc0")
+
+[node name="Message" type="RichTextLabel" parent="WinScreen/BackToMainMenuButton"]
+z_index = 1
+clip_contents = false
+layout_mode = 0
+offset_left = -13.498309
+offset_top = -11.473572
+offset_right = 719.2672
+offset_bottom = 249.01007
+scale = Vector2(0.35, 0.35)
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+theme_override_constants/line_separation = 10
+theme_override_constants/outline_size = 32
+theme_override_fonts/normal_font = ExtResource("23_qwd4a")
+theme_override_font_sizes/normal_font_size = 196
+text = "MENU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="PassTurnButton" to="." method="OnPassTurnButtonPressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="OnSettingsButtonPressed"]
+[connection signal="pressed" from="WinScreen/BackToMainMenuButton" to="." method="OnBackToMainMenuButtonPressed"]

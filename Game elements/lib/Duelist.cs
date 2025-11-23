@@ -74,6 +74,7 @@ public partial class Duelist : Control
         HurtAnimation.Play();
         await ToSignal(HurtAnimation, "animation_finished");
         HurtAnimation.Hide();
+
     }
     
     public void GiveSouls(int amount)

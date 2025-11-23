@@ -37,7 +37,4 @@ public partial class TurnManager : Node
         passTurnButton.Disabled = true;
         passTurnButton.MouseDefaultCursorShape = Control.CursorShape.Arrow;
     }
-    // if canPlayerPlaceCards then throw out a signal or osme shit and add a vareiable in base player card 
-    // that allows to place cards when thats true and not allow it when its false
-    // same for other states yk
 }

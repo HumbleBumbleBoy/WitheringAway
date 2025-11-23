@@ -374,7 +374,7 @@ public partial class BaseCardTemplate : Control
         fieldLabel.Text = currentLabelValue.ToString();
     }
 
-    private void CheckAppearance()
+    protected virtual void CheckAppearance()
     {
         if (isHovering && !IsFlipped)
         {

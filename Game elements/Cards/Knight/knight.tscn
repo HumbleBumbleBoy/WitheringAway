@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0x0pkt14i3ha"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/BaseCardTemplate/base_card_template.tscn" id="1_idslh"]
+[ext_resource type="Script" uid="uid://c72t7ivxs82ci" path="res://Game elements/Cards/Knight/Knight.cs" id="2_bbue6"]
+[ext_resource type="Texture2D" uid="uid://bugd7ku5vv6sc" path="res://Game elements/Cards/Knight/Knight.png" id="3_hx5o0"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_ao8ck"]
+
+[sub_resource type="Resource" id="Resource_niax7"]
+script = ExtResource("4_ao8ck")
+Art = ExtResource("3_hx5o0")
+Name = "Knight"
+Description = "Master of endurance"
+TimeLeftOnField = 5
+Cost = 7
+Health = 5
+Defense = 3
+Attack = 5
+HowManyAttacks = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Knight" instance=ExtResource("1_idslh")]
+script = ExtResource("2_bbue6")
+CardData = SubResource("Resource_niax7")
+
+[node name="CardArt" parent="." index="5"]
+texture = ExtResource("3_hx5o0")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cmu4vftolr7uv"
+path="res://.godot/imported/Project_CG.F.mp3-9eeff48cc3665bf4165ec75653e6dd1b.mp3str"
+
+[deps]
+
+source_file="res://General assets/SFXnMusic/Project_CG.F.mp3"
+dest_files=["res://.godot/imported/Project_CG.F.mp3-9eeff48cc3665bf4165ec75653e6dd1b.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

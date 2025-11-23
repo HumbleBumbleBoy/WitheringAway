@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=23 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://c24il8nymjmhi" path="res://Game elements/UI/ClickAButton.wav" id="16_0bjk3"]
 [ext_resource type="Texture2D" uid="uid://b36a0vf4vufhp" path="res://Game elements/Game field/NextTurn.png" id="17_f45hw"]
 [ext_resource type="Texture2D" uid="uid://c01af30pkl82d" path="res://Game elements/Game field/NextTurnDisabled.png" id="18_5scjv"]
+[ext_resource type="AudioStream" uid="uid://cmu4vftolr7uv" path="res://General assets/SFXnMusic/Project_CG.F.mp3" id="21_u6v7y"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5scjv"]
 animations = [{
@@ -119,6 +120,12 @@ texture_pressed = ExtResource("15_0bjk3")
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_0bjk3")
 bus = &"SFX"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_u6v7y")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
 
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="PassTurnButton" to="." method="OnPassTurnButtonPressed"]

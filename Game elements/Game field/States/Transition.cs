@@ -31,7 +31,7 @@ public class Transition : IState<TurnManager>
         _DecayCards(fieldData?.PlayerCardsOnField ?? []);
         _DecayCards(fieldData?.EnemyCardsOnField ?? []);
         
-        context.GetTree().CreateTimer(5).Timeout += () =>
+        context.GetTree().CreateTimer(2).Timeout += () =>
         {
             if (context.StateMachine.CurrentState == this)
             {

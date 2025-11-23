@@ -15,19 +15,19 @@
 [ext_resource type="Texture2D" uid="uid://721x23xdooqh" path="res://Game elements/GameScene/EnemyHeroAnimation/Enemy4.png" id="8_e0nab"]
 [ext_resource type="Texture2D" uid="uid://ck51cbdckhrsp" path="res://Game elements/GameScene/EnemyHeroAnimation/Enemy1.png" id="9_gj65n"]
 [ext_resource type="Texture2D" uid="uid://dk87dqaejnbl6" path="res://Game elements/GameScene/Block/Block0.png" id="10_6wm5a"]
-[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="10_il5rd"]
-[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="11_u54p7"]
-[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="12_bul8f"]
-[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
-[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
-[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
+[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="10_il5rd"]
+[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="11_u54p7"]
+[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="12_bul8f"]
+[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
+[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
+[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
 [ext_resource type="Script" uid="uid://cibcsysyk5auq" path="res://Game elements/lib/Duelist.cs" id="18_u54p7"]
 [ext_resource type="Script" uid="uid://bdwv0wmnddn21" path="res://Game elements/components/HealthComponent.cs" id="19_bul8f"]
 [ext_resource type="Texture2D" uid="uid://bwoh5qp8ggnq7" path="res://Game elements/GameScene/Block/Block1.png" id="19_vck3y"]
 [ext_resource type="Texture2D" uid="uid://bipp2fe2glao3" path="res://Game elements/GameScene/Block/Block2.png" id="20_f5nbi"]
 [ext_resource type="Texture2D" uid="uid://dhlui5ex5r0ou" path="res://Game elements/GameScene/Block/Block3.png" id="21_spw73"]
 [ext_resource type="Texture2D" uid="uid://dxy4h54e0y1x7" path="res://Game elements/GameScene/Block/Block4.png" id="22_idrk5"]
-[ext_resource type="AudioStream" uid="uid://baxfbo52qe2dn" path="res://assets/audio/Blocked.wav" id="24_a8yk8"]
+[ext_resource type="AudioStream" uid="uid://6uia4ff1uo7s" path="res://assets/audio/Blocked.wav" id="24_a8yk8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw8lp"]
 animations = [{
@@ -192,7 +192,7 @@ layout_mode = 2
 position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
-[node name="Player" type="AnimatedSprite2D" parent="PlayerSide"]
+[node name="Player" type="AnimatedSprite2D" parent="PlayerSide" groups=["PlayerCharacter"]]
 position = Vector2(238, 280)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_n2yv0")
@@ -329,7 +329,7 @@ layout_mode = 2
 position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
-[node name="Enemy" type="AnimatedSprite2D" parent="EnemySide"]
+[node name="Enemy" type="AnimatedSprite2D" parent="EnemySide" groups=["EnemyCharacter"]]
 position = Vector2(428, 286)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_fuf8r")

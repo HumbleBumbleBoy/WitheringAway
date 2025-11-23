@@ -15,7 +15,6 @@ public partial class BaseCardTemplate : Control
     
     
     [Export] public BaseCard? CardData { get; set; }
-    [Export] public AttackManager? AttackManager; 
     [Export] public Sprite2D? CardOverlay;
     [Export] public Sprite2D? CardArt;
     [Export] public Sprite2D? CardOnFieldOverlay;
@@ -45,6 +44,8 @@ public partial class BaseCardTemplate : Control
     private float _timeSinceLastHealthUpdate;
     private float _timeSinceLastDefenseUpdate;
     private float _timeSinceLastTimeOnFieldUpdate;
+    private float _timeSinceLastAttackUpdate;
+    private float _timeSinceLastAttackAmountUpdate;
 
     public BaseCardTemplate()
     {
@@ -77,8 +78,6 @@ public partial class BaseCardTemplate : Control
         
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
-        AttackManager = GetNode<AttackManager>("AttackManager");
-
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
         healthComponent.SetMaxHealth(CardData?.Health ?? healthComponent.MaxHealth);
         
@@ -91,10 +90,10 @@ public partial class BaseCardTemplate : Control
         var costComponent = this.GetOrAddComponent<CostComponent>();
         costComponent.SetCost(CardData?.Cost ?? costComponent.Cost);
         
-        AttackManager.Attack = CardData?.Attack??0;
-        AttackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
-        AttackManager.Initialize();
-
+        var attackComponent = this.GetOrAddComponent<AttackComponent>();
+        attackComponent.SetAttackDamage(CardData?.Attack ?? attackComponent.AttackDamage);
+        attackComponent.SetAttackCount(CardData?.HowManyAttacks ?? attackComponent.AttackCount);
+        
         CustomMinimumSize = new Vector2(32, 48);
         UpdateVisuals();
 
@@ -123,15 +122,62 @@ public partial class BaseCardTemplate : Control
             }
             else
             {
-                StateMachine.ChangeState(new CardInHand());
+                var result = GetHoveredFriendlyPlaceable();
+                if (result != null)
+                {
+                    var fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
+                    var cardOnField = fieldData.GetCardOnSpecificLane(result.Value.lane, true);
+                    DropOnCard(cardOnField, true, result.Value.lane);
+                    return;
+                }
+                
+                result = GetHoveredEnemyPlaceable();
+                if (result != null)
+                {
+                    var fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
+                    var cardOnField = fieldData.GetCardOnSpecificLane(result.Value.lane, false);
+                    DropOnCard(cardOnField, false, result.Value.lane);
+                    return;
+                }
+                
+                var duelistHovered = GetHoveredDuelist();
+                if (duelistHovered != null)
+                {
+                    DropOnDuelist(duelistHovered);
+                    return;
+                }
+                
+                Drop(true);
             }
         };
+    }
+
+    public virtual async Task Kill()
+    {
+        await Task.WhenAll(
+            PlayAnimation("Dying", 0.2f),
+            PlaySound("Death")
+        );
+        
+        QueueFree();
     }
     
     public int GetCurrentHealth()
     {
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
         return healthComponent.CurrentHealth;
+    }
+    
+    public int GetAttackDamage()
+    {
+        var attackComponent = this.GetOrAddComponent<AttackComponent>();
+        return attackComponent.AttackDamage;
+    }
+    
+    public int GetAttackCount()
+    {
+        var attackComponent = this.GetOrAddComponent<AttackComponent>();
+        return attackComponent.AttackCount;
     }
     
     public void TakeDamage(int damage)
@@ -147,6 +193,9 @@ public partial class BaseCardTemplate : Control
         tween.TweenProperty(this, "global_position", originalPosition + new Vector2(5, -5), 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
         tween.TweenProperty(this, "global_position", originalPosition - new Vector2(5, -5), 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
         tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
+        
+        PlaySound("Hurt");
+        PlayAnimation("Hurt");
     }
     
     public async Task AttackOnce(Control target, Callable? onMidAttack = null)
@@ -165,7 +214,7 @@ public partial class BaseCardTemplate : Control
     
     public async Task Attack(Control target, Callable? onMidAttack = null)
     {
-        for (var i = 0; i < (AttackManager?.HowManyAttacks ?? 1); i++)
+        for (var i = 0; i < GetAttackCount(); i++)
         {
             await AttackOnce(target, onMidAttack);
         }
@@ -178,9 +227,7 @@ public partial class BaseCardTemplate : Control
             return Callable.From(() =>
             {
                 _ = PlaySound("Attack");
-                card.TakeDamage(AttackManager?.Attack ?? 0);
-                _ = card.PlaySound("Hurt");
-                _ = card.PlayAnimation("Hurt");
+                card.TakeDamage(GetAttackDamage());
             });
         }
 
@@ -234,8 +281,7 @@ public partial class BaseCardTemplate : Control
         UpdateVisualDefense();
         UpdateVisualTimeOnField();
         UpdateVisualCost();
-        
-        AttackManager?.UpdateLabels(); 
+        UpdateVisualDamage();
 
         CardName!.Text = CardData?.Name ?? "";
         CardArt!.Texture = CardData?.Art;
@@ -279,6 +325,21 @@ public partial class BaseCardTemplate : Control
         var costLabel = CardOverlay!.GetNode<RichTextLabel>("CostLabel");
         
         costLabel.Text = costComponent.Cost.ToString();
+    }
+
+    private void UpdateVisualDamage()
+    {
+        var attackComponent = this.GetOrAddComponent<AttackComponent>();
+        
+        var attackLabel = CardOverlay!.GetNode<RichTextLabel>("AttackLabel");
+        var attackOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("AttackLabel");
+        
+        _UpdateTextLabels(attackLabel, attackOnFieldLabel, attackComponent.AttackDamage, ref _timeSinceLastAttackUpdate);
+        
+        var attackAmountLabel = CardOverlay!.GetNode<RichTextLabel>("AttackAmountLabel");
+        var attackAmountOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("AttackAmountLabel");
+        
+        _UpdateTextLabels(attackAmountLabel, attackAmountOnFieldLabel, attackComponent.AttackCount, ref _timeSinceLastAttackAmountUpdate);
     }
 
     private void _UpdateTextLabels(RichTextLabel overlayLabel, RichTextLabel fieldLabel, int value, ref float timeElapsed)
@@ -376,12 +437,88 @@ public partial class BaseCardTemplate : Control
         if (playerDuelist is null) return false;
         if (playerDuelist.CurrentSouls < (CardData?.Cost ?? 0)) return false;
         
-        FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
-        string numberOnly = Regex.Replace(PlacedAreaName, @"[^\d]", "");
-        int laneIndex = int.Parse(numberOnly) - 1;
-        
-        GD.Print("Checking lane " + laneIndex + " for validity.");
+        var fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
+        var numberOnly = NumberRegex().Replace(PlacedAreaName, "");
+        var laneIndex = int.Parse(numberOnly) - 1;
         
         return !fieldData.IsLaneOccupied(laneIndex, true);
     }
+
+    protected virtual void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
+    {
+        StateMachine.ChangeState(new CardInHand());
+    }
+    
+    protected virtual void DropOnDuelist(Duelist duelist)
+    {
+        StateMachine.ChangeState(new CardInHand());
+    }
+
+    protected virtual void Drop(bool isPlayer)
+    {
+        StateMachine.ChangeState(new CardInHand());
+    }
+
+    private (Node2D position, int lane)? GetHoveredFriendlyPlaceable()
+    {
+        var tree = GetTree();
+        foreach (var node in tree.GetNodesInGroup("PlacablePosition"))
+        {
+            if (node is not Node2D placeablePosition) continue;
+            var area2D = placeablePosition.GetNode<Area2D>("Area2D");
+            if (!area2D.OverlapsArea(GetNode<Area2D>("Area2D"))) continue;
+            
+            var numberOnly = NumberRegex().Replace(placeablePosition.Name, "");
+            var laneIndex = int.Parse(numberOnly) - 1;
+            return (placeablePosition, laneIndex);
+        }
+
+        return null;
+    }
+
+    private (Node2D position, int lane)? GetHoveredEnemyPlaceable()
+    {
+        var tree = GetTree();
+        foreach (var node in tree.GetNodesInGroup("EnemyPlacablePosition"))
+        {
+            if (node is not Node2D placeablePosition) continue;
+            var area2D = placeablePosition.GetNode<Area2D>("Area2D");
+            if (!area2D.OverlapsArea(GetNode<Area2D>("Area2D"))) continue;
+            
+            var numberOnly = NumberRegex().Replace(placeablePosition.Name, "");
+            var laneIndex = int.Parse(numberOnly) - 1;
+            return (placeablePosition, laneIndex);
+        }
+
+        return null;
+    }
+    
+    private Duelist? GetHoveredDuelist()
+    {
+        var playerDuelist = GetTree().GetFirstNodeInGroup("PlayerCharacter");
+        var enemyDuelist = GetTree().GetFirstNodeInGroup("EnemyCharacter");
+        
+        if (playerDuelist != null)
+        {
+            var area2D = playerDuelist.GetNode<Area2D>("Area2D");
+            if (area2D.OverlapsArea(GetNode<Area2D>("Area2D")))
+            {
+                return GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
+            }
+        }
+        
+        if (enemyDuelist != null)
+        {
+            var area2D = enemyDuelist.GetNode<Area2D>("Area2D");
+            if (area2D.OverlapsArea(GetNode<Area2D>("Area2D")))
+            {
+                return GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist;
+            }
+        }
+        
+        return null;
+    }
+    
+    [GeneratedRegex(@"[^\d]")]
+    private static partial Regex NumberRegex();
 }

@@ -44,11 +44,6 @@ public partial class Duelist : Control
     
     public async Task TakeDamage(int amount)
     {
-        // 0 - 1
-        // 1 - 2
-        // 2 - 3
-        // 3 - BLOCKED
-        
         if (WouldYouLookAtTheTime == 3)
         {
             WouldYouLookAtTheTime++;

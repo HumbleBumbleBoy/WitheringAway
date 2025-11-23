@@ -41,4 +41,4 @@ offset_top = -46.25
 offset_right = 56.75
 offset_bottom = 39.75
 scale = Vector2(0.4, 0.4)
-text = "That was not medicine... (when played select a unit to heal for 3HP but lose 1ATK)"
+text = "That was not medicine... (when played heals a random unit for 3HP but makes it lose 1ATK)"

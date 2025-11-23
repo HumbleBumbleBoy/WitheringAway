@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.lib;
@@ -11,6 +13,7 @@ public class Combat : IState<TurnManager>
     public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
         GD.Print("FIGHT!");
+
         turnManager.isCombatTime = true;
         
         fieldData = turnManager.GetNode<FieldData>("/root/GameScene/FieldData");
@@ -49,12 +52,30 @@ public class Combat : IState<TurnManager>
 
         if (playerCard == null)
         {
-            return; // damage player
+            Debug.Assert(enemyCard != null, nameof(enemyCard) + " != null");
+            
+            var playerDuelist = (turnManager.GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist)!;
+            await enemyCard.Attack(playerDuelist, Callable.From(() =>
+            {
+                _ = enemyCard.PlaySound("Attack");
+                _ = playerDuelist.TakeDamage(enemyCard.AttackManager?.Attack ?? 0);
+                _ = enemyCard.PlaySound("Hurt");
+            }));
+            return;
         }
 
         if (enemyCard == null)
         {
-            return; // damage enemy
+            Debug.Assert(playerCard != null, nameof(playerCard) + " != null");
+            
+            var enemyDuelist = (turnManager.GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist)!;
+            await playerCard.Attack(enemyDuelist, Callable.From(() =>
+            {
+                _ = playerCard.PlaySound("Attack");
+                _ = enemyDuelist.TakeDamage(playerCard.AttackManager?.Attack ?? 0);
+                _ = playerCard.PlaySound("Hurt");
+            }));
+            return;
         }
 
         await playerCard.Attack(enemyCard);

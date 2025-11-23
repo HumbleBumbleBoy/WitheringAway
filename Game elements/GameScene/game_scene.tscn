@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://n2s4x123s73j"]
+[gd_scene load_steps=25 format=3 uid="uid://n2s4x123s73j"]
 
 [ext_resource type="Script" uid="uid://dgm78fib7uvut" path="res://Game elements/GameScene/GameScene.cs" id="1_ijnl5"]
 [ext_resource type="PackedScene" uid="uid://ca7dwerbds5x4" path="res://Game elements/Game field/field.tscn" id="2_en8yc"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://b36a0vf4vufhp" path="res://Game elements/Game field/NextTurn.png" id="17_f45hw"]
 [ext_resource type="Texture2D" uid="uid://c01af30pkl82d" path="res://Game elements/Game field/NextTurnDisabled.png" id="18_5scjv"]
 [ext_resource type="AudioStream" uid="uid://cmu4vftolr7uv" path="res://General assets/SFXnMusic/Project_CG.F.mp3" id="21_u6v7y"]
+[ext_resource type="Texture2D" uid="uid://doeurq5pyw7y8" path="res://Game elements/GameScene/SoulsContainer.png" id="22_ft36r"]
+[ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="23_qwd4a"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5scjv"]
 animations = [{
@@ -126,6 +128,62 @@ stream = ExtResource("21_u6v7y")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
+
+[node name="SoulsContainer" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(222, 162)
+scale = Vector2(3.65, 3.65)
+texture = ExtResource("22_ft36r")
+
+[node name="SoulsLabel" type="RichTextLabel" parent="SoulsContainer" groups=["PlayerSoulCounter"]]
+z_index = 1
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.835617
+offset_top = -30.958904
+offset_right = 29.164383
+offset_bottom = 28.041096
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5200627, 0.3732384)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("23_qwd4a")
+theme_override_font_sizes/normal_font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoulsContainer2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1620, 730)
+scale = Vector2(3.65, 3.65)
+texture = ExtResource("22_ft36r")
+
+[node name="SoulsLabel" type="RichTextLabel" parent="SoulsContainer2" groups=["EnemySoulCounter"]]
+z_index = 1
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.835617
+offset_top = -30.958904
+offset_right = 29.164383
+offset_bottom = 28.041096
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5200627, 0.3732384)
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("23_qwd4a")
+theme_override_font_sizes/normal_font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="SummonCardButton" to="." method="onDrawCardButtonPressed"]
 [connection signal="pressed" from="PassTurnButton" to="." method="OnPassTurnButtonPressed"]

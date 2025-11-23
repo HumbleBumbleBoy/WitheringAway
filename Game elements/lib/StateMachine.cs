@@ -5,7 +5,7 @@ namespace Witheringaway.Game_elements.lib;
 public partial class StateMachine<TValue>(TValue context) : Node
 {
     private IState<TValue>? currentState;
-    
+
     public IState<TValue>? CurrentState => currentState;
     public TValue GetContext() => context;
 

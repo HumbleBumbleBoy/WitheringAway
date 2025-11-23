@@ -16,7 +16,6 @@ public partial class BaseCardTemplate : Control
     
     [Export] public BaseCard? CardData { get; set; }
     [Export] public AttackManager? AttackManager; 
-    [Export] public CostManager? CostManager;
     [Export] public Sprite2D? CardOverlay;
     [Export] public Sprite2D? CardArt;
     [Export] public Sprite2D? CardOnFieldOverlay;
@@ -79,7 +78,6 @@ public partial class BaseCardTemplate : Control
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
         AttackManager = GetNode<AttackManager>("AttackManager");
-        CostManager = GetNode<CostManager>("CostManager");
 
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
         healthComponent.SetMaxHealth(CardData?.Health ?? healthComponent.MaxHealth);
@@ -90,12 +88,12 @@ public partial class BaseCardTemplate : Control
         var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
         timeOnFieldComponent.SetTimeOnField(CardData?.TimeLeftOnField ?? timeOnFieldComponent.TimeOnField);
         
+        var costComponent = this.GetOrAddComponent<CostComponent>();
+        costComponent.SetCost(CardData?.Cost ?? costComponent.Cost);
+        
         AttackManager.Attack = CardData?.Attack??0;
         AttackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
         AttackManager.Initialize();
-        
-        CostManager.Cost = CardData?.Cost??0;
-        CostManager.Initialize();
 
         CustomMinimumSize = new Vector2(32, 48);
         UpdateVisuals();
@@ -116,10 +114,24 @@ public partial class BaseCardTemplate : Control
             if (StateMachine.CurrentState is not DraggingCard) return;
             
             _isDraggingAnyCard = false;
-                
-            IState<BaseCardTemplate> nextState = CheckIfValidDropPosition() ? new CardEnteredField(true) : new CardInHand();
-            StateMachine.ChangeState(nextState);
+
+            if (IsValidDropPosition())
+            {
+                var duelist = GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
+                duelist?.TakeSouls(CardData?.Cost ?? 0);
+                StateMachine.ChangeState(new CardEnteredField(true));
+            }
+            else
+            {
+                StateMachine.ChangeState(new CardInHand());
+            }
         };
+    }
+    
+    public int GetCurrentHealth()
+    {
+        var healthComponent = this.GetOrAddComponent<HealthComponent>();
+        return healthComponent.CurrentHealth;
     }
     
     public void TakeDamage(int damage)
@@ -137,32 +149,42 @@ public partial class BaseCardTemplate : Control
         tween.TweenProperty(this, "global_position", originalPosition, 0.05f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
     }
     
-    public async Task AttackOnce(BaseCardTemplate targetCard, Callable? onMidAttack = null)
+    public async Task AttackOnce(Control target, Callable? onMidAttack = null)
     {
         var originalPosition = GlobalPosition;
-        var directionToTarget = (targetCard.GlobalPosition - GlobalPosition).Normalized();
+        var directionToTarget = (target.GlobalPosition - GlobalPosition).Normalized();
         var attackPosition = originalPosition + directionToTarget * 20;
         var tween = CreateTween();
         tween.TweenProperty(this, "global_position", attackPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
-        tween.TweenCallback(onMidAttack ?? Callable.From(() => 
-        {
-            _ = PlaySound("Attack");
-            targetCard.TakeDamage(AttackManager?.Attack ?? 0);
-            _ = targetCard.PlaySound("Hurt");
-            _ = targetCard.PlayAnimation("Hurt");
-        }));
+        tween.TweenCallback(onMidAttack ?? _AttackCard(target) ?? Callable.From(() => {}));
         tween.TweenProperty(this, "global_position", originalPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
         await ToSignal(tween, "finished");
 
         await this.Wait(0.3f);
     }
     
-    public async Task Attack(BaseCardTemplate targetCard, Callable? onMidAttack = null)
+    public async Task Attack(Control target, Callable? onMidAttack = null)
     {
         for (var i = 0; i < (AttackManager?.HowManyAttacks ?? 1); i++)
         {
-            await AttackOnce(targetCard, onMidAttack);
+            await AttackOnce(target, onMidAttack);
         }
+    }
+
+    private Callable? _AttackCard(Control node)
+    {
+        if (node is BaseCardTemplate card)
+        {
+            return Callable.From(() =>
+            {
+                _ = PlaySound("Attack");
+                card.TakeDamage(AttackManager?.Attack ?? 0);
+                _ = card.PlaySound("Hurt");
+                _ = card.PlayAnimation("Hurt");
+            });
+        }
+
+        return null;
     }
 
     public bool ShouldDie()
@@ -211,9 +233,9 @@ public partial class BaseCardTemplate : Control
         UpdateVisualHealth();
         UpdateVisualDefense();
         UpdateVisualTimeOnField();
+        UpdateVisualCost();
         
         AttackManager?.UpdateLabels(); 
-        if (!IsCardInField) { CostManager?.UpdateLabels(); }
 
         CardName!.Text = CardData?.Name ?? "";
         CardArt!.Texture = CardData?.Art;
@@ -248,6 +270,15 @@ public partial class BaseCardTemplate : Control
         var timeOnFieldOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("TimeLeftLabel");
         
         _UpdateTextLabels(timeOnFieldLabel, timeOnFieldOnFieldLabel, timeOnFieldComponent.TimeOnField, ref _timeSinceLastTimeOnFieldUpdate);
+    }
+    
+    private void UpdateVisualCost()
+    {
+        var costComponent = this.GetOrAddComponent<CostComponent>();
+        
+        var costLabel = CardOverlay!.GetNode<RichTextLabel>("CostLabel");
+        
+        costLabel.Text = costComponent.Cost.ToString();
     }
 
     private void _UpdateTextLabels(RichTextLabel overlayLabel, RichTextLabel fieldLabel, int value, ref float timeElapsed)
@@ -336,10 +367,14 @@ public partial class BaseCardTemplate : Control
         }
     }
 
-    private bool CheckIfValidDropPosition()
+    private bool IsValidDropPosition()
     {
         if (!IsCardPlayable) return false;
         if (PlacedAreaName is null) return false;
+        
+        var playerDuelist = GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
+        if (playerDuelist is null) return false;
+        if (playerDuelist.CurrentSouls < (CardData?.Cost ?? 0)) return false;
         
         FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
         string numberOnly = Regex.Replace(PlacedAreaName, @"[^\d]", "");

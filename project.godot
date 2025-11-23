@@ -43,6 +43,10 @@ EnemyPlacablePosition=""
 EnemyHandManager=""
 PlayerHandManager=""
 GameField=""
+PlayerDuelist=""
+EnemyDuelist=""
+PlayerSoulCounter=""
+EnemySoulCounter=""
 
 [input]
 

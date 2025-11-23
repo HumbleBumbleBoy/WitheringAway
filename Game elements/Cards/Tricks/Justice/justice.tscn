@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://f2qm21d7coyn"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_xwd2u"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_4458c"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_t1x8c"]
+[ext_resource type="Texture2D" uid="uid://2k4irgchasj6" path="res://Game elements/Cards/Tricks/Justice/Justice.png" id="4_go7i3"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_up1t6"]
+
+[sub_resource type="Resource" id="Resource_8j04h"]
+script = ExtResource("3_t1x8c")
+BonusTimeOnField = -5
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_qx2y4"]
+script = ExtResource("5_up1t6")
+Art = ExtResource("4_go7i3")
+Name = "Justice"
+Description = "Judgement upon you (-5 time left on field"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Justice" instance=ExtResource("1_xwd2u")]
+script = ExtResource("2_4458c")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = true
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_8j04h")]
+CardData = SubResource("Resource_qx2y4")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 3.5
+offset_top = 23.5
+offset_right = 67.24999
+offset_bottom = 41.5
+scale = Vector2(0.4, 0.4)
+text = "Justice"

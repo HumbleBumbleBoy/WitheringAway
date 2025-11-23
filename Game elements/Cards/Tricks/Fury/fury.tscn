@@ -15,7 +15,7 @@ metadata/_custom_type_script = "uid://cyijiqug3galh"
 script = ExtResource("4_ab1xm")
 Art = ExtResource("4_6j18j")
 Name = "Fury"
-Description = "Pure Determination"
+Description = "Will to fight (bonus attack)"
 Cost = 2
 metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 

@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtr0ar5lvng3t"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_n4uss"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_bynqw"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_cptrp"]
+[ext_resource type="Texture2D" uid="uid://c7ogcscvh0pyj" path="res://Game elements/Cards/Tricks/Faith/Faith.png" id="4_g8sfm"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_mlc0y"]
+
+[sub_resource type="Resource" id="Resource_7aojh"]
+script = ExtResource("3_cptrp")
+BonusTimeOnField = 3
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_enn2n"]
+script = ExtResource("5_mlc0y")
+Art = ExtResource("4_g8sfm")
+Name = "Faith"
+Description = "You can find it (+3 turns on field)"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Faith" instance=ExtResource("1_n4uss")]
+script = ExtResource("2_bynqw")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_7aojh")]
+CardData = SubResource("Resource_enn2n")
+
+[node name="NameLabel" parent="." index="8"]
+text = "Faith"

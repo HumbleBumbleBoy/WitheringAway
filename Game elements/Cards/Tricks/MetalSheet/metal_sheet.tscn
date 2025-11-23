@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://vooycsnjmxp7"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_arws8"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_qcxa6"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_t2ssg"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_0epu0"]
+[ext_resource type="Texture2D" uid="uid://b7cbx0w825mdd" path="res://Game elements/Cards/Tricks/MetalSheet/MetalSheet.png" id="4_qcxa6"]
+
+[sub_resource type="Resource" id="Resource_qj68k"]
+script = ExtResource("3_t2ssg")
+BonusDefense = 1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_u7yw3"]
+script = ExtResource("4_0epu0")
+Art = ExtResource("4_qcxa6")
+Name = "Metal sheet"
+Description = "Surprisingly useful (+1 armor)"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="MetalSheet" instance=ExtResource("1_arws8")]
+script = ExtResource("2_qcxa6")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_qj68k")]
+CardData = SubResource("Resource_u7yw3")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = -0.5
+offset_top = 24.0
+offset_right = 110.33333
+offset_bottom = 49.5
+scale = Vector2(0.3, 0.3)
+text = "Metal sheet"

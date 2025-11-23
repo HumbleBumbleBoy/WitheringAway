@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://bu6d6sswbfq6k"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_ghm3c"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_rdkd8"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_xdt5q"]
+[ext_resource type="Texture2D" uid="uid://bhs6881hqork2" path="res://Game elements/Cards/Tricks/Decay/Decay.png" id="4_bcf6d"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_8t1f6"]
+
+[sub_resource type="Resource" id="Resource_1mdut"]
+script = ExtResource("3_xdt5q")
+BonusHealth = -1
+BonusDamage = -1
+BonusTimeOnField = -1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_6dlai"]
+script = ExtResource("5_8t1f6")
+Art = ExtResource("4_bcf6d")
+Name = "Decay"
+Description = "Consumes from the inside (-1/-1 -1 time on field)"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Decay" instance=ExtResource("1_ghm3c")]
+script = ExtResource("2_rdkd8")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_1mdut")]
+CardData = SubResource("Resource_6dlai")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = -1.0
+offset_right = 68.0
+text = "Decay"

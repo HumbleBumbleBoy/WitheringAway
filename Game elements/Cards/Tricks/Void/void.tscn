@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwuy12xanqxmh"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_7pihu"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_sxtyk"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_t24h0"]
+[ext_resource type="Texture2D" uid="uid://b2uwqje6pkl6" path="res://Game elements/Cards/Tricks/Void/Void.png" id="4_snorl"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_ym8j7"]
+
+[sub_resource type="Resource" id="Resource_jo4hc"]
+script = ExtResource("3_t24h0")
+BonusHealth = -6
+BonusDamage = -6
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_jswhv"]
+script = ExtResource("5_ym8j7")
+Art = ExtResource("4_snorl")
+Name = "Void"
+Description = "The hole is unending (-6/-6 works after round 5)"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Void" instance=ExtResource("1_7pihu")]
+script = ExtResource("2_sxtyk")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_jo4hc")]
+CardData = SubResource("Resource_jswhv")

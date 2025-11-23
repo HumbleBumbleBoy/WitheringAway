@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbr56su1rpyvs"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_wx8c5"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_i0dor"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_r6wi4"]
+[ext_resource type="Texture2D" uid="uid://birt1vs5e0vjk" path="res://Game elements/Cards/Tricks/KnightsHelmet/KnightsHelmet.png" id="4_i0dor"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_nc2f0"]
+
+[sub_resource type="Resource" id="Resource_dee6y"]
+script = ExtResource("3_r6wi4")
+BonusDefense = 2
+BonusHealth = 1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_cvxnr"]
+script = ExtResource("4_nc2f0")
+Art = ExtResource("4_i0dor")
+Name = "Knight's helmet"
+Description = "Sturdy piece of armor (+2 armor +1HP)"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="KnightsHelmet" instance=ExtResource("1_wx8c5")]
+script = ExtResource("2_i0dor")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_dee6y")]
+CardData = SubResource("Resource_cvxnr")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 1.0
+offset_top = 22.0
+offset_right = 105.166664
+offset_bottom = 73.666664
+scale = Vector2(0.3, 0.3)
+text = "Knight's helmet"

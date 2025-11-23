@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://yn1nq5kycihp"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_ftixu"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_5ydua"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_i8xf0"]
+[ext_resource type="Texture2D" uid="uid://bxjhc4wlja0bd" path="res://Game elements/Cards/Tricks/Improvised Explosive/Improvised Explosive.png" id="4_83vaj"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_oc6o4"]
+
+[sub_resource type="Resource" id="Resource_y4vvx"]
+script = ExtResource("3_i8xf0")
+FlatDamage = 5
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_vvtyo"]
+script = ExtResource("5_oc6o4")
+Art = ExtResource("4_83vaj")
+Name = "Improvised explosive"
+Description = "A bummer (deal 5 damage)"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="ImprovisedExplosive" instance=ExtResource("1_ftixu")]
+script = ExtResource("2_5ydua")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_y4vvx")]
+CardData = SubResource("Resource_vvtyo")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 3.25
+offset_top = 22.0
+offset_right = 98.24999
+offset_bottom = 40.0
+scale = Vector2(0.3, 0.3)
+text = "Improvised explosive"

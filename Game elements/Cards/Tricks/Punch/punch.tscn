@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjxn8wkn7x8j2"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_t1jf2"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_uwunb"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_m8a47"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_8apns"]
+[ext_resource type="Texture2D" uid="uid://x2418qemtja3" path="res://Game elements/Cards/Tricks/Punch/Punch.png" id="4_uwunb"]
+
+[sub_resource type="Resource" id="Resource_ev6l3"]
+script = ExtResource("3_m8a47")
+FlatDamage = 3
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_mfqo5"]
+script = ExtResource("4_8apns")
+Art = ExtResource("4_uwunb")
+Name = "Punch"
+Description = "Hard hitter (deal 3 damage to anything)"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Punch" instance=ExtResource("1_t1jf2")]
+script = ExtResource("2_uwunb")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = true
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_ev6l3")]
+CardData = SubResource("Resource_mfqo5")

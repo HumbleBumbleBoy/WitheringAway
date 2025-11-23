@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://qi87xbt3tycv"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_818uw"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_2krdw"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_5wt8p"]
+[ext_resource type="Texture2D" uid="uid://c0u3cvl2nbb4h" path="res://Game elements/Cards/Tricks/Sacrifice/Sacrifice.png" id="4_6qun3"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_iic0l"]
+
+[sub_resource type="Resource" id="Resource_0rxq2"]
+script = ExtResource("3_5wt8p")
+BonusAttacks = 2
+BonusTimeOnField = -999
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_xcmdt"]
+script = ExtResource("5_iic0l")
+Art = ExtResource("4_6qun3")
+Name = "Sacrifice"
+Description = "Do you have it in you? (do 2 bonus attacks then decay after)"
+Cost = 3
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Sacrifice" instance=ExtResource("1_818uw")]
+script = ExtResource("2_2krdw")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_0rxq2")]
+CardData = SubResource("Resource_xcmdt")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 1.0000002
+offset_top = 23.25
+offset_right = 79.12499
+offset_bottom = 41.25
+scale = Vector2(0.4, 0.4)
+text = "Sacrifice"

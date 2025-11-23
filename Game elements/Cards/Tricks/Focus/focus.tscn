@@ -1,0 +1,28 @@
+[gd_scene load_steps=8 format=3 uid="uid://bc6phts77hqmy"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_hgk3a"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_imf3s"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_1pdqi"]
+[ext_resource type="Texture2D" uid="uid://c8yf5vdenh0l4" path="res://Game elements/Cards/Tricks/Focus/Focus.png" id="4_ed8uw"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_e5th7"]
+
+[sub_resource type="Resource" id="Resource_sf0vq"]
+script = ExtResource("3_1pdqi")
+ExtraCardsToDraw = 2
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_40s3p"]
+script = ExtResource("5_e5th7")
+Art = ExtResource("4_ed8uw")
+Name = "Focus"
+Description = "Take a moment to think (draw 2 cards)"
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Focus" instance=ExtResource("1_hgk3a")]
+script = ExtResource("2_imf3s")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_sf0vq")]
+CardData = SubResource("Resource_40s3p")

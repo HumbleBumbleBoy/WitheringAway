@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://db35tiq6110kc"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_8i8u2"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_64xrw"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_gh3kr"]
+[ext_resource type="Texture2D" uid="uid://c8gfsotvytwt3" path="res://Game elements/Cards/Tricks/FightingSpirit/FightingSpirit.png" id="4_hmyi5"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_405pv"]
+
+[sub_resource type="Resource" id="Resource_gnr61"]
+script = ExtResource("3_gh3kr")
+BonusDamage = 2
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_l8xh7"]
+script = ExtResource("5_405pv")
+Art = ExtResource("4_hmyi5")
+Name = "Fight spirit"
+Description = "Will to kill (+2ATK)"
+Cost = 1
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="FightingSpirit" instance=ExtResource("1_8i8u2")]
+script = ExtResource("2_64xrw")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_gnr61")]
+CardData = SubResource("Resource_l8xh7")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 0.75
+offset_top = 24.0
+offset_right = 104.916664
+offset_bottom = 46.0
+scale = Vector2(0.3, 0.3)
+text = "Fight spirit"

@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjce5orx7t3q5"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_c7xlq"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_y46or"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_n3r3o"]
+[ext_resource type="Texture2D" uid="uid://dfqbage8au4v8" path="res://Game elements/Cards/Tricks/Darkness/Darkness.png" id="4_feo1k"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="5_vef31"]
+
+[sub_resource type="Resource" id="Resource_rjdmb"]
+script = ExtResource("3_n3r3o")
+FlatDamage = 10
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_d147q"]
+script = ExtResource("5_vef31")
+Art = ExtResource("4_feo1k")
+Name = "Darkness"
+Description = "All consuming (deal 10 damage)"
+Cost = 5
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Darkness" instance=ExtResource("1_c7xlq")]
+script = ExtResource("2_y46or")
+CanPlaceOnFriendlyField = false
+CanPlaceOnEnemyField = true
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_rjdmb")]
+CardData = SubResource("Resource_d147q")
+
+[node name="NameLabel" parent="." index="8"]
+offset_left = 1.7500002
+offset_top = 23.75
+offset_right = 74.24999
+offset_bottom = 41.75
+scale = Vector2(0.4, 0.4)
+text = "Darkness"

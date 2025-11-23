@@ -1,24 +1,75 @@
-[gd_scene load_steps=17 format=3 uid="uid://dll2sitm1b08a"]
+[gd_scene load_steps=48 format=3 uid="uid://dll2sitm1b08a"]
 
 [ext_resource type="PackedScene" uid="uid://1xia3fwv3jf0" path="res://Game elements/Enemy/Hand/enemy_hand_manager.tscn" id="1_qxscf"]
 [ext_resource type="PackedScene" uid="uid://l2t8da7vubhb" path="res://Game elements/Enemy/Deck/enemy_deck_manager.tscn" id="2_ka80h"]
+[ext_resource type="PackedScene" uid="uid://b1aofctakili4" path="res://Game elements/Cards/Units/VoodooDoll/voodoo_doll.tscn" id="3_821dm"]
 [ext_resource type="PackedScene" uid="uid://dnq2aayl77tw3" path="res://Game elements/Cards/Units/Hitman/hitman.tscn" id="3_ptprs"]
 [ext_resource type="Script" uid="uid://y1uuemct04gs" path="res://Game elements/Decks/Deck.cs" id="4_2omue"]
 [ext_resource type="PackedScene" uid="uid://c3px0cex1xeyy" path="res://Game elements/Cards/Units/Murderer/murderer.tscn" id="4_15ykk"]
 [ext_resource type="PackedScene" uid="uid://djepd3w03w68t" path="res://Game elements/Cards/Units/Qman/q_man.tscn" id="4_o0bg0"]
+[ext_resource type="PackedScene" uid="uid://0lxc363tq1od" path="res://Game elements/Cards/Tricks/HealthyTreat/healthy_treat.tscn" id="4_pr07o"]
 [ext_resource type="PackedScene" uid="uid://c66npy1kffppd" path="res://Game elements/Cards/Units/TimeKeeper/time_keeper.tscn" id="5_4o1hh"]
 [ext_resource type="PackedScene" uid="uid://ylcpu7nkkbbl" path="res://Game elements/Cards/Units/Crooked/crooked.tscn" id="5_8p2cr"]
 [ext_resource type="PackedScene" uid="uid://b87kmxjur3uaq" path="res://Game elements/Player/Deck/player_deck.tscn" id="5_bwjm8"]
+[ext_resource type="PackedScene" uid="uid://bbr56su1rpyvs" path="res://Game elements/Cards/Tricks/KnightsHelmet/knights_helmet.tscn" id="5_tmn48"]
+[ext_resource type="PackedScene" uid="uid://bc6phts77hqmy" path="res://Game elements/Cards/Tricks/Focus/focus.tscn" id="6_kq3la"]
+[ext_resource type="PackedScene" uid="uid://yn1nq5kycihp" path="res://Game elements/Cards/Tricks/Improvised Explosive/improvised_explosive.tscn" id="7_pxygg"]
 [ext_resource type="PackedScene" uid="uid://jro0pvtbpgkh" path="res://Game elements/Cards/Units/Rats/rats.tscn" id="7_rsype"]
 [ext_resource type="PackedScene" uid="uid://dj1wb3aypjg2k" path="res://Game elements/Cards/Units/Beast/beast.tscn" id="8_602gf"]
+[ext_resource type="PackedScene" uid="uid://cjxn8wkn7x8j2" path="res://Game elements/Cards/Tricks/Punch/punch.tscn" id="8_lyo60"]
 [ext_resource type="PackedScene" uid="uid://clb0fduewg5qm" path="res://Game elements/Cards/Units/Bird/bird.tscn" id="9_cc71r"]
+[ext_resource type="PackedScene" uid="uid://d3muxnfqlrgh7" path="res://Game elements/Cards/Units/PhoneGuy/phone_guy.tscn" id="10_16li5"]
 [ext_resource type="PackedScene" uid="uid://dm72ydm4xjfj1" path="res://Game elements/Cards/Units/Snow/snow.tscn" id="10_v10ll"]
 [ext_resource type="PackedScene" uid="uid://bxolknj8a772a" path="res://Game elements/Cards/Units/Surgeon/surgeon.tscn" id="11_1mhqi"]
+[ext_resource type="PackedScene" uid="uid://djjbthd3uuk4e" path="res://Game elements/Cards/Units/Baker/baker.tscn" id="11_gq46d"]
 [ext_resource type="PackedScene" uid="uid://ck5tb3rct23ku" path="res://Game elements/Cards/Units/Bandit/bandit.tscn" id="12_mjftn"]
+[ext_resource type="PackedScene" uid="uid://b1721nojmcdh2" path="res://Game elements/Cards/Tricks/Fury/fury.tscn" id="15_c64dh"]
+[ext_resource type="PackedScene" uid="uid://cvqfc0k1e3s2c" path="res://Game elements/Cards/Tricks/Rage/rage.tscn" id="16_q77nf"]
+[ext_resource type="PackedScene" uid="uid://cmlbc6wlwoer2" path="res://Game elements/Cards/Units/TheGuyOnThePhone/the_guy_on_the_phone.tscn" id="18_kmscf"]
+[ext_resource type="PackedScene" uid="uid://dtr0ar5lvng3t" path="res://Game elements/Cards/Tricks/Faith/faith.tscn" id="19_issbu"]
+[ext_resource type="PackedScene" uid="uid://db35tiq6110kc" path="res://Game elements/Cards/Tricks/FightingSpirit/fighting_spirit.tscn" id="22_q4xyv"]
+[ext_resource type="PackedScene" uid="uid://d2v6b6audb5ak" path="res://Game elements/Cards/Tricks/InnerPeace/inner_peace.tscn" id="23_wgmwo"]
+[ext_resource type="PackedScene" uid="uid://dfpj2wwkwmmj8" path="res://Game elements/Cards/Units/Reaper/reaper.tscn" id="24_5ff0y"]
+[ext_resource type="PackedScene" uid="uid://dwuy12xanqxmh" path="res://Game elements/Cards/Tricks/Void/void.tscn" id="25_c64dh"]
+[ext_resource type="PackedScene" uid="uid://bat53jrc6bk6n" path="res://Game elements/Cards/Tricks/Rot/rot.tscn" id="26_q77nf"]
+[ext_resource type="PackedScene" uid="uid://dmgh2loabw462" path="res://Game elements/Cards/Units/Hooligan/hooligan.tscn" id="27_kmscf"]
+[ext_resource type="PackedScene" uid="uid://c6nmqjuw01ku0" path="res://Game elements/Cards/Units/BeeSwarm/bee_swarm.tscn" id="28_issbu"]
+[ext_resource type="PackedScene" uid="uid://g73m314tg2pp" path="res://Game elements/Cards/Units/Beekeeper/bee_keeper.tscn" id="29_q4xyv"]
+[ext_resource type="PackedScene" uid="uid://d3ch5cwsx6rad" path="res://Game elements/Cards/Tricks/LunchBox/lunch_box.tscn" id="30_wgmwo"]
+[ext_resource type="PackedScene" uid="uid://dxlpmferln21t" path="res://Game elements/Cards/Units/Drunkyard/drunkyard.tscn" id="31_5ff0y"]
+[ext_resource type="PackedScene" uid="uid://cktk7dvd30d2t" path="res://Game elements/Cards/Units/Informant/informant.tscn" id="33_wgmwo"]
+[ext_resource type="PackedScene" uid="uid://qi87xbt3tycv" path="res://Game elements/Cards/Tricks/Sacrifice/sacrifice.tscn" id="35_5ff0y"]
+[ext_resource type="PackedScene" uid="uid://dtwm31d3iqt5m" path="res://Game elements/Cards/Units/Undead/undead.tscn" id="37_0ufxe"]
+[ext_resource type="PackedScene" uid="uid://bu6d6sswbfq6k" path="res://Game elements/Cards/Tricks/Decay/decay.tscn" id="40_uj5xj"]
 
-[sub_resource type="Resource" id="Resource_2www7"]
+[sub_resource type="Resource" id="Resource_p74pi"]
 script = ExtResource("4_2omue")
-Cards = [ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0")]
+Cards = [ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("4_pr07o"), ExtResource("4_pr07o"), ExtResource("4_pr07o"), ExtResource("4_pr07o"), ExtResource("5_tmn48"), ExtResource("5_tmn48"), ExtResource("5_tmn48"), ExtResource("5_tmn48"), ExtResource("6_kq3la"), ExtResource("6_kq3la"), ExtResource("6_kq3la"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("10_16li5"), ExtResource("10_16li5"), ExtResource("10_16li5"), ExtResource("10_16li5"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
+[sub_resource type="Resource" id="Resource_iqhhb"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("16_q77nf"), ExtResource("16_q77nf"), ExtResource("16_q77nf"), ExtResource("16_q77nf"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("19_issbu"), ExtResource("19_issbu"), ExtResource("19_issbu"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("22_q4xyv"), ExtResource("22_q4xyv"), ExtResource("22_q4xyv"), ExtResource("22_q4xyv"), ExtResource("23_wgmwo"), ExtResource("23_wgmwo"), ExtResource("23_wgmwo"), ExtResource("24_5ff0y"), ExtResource("24_5ff0y"), ExtResource("24_5ff0y")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
+[sub_resource type="Resource" id="Resource_4nu02"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("25_c64dh"), ExtResource("25_c64dh"), ExtResource("25_c64dh"), ExtResource("26_q77nf"), ExtResource("26_q77nf"), ExtResource("26_q77nf"), ExtResource("27_kmscf"), ExtResource("27_kmscf"), ExtResource("27_kmscf"), ExtResource("27_kmscf"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("28_issbu"), ExtResource("28_issbu"), ExtResource("28_issbu"), ExtResource("28_issbu"), ExtResource("29_q4xyv"), ExtResource("29_q4xyv"), ExtResource("29_q4xyv"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("4_o0bg0"), ExtResource("6_kq3la"), ExtResource("6_kq3la"), ExtResource("6_kq3la"), ExtResource("30_wgmwo"), ExtResource("30_wgmwo"), ExtResource("30_wgmwo"), ExtResource("31_5ff0y"), ExtResource("31_5ff0y"), ExtResource("31_5ff0y"), ExtResource("31_5ff0y"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
+[sub_resource type="Resource" id="Resource_yuktj"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("5_tmn48"), ExtResource("5_tmn48"), ExtResource("5_tmn48"), ExtResource("33_wgmwo"), ExtResource("33_wgmwo"), ExtResource("33_wgmwo"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("35_5ff0y"), ExtResource("35_5ff0y"), ExtResource("35_5ff0y"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("5_4o1hh"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("23_wgmwo"), ExtResource("23_wgmwo"), ExtResource("23_wgmwo"), ExtResource("23_wgmwo")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
+[sub_resource type="Resource" id="Resource_2fmra"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("10_v10ll"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("7_rsype"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("9_cc71r"), ExtResource("28_issbu"), ExtResource("28_issbu"), ExtResource("28_issbu"), ExtResource("28_issbu"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("8_602gf"), ExtResource("22_q4xyv"), ExtResource("22_q4xyv"), ExtResource("22_q4xyv"), ExtResource("22_q4xyv"), ExtResource("30_wgmwo"), ExtResource("30_wgmwo"), ExtResource("30_wgmwo"), ExtResource("30_wgmwo"), ExtResource("26_q77nf"), ExtResource("26_q77nf"), ExtResource("26_q77nf"), ExtResource("26_q77nf"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("10_16li5"), ExtResource("10_16li5"), ExtResource("10_16li5"), ExtResource("10_16li5")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
+[sub_resource type="Resource" id="Resource_2vuwc"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("40_uj5xj"), ExtResource("40_uj5xj"), ExtResource("40_uj5xj"), ExtResource("40_uj5xj")]
 metadata/_custom_type_script = "uid://y1uuemct04gs"
 
 [node name="Enemy" type="Node"]
@@ -35,7 +86,7 @@ scale = Vector2(1, -1)
 enemyDeckManager = NodePath("../EnemyDeckManager")
 
 [node name="EnemyDeckManager" parent="." instance=ExtResource("2_ka80h")]
-Decks = [SubResource("Resource_2www7")]
+Decks = [SubResource("Resource_p74pi"), SubResource("Resource_iqhhb"), SubResource("Resource_4nu02"), SubResource("Resource_yuktj"), SubResource("Resource_2fmra"), SubResource("Resource_2vuwc")]
 
 [node name="EnemyDeck" parent="." instance=ExtResource("5_bwjm8")]
 offset_left = 1528.0

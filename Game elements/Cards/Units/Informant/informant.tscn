@@ -23,3 +23,6 @@ CardData = SubResource("Resource_urbxy")
 
 [node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_g0g2v")
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+text = "Really good at her job (on hit draw a card)"

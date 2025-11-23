@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dll2sitm1b08a"]
+[gd_scene load_steps=52 format=3 uid="uid://dll2sitm1b08a"]
 
 [ext_resource type="PackedScene" uid="uid://1xia3fwv3jf0" path="res://Game elements/Enemy/Hand/enemy_hand_manager.tscn" id="1_qxscf"]
 [ext_resource type="PackedScene" uid="uid://l2t8da7vubhb" path="res://Game elements/Enemy/Deck/enemy_deck_manager.tscn" id="2_ka80h"]
@@ -41,6 +41,9 @@
 [ext_resource type="PackedScene" uid="uid://qi87xbt3tycv" path="res://Game elements/Cards/Tricks/Sacrifice/sacrifice.tscn" id="35_5ff0y"]
 [ext_resource type="PackedScene" uid="uid://dtwm31d3iqt5m" path="res://Game elements/Cards/Units/Undead/undead.tscn" id="37_0ufxe"]
 [ext_resource type="PackedScene" uid="uid://bu6d6sswbfq6k" path="res://Game elements/Cards/Tricks/Decay/decay.tscn" id="40_uj5xj"]
+[ext_resource type="PackedScene" uid="uid://b0x0pkt14i3ha" path="res://Game elements/Cards/Units/Knight/knight.tscn" id="41_os41v"]
+[ext_resource type="PackedScene" uid="uid://f2qm21d7coyn" path="res://Game elements/Cards/Tricks/Justice/justice.tscn" id="42_p0p78"]
+[ext_resource type="PackedScene" uid="uid://vooycsnjmxp7" path="res://Game elements/Cards/Tricks/MetalSheet/metal_sheet.tscn" id="43_ju1rn"]
 
 [sub_resource type="Resource" id="Resource_p74pi"]
 script = ExtResource("4_2omue")
@@ -72,6 +75,11 @@ script = ExtResource("4_2omue")
 Cards = [ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("37_0ufxe"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("3_821dm"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("11_1mhqi"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("18_kmscf"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("7_pxygg"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("3_ptprs"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("15_c64dh"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("11_gq46d"), ExtResource("40_uj5xj"), ExtResource("40_uj5xj"), ExtResource("40_uj5xj"), ExtResource("40_uj5xj")]
 metadata/_custom_type_script = "uid://y1uuemct04gs"
 
+[sub_resource type="Resource" id="Resource_bb4no"]
+script = ExtResource("4_2omue")
+Cards = [ExtResource("41_os41v"), ExtResource("41_os41v"), ExtResource("41_os41v"), ExtResource("41_os41v"), ExtResource("33_wgmwo"), ExtResource("33_wgmwo"), ExtResource("33_wgmwo"), ExtResource("33_wgmwo"), ExtResource("24_5ff0y"), ExtResource("24_5ff0y"), ExtResource("24_5ff0y"), ExtResource("24_5ff0y"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("12_mjftn"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("5_8p2cr"), ExtResource("42_p0p78"), ExtResource("42_p0p78"), ExtResource("42_p0p78"), ExtResource("42_p0p78"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("8_lyo60"), ExtResource("43_ju1rn"), ExtResource("43_ju1rn"), ExtResource("43_ju1rn"), ExtResource("6_kq3la"), ExtResource("6_kq3la"), ExtResource("6_kq3la"), ExtResource("16_q77nf"), ExtResource("16_q77nf"), ExtResource("16_q77nf"), ExtResource("4_15ykk"), ExtResource("4_15ykk"), ExtResource("4_15ykk")]
+metadata/_custom_type_script = "uid://y1uuemct04gs"
+
 [node name="Enemy" type="Node"]
 
 [node name="EnemyHandManager" parent="." node_paths=PackedStringArray("enemyDeckManager") groups=["EnemyHandManager"] instance=ExtResource("1_qxscf")]
@@ -86,7 +94,7 @@ scale = Vector2(1, -1)
 enemyDeckManager = NodePath("../EnemyDeckManager")
 
 [node name="EnemyDeckManager" parent="." instance=ExtResource("2_ka80h")]
-Decks = [SubResource("Resource_p74pi"), SubResource("Resource_iqhhb"), SubResource("Resource_4nu02"), SubResource("Resource_yuktj"), SubResource("Resource_2fmra"), SubResource("Resource_2vuwc")]
+Decks = [SubResource("Resource_p74pi"), SubResource("Resource_iqhhb"), SubResource("Resource_4nu02"), SubResource("Resource_yuktj"), SubResource("Resource_2fmra"), SubResource("Resource_2vuwc"), SubResource("Resource_bb4no")]
 
 [node name="EnemyDeck" parent="." instance=ExtResource("5_bwjm8")]
 offset_left = 1528.0

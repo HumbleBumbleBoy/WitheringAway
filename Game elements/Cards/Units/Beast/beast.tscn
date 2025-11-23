@@ -22,5 +22,12 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 script = ExtResource("2_nhk4b")
 CardData = SubResource("Resource_60lfd")
 
-[node name="CardArt" parent="." index="4"]
+[node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_60lfd")
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+anchors_preset = -1
+anchor_right = 0.9628904
+anchor_bottom = 0.9238279
+scale = Vector2(0.4, 0.4)
+text = "It towers over you, feasts on eaten souls (Heal for 2HP on kill if it survives)"

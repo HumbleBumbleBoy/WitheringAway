@@ -23,3 +23,10 @@ CardData = SubResource("Resource_aejsj")
 
 [node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_aejsj")
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+anchors_preset = -1
+anchor_right = 0.9238279
+anchor_bottom = 0.8847655
+scale = Vector2(0.4, 0.4)
+text = "Has a soft spot for... some (on end combat, give +1/+1 to a random friendly unit)"

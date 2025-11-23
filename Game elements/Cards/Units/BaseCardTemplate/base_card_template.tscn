@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=35 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/Units/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://bfg6sbkw24r5b" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes3.png" id="22_760eh"]
 [ext_resource type="Texture2D" uid="uid://d078f87b6inbk" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes4.png" id="23_64roj"]
 [ext_resource type="Texture2D" uid="uid://qinn3qpn8vmv" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes5.png" id="24_na3e1"]
+[ext_resource type="Texture2D" uid="uid://422u7q7q4fk" path="res://Game elements/Cards/Units/BaseCardTemplate/Trick.png" id="30_8rn0r"]
 
 [sub_resource type="Resource" id="Resource_o8iy5"]
 script = ExtResource("2_7kkpe")
@@ -418,6 +419,28 @@ position = Vector2(0, 2)
 position = Vector2(16, 23.5)
 shape = SubResource("RectangleShape2D_gdwny")
 metadata/_edit_lock_ = true
+
+[node name="Trick" type="Sprite2D" parent="."]
+visible = false
+z_index = 1999
+position = Vector2(28.25, 3.75)
+scale = Vector2(0.38867188, 0.38867188)
+texture = ExtResource("30_8rn0r")
+
+[node name="NameLabel" type="RichTextLabel" parent="Trick"]
+z_index = 1
+clip_contents = false
+offset_left = -34.733665
+offset_top = -13.507538
+offset_right = 38.592964
+offset_bottom = 4.50251
+rotation = 0.12042772
+mouse_filter = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("5_yp28l")
+theme_override_font_sizes/normal_font_size = 16
+text = "TRICK"
+horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

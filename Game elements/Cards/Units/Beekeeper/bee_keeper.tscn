@@ -32,3 +32,10 @@ offset_bottom = 43.499996
 scale = Vector2(0.3, 0.3)
 text = "Beekeeper"
 vertical_alignment = 1
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+anchors_preset = -1
+anchor_right = 0.9628904
+anchor_bottom = 0.98242164
+scale = Vector2(0.4, 0.4)
+text = "Uses his hive in an unconventional way (spawn 2 bee swarms in random places on played)"

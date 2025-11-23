@@ -30,3 +30,6 @@ offset_bottom = 48.833336
 scale = Vector2(0.3, 0.3)
 text = "Phone guy"
 vertical_alignment = 1
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+text = "No one kniows who's the guy on the phone (on played draw a card)"

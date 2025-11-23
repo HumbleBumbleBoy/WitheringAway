@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 script = ExtResource("2_fuwvq")
 CardData = SubResource("Resource_wf5jl")
 
-[node name="CardArt" parent="." index="4"]
+[node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_fuwvq")
 
 [node name="TimeLeftLabel" parent="CardOnFieldOverlay" index="3"]
@@ -38,3 +38,13 @@ offset_right = 42.000004
 scale = Vector2(0.5, 0.5)
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CardDescription" parent="." index="9"]
+visible = true
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+anchors_preset = -1
+anchor_right = 0.9742458
+anchor_bottom = 0.8847655
+scale = Vector2(0.4, 0.4)
+text = "Bringer of peace (takes 1 time on field away from a random enemy card on end of combat)"

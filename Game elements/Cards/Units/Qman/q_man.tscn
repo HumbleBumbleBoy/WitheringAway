@@ -12,9 +12,9 @@ Name = "Q man"
 Description = "Tough farmer (choose a lane to spawn a bird in [2HP/3ATK])"
 TimeLeftOnField = 9
 Cost = 6
-Health = 6
+Health = 5
 Defense = 1
-Attack = 6
+Attack = 5
 HowManyAttacks = 1
 metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 
@@ -22,5 +22,8 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 script = ExtResource("2_v0p8v")
 CardData = SubResource("Resource_8pcqr")
 
-[node name="CardArt" parent="." index="4"]
+[node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_8pcqr")
+
+[node name="DescriptionLabel" parent="CardDescription" index="0"]
+text = "Tough farmer (choose a lane to spawn a bird in [2HP/3ATK])"

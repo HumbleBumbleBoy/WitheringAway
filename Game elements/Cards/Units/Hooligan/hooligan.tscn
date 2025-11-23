@@ -24,9 +24,6 @@ CardData = SubResource("Resource_jiby1")
 [node name="CardArt" parent="." index="5"]
 texture = ExtResource("3_c0byb")
 
-[node name="CardOnFieldOverlay" parent="." index="6"]
-visible = true
-
 [node name="NameLabel" parent="." index="8"]
 offset_left = 0.99999994
 offset_top = 22.0
@@ -50,3 +47,4 @@ offset_top = -57.5
 offset_right = 69.91177
 offset_bottom = 50.042496
 scale = Vector2(0.4, 0.4)
+text = "Can break a bone, works best in groups (+1/+1 for every other hooligan on field)"

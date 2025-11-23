@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using Godot;
-using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 

@@ -4,7 +4,7 @@ using Godot;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 
-namespace Witheringaway.Game_elements.Cards.BaseCardTemplate;
+namespace Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 
 [GlobalClass]
 public partial class BaseCardTemplate : Control

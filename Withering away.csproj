@@ -6,4 +6,8 @@
     <RootNamespace>Witheringaway</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Game elements\components\CostComponent.cs.uid" />
+    <Content Include="Game elements\lib\Duelist.cs.uid" />
+  </ItemGroup>
 </Project>

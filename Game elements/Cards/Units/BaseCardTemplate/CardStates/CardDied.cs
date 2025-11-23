@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.lib;
 
-using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 
 public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
 {

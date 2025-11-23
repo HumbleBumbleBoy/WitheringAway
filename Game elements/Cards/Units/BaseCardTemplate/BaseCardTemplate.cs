@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Godot;
@@ -266,9 +268,12 @@ public partial class BaseCardTemplate : Control
         return _attackComponent.AttackCount;
     }
     
-    public int GetCost()
+    public int GetCost(bool isPlayer)
     {
-        return _costComponent.Cost;
+        var cards = FieldData.Instance.GetCardsOnField(isPlayer);
+        var countCrooked = cards.Count(card => card is Crooked);
+        
+        return Math.Max(_costComponent.Cost - countCrooked, 0);
     }
     
     public void TakeDamage(BaseCardTemplate? attacker, int damage, bool isPlayer = true)
@@ -416,7 +421,7 @@ public partial class BaseCardTemplate : Control
     {
         var costLabel = CardOverlay!.GetNode<RichTextLabel>("CostLabel");
         
-        costLabel.Text = _costComponent.Cost.ToString();
+        costLabel.Text = GetCost(true).ToString();
     }
 
     private void UpdateVisualDamage()

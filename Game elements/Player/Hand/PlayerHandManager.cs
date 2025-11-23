@@ -19,27 +19,6 @@ public partial class PlayerHandManager : HandManager
         PlayerHandManager = this;
     }
     
-    public override void _Process(double delta)
-    {
-        if (!Input.IsActionJustPressed("check_card_description")) return;
-        // Find a hooligan in the deck, and add it to the hand for testing, using check card desc for debug
-        foreach (var card in playerDeckManager?.PlayerCardsInDeck ?? [])
-        {
-            var instantiatedCard = card.Instantiate();
-
-            if (instantiatedCard is not BeeKeeper) continue;
-            instantiatedCard.QueueFree();
-                    
-            var topCard = playerDeckManager.PlayerCardsInDeck[^1];
-            playerDeckManager.PlayerCardsInDeck[^1] = card;
-            playerDeckManager.PlayerCardsInDeck[playerDeckManager.PlayerCardsInDeck.IndexOf(card)] = topCard;
-            GetTopCard();
-            break;
-        }
-        
-        Duelist.PlayerDuelist.GiveSouls(100);
-    }
-
     public override void _ExitTree()
     {
         if (PlayerHandManager == this)

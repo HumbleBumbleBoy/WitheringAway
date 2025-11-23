@@ -102,7 +102,7 @@ public partial class TrickCard : BaseCardTemplate
     protected override void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
     {
         GD.Print("Dropped on card: " + (card?.Name ?? "null"));
-        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost() || card is null)
+        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost(isPlayer) || card is null)
         {
             base.DropOnCard(card, isPlayer, laneIndex);
             return;
@@ -110,7 +110,7 @@ public partial class TrickCard : BaseCardTemplate
 
         if (ApplyEffect(card, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
         {
-            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost());
+            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost(isPlayer));
             Kill();
             return;
         }
@@ -121,7 +121,7 @@ public partial class TrickCard : BaseCardTemplate
     protected override void DropOnDuelist(Duelist duelist, bool isPlayer)
     {
         GD.Print("Dropped on duelist: " + duelist.Name);
-        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost())
+        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost(isPlayer))
         {
             base.DropOnDuelist(duelist, isPlayer);
             return;
@@ -129,7 +129,7 @@ public partial class TrickCard : BaseCardTemplate
         
         if (ApplyEffect(duelist, GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound))
         {
-            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost());
+            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost(isPlayer));
             Kill();
             return;
         }
@@ -140,7 +140,7 @@ public partial class TrickCard : BaseCardTemplate
     protected override void Drop(bool isPlayer)
     {
         GD.Print("Dropped on empty space");
-        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost())
+        if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost(isPlayer))
         {
             base.Drop(isPlayer);
             return;
@@ -148,7 +148,7 @@ public partial class TrickCard : BaseCardTemplate
         
         if (ApplyGeneralEffect(GetNode<TurnManager>("/root/GameScene/TurnManager").CurrentRound, isPlayer))
         {
-            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost());
+            Duelist.GetDuelist(isPlayer).TakeSouls(GetCost(isPlayer));
             Kill();
             return;
         }

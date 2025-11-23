@@ -1,5 +1,6 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib.manager;
 
@@ -30,7 +31,7 @@ public partial class EnemyHandManager : HandManager
         GD.Print("Card added");
         card.RemoveAllComponents<DraggableComponent>();
         
-        card.isFlipped = true;
+        card.IsFlipped = true;
             
         cardContainer?.AddChild(card);
         enemyCardsInHand.Add(card);
@@ -40,7 +41,7 @@ public partial class EnemyHandManager : HandManager
 
     public override void RemoveCardFromHand(BaseCardTemplate cardToRemove)
     {
-        cardToRemove.isFlipped = false;
+        cardToRemove.IsFlipped = false;
         enemyCardsInHand.Remove(cardToRemove);
         cardContainer?.RemoveChild(cardToRemove);
     }

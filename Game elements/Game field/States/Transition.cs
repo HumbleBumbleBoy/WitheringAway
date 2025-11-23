@@ -3,6 +3,8 @@ using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+
 public class Transition : IState<TurnManager>
 {
     public IState<TurnManager>? OnEnter(TurnManager context, IState<TurnManager>? previousState)
@@ -28,8 +30,8 @@ public class Transition : IState<TurnManager>
         GD.Print("Player drew a card.");
         
         var fieldData = context.GetNode<FieldData>("/root/GameScene/FieldData");
-        _DecayCards(fieldData?.PlayerCardsOnField ?? []);
-        _DecayCards(fieldData?.EnemyCardsOnField ?? []);
+        _DecayCards(fieldData?.PlayerCardsOnField ?? [], true);
+        _DecayCards(fieldData?.EnemyCardsOnField ?? [], false);
         
         context.GetTree().CreateTimer(5).Timeout += () =>
         {
@@ -42,7 +44,7 @@ public class Transition : IState<TurnManager>
         return null;
     }
     
-    private void _DecayCards(BaseCardTemplate?[] cards)
+    private static void _DecayCards(BaseCardTemplate?[] cards, bool isPlayer)
     {
         foreach (var card in cards)
         {
@@ -50,8 +52,14 @@ public class Transition : IState<TurnManager>
             {
                 continue;
             }
-            var timeOnField = card?.FirstComponent<TimeOnFieldComponent>();
+            
+            var timeOnField = card.FirstComponent<TimeOnFieldComponent>();
             timeOnField?.SubtractTimeOnField(1);
+            
+            if (timeOnField is { TimeOnField: <= 0 })
+            {
+                card.StateMachine.ChangeState(new CardDied(isPlayer));
+            }
         }
     }
 }

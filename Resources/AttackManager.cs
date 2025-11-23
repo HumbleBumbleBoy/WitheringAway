@@ -16,14 +16,14 @@ public partial class AttackManager : Node
 
     public void UpdateLabels()
     {
-        var parent = GetParent<BaseCardTemplate>();
+        var parent = GetParent<Witheringaway.Game_elements.Cards.BaseCardTemplate.BaseCardTemplate>();
         if (parent != null)
         {
-            parent.cardOverlay.GetNode<RichTextLabel>("AttackLabel").Text = CurrentAttack.ToString();
-            parent.cardOverlay.GetNode<RichTextLabel>("AttackAmountLabel").Text = CurrentHowManyAttacks.ToString();
+            parent.CardOverlay.GetNode<RichTextLabel>("AttackLabel").Text = CurrentAttack.ToString();
+            parent.CardOverlay.GetNode<RichTextLabel>("AttackAmountLabel").Text = CurrentHowManyAttacks.ToString();
             
-            parent.cardOnFieldOverlay.GetNode<RichTextLabel>("AttackLabel").Text = CurrentAttack.ToString();
-            parent.cardOnFieldOverlay.GetNode<RichTextLabel>("AttackAmountLabel").Text = CurrentHowManyAttacks.ToString();
+            parent.CardOnFieldOverlay.GetNode<RichTextLabel>("AttackLabel").Text = CurrentAttack.ToString();
+            parent.CardOnFieldOverlay.GetNode<RichTextLabel>("AttackAmountLabel").Text = CurrentHowManyAttacks.ToString();
         }
     }
 }

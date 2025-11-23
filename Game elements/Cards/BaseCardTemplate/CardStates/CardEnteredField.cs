@@ -1,4 +1,6 @@
+using System.Text.RegularExpressions;
 using Godot;
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 
@@ -20,8 +22,8 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         }
         
         GD.Print(card.Name + " entered field");
-        card.isCardInField = true;
-        card.audioFolder?.GetNode<AudioStreamPlayer>("PlaceDown").Play();
+        card.IsCardInField = true;
+        card.AudioFolder?.GetNode<AudioStreamPlayer>("PlaceDown").Play();
 
         // GET FIELD REFERENCE FIRST (while card still has parent)
         Field = card.GetTree().GetFirstNodeInGroup("GameField") as Node2D;
@@ -30,8 +32,8 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         handManager.RemoveCardFromHand(card);
         
         // NOW reparent to field
-        string areaName = card.nameOfAreaPlaceOurCardIn;
-        string numberOnly = System.Text.RegularExpressions.Regex.Replace(areaName, @"[^\d]", "");
+        string areaName = card.PlacedAreaName;
+        string numberOnly = Regex.Replace(areaName, @"[^\d]", "");
         indexOfLane = int.Parse(numberOnly)-1;
         
         var fieldSide = isPlayer ? "PlayerSide" : "EnemySide";
@@ -44,12 +46,12 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         fieldData.PlayCardOnSpecificLane(indexOfLane, card, isPlayer);
 
         card.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
-        card.cardArt.Scale = new Vector2(0.6f, 0.6f);
-        card.cardOnFieldOverlay.Scale = new Vector2(1.0f, 1.0f);
-        card.cardOnFieldOverlay?.Show();
-        card.cardBackground?.Hide();
-        card.cardOverlay?.Hide();
-        card.cardName?.Hide();
+        card.CardArt.Scale = new Vector2(0.6f, 0.6f);
+        card.CardOnFieldOverlay.Scale = new Vector2(1.0f, 1.0f);
+        card.CardOnFieldOverlay?.Show();
+        card.CardBackground?.Hide();
+        card.CardOverlay?.Hide();
+        card.CardName?.Hide();
         
         return null;
     }
@@ -57,7 +59,7 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
     public IState<BaseCardTemplate>? OnExit(BaseCardTemplate card, IState<BaseCardTemplate>? nextState)
     {
         GD.Print(card.Name + "exited field");  // probably died
-        card.isCardInField = false;
+        card.IsCardInField = false;
 
         return new CardDied(isPlayer);
     }

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using Witheringaway.Game_elements.components;
 
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+
 public partial class EnemyDeckManager : Node
 {
     [Export] public Deck[] Decks = [];

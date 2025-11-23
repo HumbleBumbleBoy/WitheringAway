@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="12_u31ds"]
 [ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="13_w21m4"]
 [ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="14_ojnya"]
-[ext_resource type="Script" uid="uid://ckbdphqd33w2u" path="res://Game elements/components/TimeOnFieldComponent.cs" id="18_718wa"]
+[ext_resource type="Script" uid="uid://xkosvej57tpy" path="res://Game elements/components/TimeOnFieldComponent.cs" id="18_718wa"]
 [ext_resource type="Texture2D" uid="uid://ce3mibcvapueh" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes1.png" id="20_s87ag"]
 [ext_resource type="Texture2D" uid="uid://bjsejw128o0t5" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes2.png" id="21_5lrgv"]
 [ext_resource type="Texture2D" uid="uid://bfg6sbkw24r5b" path="res://Game elements/Cards/BaseCardTemplate/Animations/Dying/TurnToAshes3.png" id="22_760eh"]
@@ -97,7 +97,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
-[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("attackManager", "costManager", "cardOverlay", "cardArt", "cardOnFieldOverlay", "cardDescription", "cardBackground", "cardBackside", "cardName", "audioFolder", "animationFolder")]
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("AttackManager", "CostManager", "CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
@@ -105,17 +105,17 @@ offset_bottom = 48.0
 scale = Vector2(4, 4)
 script = ExtResource("1_8dryo")
 CardData = SubResource("Resource_o8iy5")
-attackManager = NodePath("AttackManager")
-costManager = NodePath("CostManager")
-cardOverlay = NodePath("CardOverlay")
-cardArt = NodePath("CardArt")
-cardOnFieldOverlay = NodePath("CardOnFieldOverlay")
-cardDescription = NodePath("CardDescription")
-cardBackground = NodePath("CardBackgroundArt")
-cardBackside = NodePath("CardBackside")
-cardName = NodePath("NameLabel")
-audioFolder = NodePath("Audio")
-animationFolder = NodePath("animations")
+AttackManager = NodePath("AttackManager")
+CostManager = NodePath("CostManager")
+CardOverlay = NodePath("CardOverlay")
+CardArt = NodePath("CardArt")
+CardOnFieldOverlay = NodePath("CardOnFieldOverlay")
+CardDescription = NodePath("CardDescription")
+CardBackground = NodePath("CardBackgroundArt")
+CardBackside = NodePath("CardBackside")
+CardName = NodePath("NameLabel")
+AudioFolder = NodePath("Audio")
+AnimationFolder = NodePath("animations")
 
 [node name="animations" type="Node2D" parent="."]
 
@@ -426,7 +426,7 @@ position = Vector2(16, 23.5)
 shape = SubResource("RectangleShape2D_gdwny")
 metadata/_edit_lock_ = true
 
-[connection signal="mouse_entered" from="." to="." method="onMouseEntered"]
-[connection signal="mouse_exited" from="." to="." method="onMouseExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
 [connection signal="area_entered" from="DetectionArea" to="." method="onAreaEntered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="onAreaExited"]

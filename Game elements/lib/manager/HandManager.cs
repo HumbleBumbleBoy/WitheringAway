@@ -15,12 +15,12 @@ public partial class HandManager : Control
         
     }
     
-    public virtual void RemoveCardFromHand(BaseCardTemplate card)
+    public virtual void RemoveCardFromHand(Cards.BaseCardTemplate.BaseCardTemplate card)
     {
         
     }
 
-    public virtual BaseCardTemplate? FindCard(int availableSouls)
+    public virtual Cards.BaseCardTemplate.BaseCardTemplate? FindCard(int availableSouls)
     {
         return null;
     }

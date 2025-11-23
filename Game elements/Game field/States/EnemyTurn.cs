@@ -92,11 +92,11 @@ public class EnemyTurn : IState<TurnManager>
             return false;
         }
 
-        card.nameOfAreaPlaceOurCardIn = cardPosition.Name;
+        card.PlacedAreaName = cardPosition.Name;
 
         if (cardPosition is Node2D node)
         {
-            card.whereIsAreaWePlaceOurCardIn = node.GlobalPosition;   
+            card.PlacedAreaLocation = node.GlobalPosition;   
         }
         
         card.StateMachine.ChangeState(new CardEnteredField(false));

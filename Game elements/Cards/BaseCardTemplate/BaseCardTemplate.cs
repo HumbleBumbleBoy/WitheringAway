@@ -1,42 +1,45 @@
-using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 
+namespace Witheringaway.Game_elements.Cards.BaseCardTemplate;
+
 [GlobalClass]
 public partial class BaseCardTemplate : Control
 {
+    
+    // hacky ass shit
+    private static bool _isDraggingAnyCard;
+    
+    
     [Export] public BaseCard? CardData { get; set; }
-    [Export] public AttackManager? attackManager; 
-    [Export] public CostManager? costManager;
-    [Export] public Sprite2D? cardOverlay;
-    [Export] public Sprite2D? cardArt;
-    [Export] public Sprite2D? cardOnFieldOverlay;
-    [Export] public Sprite2D? cardDescription;
-    [Export] public Sprite2D? cardBackground;
-    [Export] public Sprite2D? cardBackside;
-    [Export] public RichTextLabel? cardName;
-    [Export] public Node? audioFolder;
-    [Export] public Node? animationFolder;
+    [Export] public AttackManager? AttackManager; 
+    [Export] public CostManager? CostManager;
+    [Export] public Sprite2D? CardOverlay;
+    [Export] public Sprite2D? CardArt;
+    [Export] public Sprite2D? CardOnFieldOverlay;
+    [Export] public Sprite2D? CardDescription;
+    [Export] public Sprite2D? CardBackground;
+    [Export] public Sprite2D? CardBackside;
+    [Export] public RichTextLabel? CardName;
+    [Export] public Node? AudioFolder;
+    [Export] public Node? AnimationFolder;
     
     public StateMachine<BaseCardTemplate> StateMachine { get; }
     
     private bool isHovering;
-    public bool isFlipped;
-    public bool isCardPlayable;
-    public bool isCheckingDescription;
+    public bool IsFlipped;
+    public bool IsCardPlayable;
+    public bool IsCheckingDescription;
     // idk if i should be doing it like that so im putting it between comments in case i want to change it
     private double _mouseDownTime;
     private Vector2 _mouseDownPosition;
     private Vector2 _mouseDownCardPosition;
-    private bool _isMouseDown;
-    public bool isCardInField;
-    public Vector2 whereIsAreaWePlaceOurCardIn;
-    public string? nameOfAreaPlaceOurCardIn;
-    private const float HOLD_DURATION = 1.0f;
-    private const float MOVE_TOLERANCE = 10f;
+    public bool IsCardInField;
+    public Vector2 PlacedAreaLocation;
+    public string? PlacedAreaName;
     // end of segment
     private TurnManager? turnManager;
     
@@ -51,19 +54,32 @@ public partial class BaseCardTemplate : Control
 
     public override void _Process(double delta)
     {
-        CheckForHold();
-        CheckApperance();
+        if (IsCardInField)
+        {
+            // Hacky way to detect hovering over the card only on the art part
+            var rect = CardArt!.GetRect();
+            rect = new Rect2(rect.Position, rect.Size);
+            rect.Position += new Vector2(0, rect.Size.Y / 2f);
+            rect.Size = new Vector2(rect.Size.X, rect.Size.Y * 0.65f);
+            
+            isHovering = rect.HasPoint(GetLocalMousePosition());
+            CardOverlay?.Hide();
+        }
+
+        IsCheckingDescription = isHovering && Input.IsActionPressed("check_card_description");
+        
+        CheckAppearance();
         UpdateVisuals();
     }
 
     public override void _Ready()
     {
-        cardOnFieldOverlay?.Hide();
+        CardOnFieldOverlay?.Hide();
         
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
-        attackManager = GetNode<AttackManager>("AttackManager");
-        costManager = GetNode<CostManager>("CostManager");
+        AttackManager = GetNode<AttackManager>("AttackManager");
+        CostManager = GetNode<CostManager>("CostManager");
 
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
         healthComponent.SetMaxHealth(CardData?.Health ?? healthComponent.MaxHealth);
@@ -74,26 +90,32 @@ public partial class BaseCardTemplate : Control
         var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
         timeOnFieldComponent.SetTimeOnField(CardData?.TimeLeftOnField ?? timeOnFieldComponent.TimeOnField);
         
-        attackManager.Attack = CardData?.Attack??0;
-        attackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
-        attackManager.Initialize();
+        AttackManager.Attack = CardData?.Attack??0;
+        AttackManager.HowManyAttacks = CardData?.HowManyAttacks??0;
+        AttackManager.Initialize();
         
-        costManager.Cost = CardData?.Cost??0;
-        costManager.Initialize();
+        CostManager.Cost = CardData?.Cost??0;
+        CostManager.Initialize();
 
         CustomMinimumSize = new Vector2(32, 48);
         UpdateVisuals();
 
         var draggable = this.FirstComponent<DraggableComponent>();
         if (draggable is null) return;
+        
+        draggable.CanStartDrag += () => !_isDraggingAnyCard;
+        
         draggable.DragStarted += _ =>
         {
+            _isDraggingAnyCard = true;
             StateMachine.ChangeState(new DraggingCard());
         };
         
         draggable.DragEnded += (_, _) =>
         {
             if (StateMachine.CurrentState is not DraggingCard) return;
+            
+            _isDraggingAnyCard = false;
                 
             IState<BaseCardTemplate> nextState = CheckIfValidDropPosition() ? new CardEnteredField(true) : new CardInHand();
             StateMachine.ChangeState(nextState);
@@ -125,7 +147,7 @@ public partial class BaseCardTemplate : Control
         tween.TweenCallback(onMidAttack ?? Callable.From(() => 
         {
             _ = PlaySound("Attack");
-            targetCard.TakeDamage(attackManager?.Attack ?? 0);
+            targetCard.TakeDamage(AttackManager?.Attack ?? 0);
             _ = targetCard.PlaySound("Hurt");
             _ = targetCard.PlayAnimation("Hurt");
         }));
@@ -137,7 +159,7 @@ public partial class BaseCardTemplate : Control
     
     public async Task Attack(BaseCardTemplate targetCard, Callable? onMidAttack = null)
     {
-        for (var i = 0; i < (attackManager?.HowManyAttacks ?? 1); i++)
+        for (var i = 0; i < (AttackManager?.HowManyAttacks ?? 1); i++)
         {
             await AttackOnce(targetCard, onMidAttack);
         }
@@ -151,7 +173,7 @@ public partial class BaseCardTemplate : Control
     
     public async Task PlaySound(string soundName)
     {
-        var soundPlayer = audioFolder?.GetNodeOrNull(soundName) as AudioStreamPlayer;
+        var soundPlayer = AudioFolder?.GetNodeOrNull(soundName) as AudioStreamPlayer;
         soundPlayer?.Play();
         if (soundPlayer != null)
         {
@@ -161,7 +183,7 @@ public partial class BaseCardTemplate : Control
 
     public async Task PlayAnimation(string animationName, float delay = 0.0f)
     {
-        if (animationFolder?.GetNodeOrNull(animationName) is AnimatedSprite2D animationPlayer)
+        if (AnimationFolder?.GetNodeOrNull(animationName) is AnimatedSprite2D animationPlayer)
         {
             if (delay > 0.0f)
             {
@@ -177,11 +199,11 @@ public partial class BaseCardTemplate : Control
 
     public void DisableArt()
     {
-        cardArt?.Hide();
-        cardOnFieldOverlay?.Hide();
-        cardBackground?.Hide();
-        cardName?.Hide();
-        cardDescription?.Hide();
+        CardArt?.Hide();
+        CardOnFieldOverlay?.Hide();
+        CardBackground?.Hide();
+        CardName?.Hide();
+        CardDescription?.Hide();
     }
     
     private void UpdateVisuals()
@@ -190,20 +212,20 @@ public partial class BaseCardTemplate : Control
         UpdateVisualDefense();
         UpdateVisualTimeOnField();
         
-        attackManager?.UpdateLabels(); 
-        if (!isCardInField) { costManager?.UpdateLabels(); }
+        AttackManager?.UpdateLabels(); 
+        if (!IsCardInField) { CostManager?.UpdateLabels(); }
 
-        cardName.Text = CardData?.Name ?? "";
-        cardArt.Texture = CardData?.Art;
-        cardDescription.GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description;
+        CardName!.Text = CardData?.Name ?? "";
+        CardArt!.Texture = CardData?.Art;
+        CardDescription!.GetNode<RichTextLabel>("DescriptionLabel").Text = CardData?.Description;
     }
 
     private void UpdateVisualHealth()
     {
         var healthComponent = this.GetOrAddComponent<HealthComponent>();
         
-        var healthLabel = cardOverlay.GetNode<RichTextLabel>("HealthLabel");
-        var healthOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel");
+        var healthLabel = CardOverlay!.GetNode<RichTextLabel>("HealthLabel");
+        var healthOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("HealthLabel");
         
         _UpdateTextLabels(healthLabel, healthOnFieldLabel, healthComponent.CurrentHealth, ref _timeSinceLastHealthUpdate);
     }
@@ -212,8 +234,8 @@ public partial class BaseCardTemplate : Control
     {
         var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
         
-        var defenseLabel = cardOverlay.GetNode<RichTextLabel>("DefenseLabel");
-        var defenseOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel");
+        var defenseLabel = CardOverlay!.GetNode<RichTextLabel>("DefenseLabel");
+        var defenseOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("DefenseLabel");
         
         _UpdateTextLabels(defenseLabel, defenseOnFieldLabel, defenseComponent.Defense, ref _timeSinceLastDefenseUpdate);
     }
@@ -222,8 +244,8 @@ public partial class BaseCardTemplate : Control
     {
         var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
         
-        var timeOnFieldLabel = cardOverlay.GetNode<RichTextLabel>("TimeLeftLabel");
-        var timeOnFieldOnFieldLabel = cardOnFieldOverlay.GetNode<RichTextLabel>("TimeLeftLabel");
+        var timeOnFieldLabel = CardOverlay!.GetNode<RichTextLabel>("TimeLeftLabel");
+        var timeOnFieldOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("TimeLeftLabel");
         
         _UpdateTextLabels(timeOnFieldLabel, timeOnFieldOnFieldLabel, timeOnFieldComponent.TimeOnField, ref _timeSinceLastTimeOnFieldUpdate);
     }
@@ -257,100 +279,70 @@ public partial class BaseCardTemplate : Control
         fieldLabel.Text = currentLabelValue.ToString();
     }
 
-    private void CheckForHold()
+    private void CheckAppearance()
     {
-        if (_isMouseDown && !isCheckingDescription && !isFlipped)
-        {
-            // Check if mouse moved too much
-            Vector2 currentPos = GetGlobalMousePosition();
-            float distance = _mouseDownPosition.DistanceTo(currentPos);
-            
-            if (distance < MOVE_TOLERANCE)
-            {
-                // Check if held long enough
-                double holdTime = (Time.GetTicksMsec() - _mouseDownTime) / 1000.0;
-                if (holdTime >= HOLD_DURATION)
-                {
-                    isCheckingDescription = true;
-                    _isMouseDown = false; // Prevent retriggering
-                }
-            }
-            else
-            {
-                // Mouse moved too far - cancel
-                _isMouseDown = false;
-            }
-        }
-    }
-
-    public void CheckApperance()
-    {
-        if (isHovering && !isFlipped && !isCardInField)
+        if (isHovering && !IsFlipped)
         {
             ZIndex = 3;
             Scale = new Vector2(4.2f, 4.2f);
         } else 
         { 
-            ZIndex = 1;
+            ZIndex = 0;
             Scale = new Vector2(4.0f, 4.0f); 
         }
-        if (isFlipped)
+        if (IsFlipped)
         {
-            cardBackside?.Show();
-        } else {cardBackside?.Hide();}
-        if (isCheckingDescription)
+            CardBackside?.Show();
+        } else {CardBackside?.Hide();}
+        if (IsCheckingDescription)
         {
-            cardDescription?.Show();
-        } else { cardDescription?.Hide(); }
+            CardDescription?.Show();
+        } else { CardDescription?.Hide(); }
     }
 
-    public void onMouseEntered()
+    private void OnMouseEntered()
     {
         isHovering = true;
-        if (!isFlipped && !isCardInField)
+        if (!IsFlipped)
         {
-            cardOverlay?.Show();
+            CardOverlay?.Show();
         }
     }
 
-    public void onMouseExited()
+    private void OnMouseExited()
     {
         isHovering = false;
-        cardOverlay?.Hide();
+        CardOverlay?.Hide();
 
-        if (isCheckingDescription)
-        {
-            isCheckingDescription = false;
-        }
-        
-        _isMouseDown = false;
+        IsCheckingDescription = false;
     }
 
     public void onAreaEntered(Area2D area)  // when card colides with either player or enemy placable position
     {
         if (area.IsInGroup("PlacablePosition"))
         {
-            nameOfAreaPlaceOurCardIn = area.Name;
-            whereIsAreaWePlaceOurCardIn = area.GlobalPosition;
+            PlacedAreaName = area.Name;
+            PlacedAreaLocation = area.GlobalPosition;
         }
         
-        isCardPlayable = turnManager.canPlayerPlaceCards;
+        IsCardPlayable = turnManager.canPlayerPlaceCards;
     }
 
     public void onAreaExited(Area2D area)
     {
         if (area.IsInGroup("PlacablePosition"))
         {
-            isCardPlayable = false;
+            IsCardPlayable = false;
         }
     }
 
     private bool CheckIfValidDropPosition()
     {
-        if (!isCardPlayable) return false;
+        if (!IsCardPlayable) return false;
+        if (PlacedAreaName is null) return false;
         
         FieldData fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
-        string numberOnly = Regex.Replace(nameOfAreaPlaceOurCardIn, @"[^\d]", "");
+        string numberOnly = Regex.Replace(PlacedAreaName, @"[^\d]", "");
         int laneIndex = int.Parse(numberOnly) - 1;
         
         GD.Print("Checking lane " + laneIndex + " for validity.");
@@ -358,4 +350,3 @@ public partial class BaseCardTemplate : Control
         return !fieldData.IsLaneOccupied(laneIndex, true);
     }
 }
-

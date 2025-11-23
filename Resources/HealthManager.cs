@@ -18,16 +18,16 @@ public partial class HealthManager : Node
     public void UpdateLabels()
     {
         // Labels are in the parent's overlay nodes
-        var parent = GetParent<BaseCardTemplate>();
+        var parent = GetParent<Witheringaway.Game_elements.Cards.BaseCardTemplate.BaseCardTemplate>();
         if (parent != null)
         {
-            parent.cardOverlay.GetNode<RichTextLabel>("HealthLabel").Text = CurrentHealth.ToString();
-            parent.cardOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = CurrentDefense.ToString();
-            parent.cardOverlay.GetNode<RichTextLabel>("TimeLeftLabel").Text = TimeLeftOnField.ToString();
+            parent.CardOverlay.GetNode<RichTextLabel>("HealthLabel").Text = CurrentHealth.ToString();
+            parent.CardOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = CurrentDefense.ToString();
+            parent.CardOverlay.GetNode<RichTextLabel>("TimeLeftLabel").Text = TimeLeftOnField.ToString();
             
-            parent.cardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel").Text = CurrentHealth.ToString();
-            parent.cardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = CurrentDefense.ToString();
-            parent.cardOnFieldOverlay.GetNode<RichTextLabel>("TimeLeftLabel").Text = TimeLeftOnField.ToString();
+            parent.CardOnFieldOverlay.GetNode<RichTextLabel>("HealthLabel").Text = CurrentHealth.ToString();
+            parent.CardOnFieldOverlay.GetNode<RichTextLabel>("DefenseLabel").Text = CurrentDefense.ToString();
+            parent.CardOnFieldOverlay.GetNode<RichTextLabel>("TimeLeftLabel").Text = TimeLeftOnField.ToString();
         }
     }
 }

@@ -10,6 +10,9 @@ public partial class DraggableComponent : Component
     public delegate void DragEventHandler(Vector2 oldPosition, Vector2 newPosition);
     public delegate void DragEndedEventHandler(Vector2 initialPosition, Vector2 finalPosition);
     
+    public delegate bool CanStartDragEventHandler();
+    
+    public event CanStartDragEventHandler? CanStartDrag;
     public event DragStartedEventHandler? DragStarted;
     public event DragEventHandler? DragEvent;
     public event DragEndedEventHandler? DragEnded;
@@ -29,6 +32,8 @@ public partial class DraggableComponent : Component
     [Export] private NodePath? _dragContainerPath;
     
     public Control? DragContainer => GetNodeOrNull<Control>(_dragContainerPath);
+    
+    public bool IsDragging => _isDragging;
 
     private bool _isMouseDown;
     private ulong _mouseDownTime;
@@ -64,6 +69,8 @@ public partial class DraggableComponent : Component
     private void _StartDragging()
     {
         if (_isDragging) return;
+        if (CanStartDrag != null && !CanStartDrag.Invoke()) return;
+        
         _isDragging = true;
         DragStarted?.Invoke(_initialNodePosition);
     }

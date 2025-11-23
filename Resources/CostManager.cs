@@ -13,10 +13,10 @@ public partial class CostManager : Node
 
     public void UpdateLabels()
     {
-        var parent = GetParent<BaseCardTemplate>();
+        var parent = GetParent<Witheringaway.Game_elements.Cards.BaseCardTemplate.BaseCardTemplate>();
         if (parent != null)
         {
-            parent.cardOverlay.GetNode<RichTextLabel>("CostLabel").Text = CurrentCost.ToString();
+            parent.CardOverlay.GetNode<RichTextLabel>("CostLabel").Text = CurrentCost.ToString();
         }
     }
 }

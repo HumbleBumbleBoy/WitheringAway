@@ -1,6 +1,9 @@
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.lib;
+
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
 
 public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
 {
@@ -13,9 +16,8 @@ public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
         string positionNumber = Regex.Replace(nameOfPosition, @"[^\d]", "");
         int indexOfLane = int.Parse(positionNumber) - 1;
         fieldData.RemoveCardOnSpecificLane(indexOfLane, isPlayer);
-
-        card.GetParent().RemoveChild(card);
-        card.QueueFree();
+        
+        DeathSequence(card);
 
         /*
     if ( has on death abbility )
@@ -26,5 +28,18 @@ public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
     */
 
         return null;
+    }
+    
+    private static async void DeathSequence(BaseCardTemplate card)
+    {
+        card.Wait(0.2f).ContinueWith(_ => card.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
+
+        await Task.WhenAll(
+            card.PlayAnimation("Dying", 0.2f),
+            card.PlaySound("Death")
+        );
+        
+        card.GetParent().RemoveChild(card);
+        card.QueueFree();
     }
 }

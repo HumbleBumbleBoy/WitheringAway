@@ -1,6 +1,6 @@
 using Godot;
 using System;
 
-public partial class Rats : BaseCardTemplate
+public partial class Rats : Witheringaway.Game_elements.Cards.BaseCardTemplate.BaseCardTemplate
 {
 }

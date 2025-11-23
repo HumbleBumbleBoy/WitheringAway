@@ -1,4 +1,5 @@
 using Godot;
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
 using Witheringaway.Game_elements.lib;
 
 public class DraggingCard : IState<BaseCardTemplate>
@@ -7,7 +8,7 @@ public class DraggingCard : IState<BaseCardTemplate>
 
     public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
-        card.audioFolder?.GetNode<AudioStreamPlayer>("PickUp").Play();
+        card.AudioFolder?.GetNode<AudioStreamPlayer>("PickUp").Play();
         _originalPosition = card.GlobalPosition; // Save the original position
 
         return null;

@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Godot;
 using Witheringaway.Game_elements.lib;
 
+using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+
 public class Combat : IState<TurnManager>
 {
     private FieldData? fieldData;

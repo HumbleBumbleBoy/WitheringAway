@@ -283,9 +283,10 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5200627, 0.3732384)
 mouse_filter = 2
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("23_qwd4a")
 theme_override_font_sizes/normal_font_size = 32
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -311,9 +312,10 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5200627, 0.3732384)
 mouse_filter = 2
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("23_qwd4a")
 theme_override_font_sizes/normal_font_size = 32
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 

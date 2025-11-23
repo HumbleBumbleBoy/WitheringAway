@@ -204,10 +204,10 @@ texture = ExtResource("6_yht3s")
 [node name="AttackLabel" type="RichTextLabel" parent="CardOnFieldOverlay"]
 z_index = 2
 clip_contents = false
-offset_left = 5.833333
-offset_top = 12.500001
-offset_right = 19.833332
-offset_bottom = 30.500004
+offset_left = 4.1666665
+offset_top = 12.916668
+offset_right = 29.166666
+offset_bottom = 30.916672
 scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme_override_constants/outline_size = 3
@@ -422,7 +422,7 @@ metadata/_edit_lock_ = true
 
 [node name="Trick" type="Sprite2D" parent="."]
 visible = false
-z_index = 1999
+z_index = 10
 position = Vector2(28.25, 3.75)
 scale = Vector2(0.38867188, 0.38867188)
 texture = ExtResource("30_8rn0r")

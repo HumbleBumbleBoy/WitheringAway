@@ -16,13 +16,15 @@ script = ExtResource("5_e5th7")
 Art = ExtResource("4_ed8uw")
 Name = "Focus"
 Description = "Take a moment to think (draw 2 cards)"
+Cost = 2
 metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 
 [node name="Focus" instance=ExtResource("1_hgk3a")]
 script = ExtResource("2_imf3s")
 CanPlaceOnFriendlyField = true
 CanPlaceOnEnemyField = true
-CanPlaceOnEnemy = false
-CanPlaceOnPlayer = false
+CanPlaceOnPlayer = true
+CanPlaceOnEnemy = true
+IsGeneralEffect = true
 TrickEffects = [SubResource("Resource_sf0vq")]
 CardData = SubResource("Resource_40s3p")

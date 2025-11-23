@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=36 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/Units/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://bjsejw128o0t5" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes2.png" id="21_5lrgv"]
 [ext_resource type="Texture2D" uid="uid://bfg6sbkw24r5b" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes3.png" id="22_760eh"]
 [ext_resource type="Texture2D" uid="uid://d078f87b6inbk" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes4.png" id="23_64roj"]
+[ext_resource type="AudioStream" uid="uid://behyt6ah8e5yv" path="res://assets/audio/FailedToPlace.wav" id="24_lw6tc"]
 [ext_resource type="Texture2D" uid="uid://qinn3qpn8vmv" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/Dying/TurnToAshes5.png" id="24_na3e1"]
 [ext_resource type="Texture2D" uid="uid://422u7q7q4fk" path="res://Game elements/Cards/Units/BaseCardTemplate/Trick.png" id="30_8rn0r"]
 
@@ -176,6 +177,9 @@ bus = &"SFX"
 stream = ExtResource("11_fsaho")
 volume_db = -5.0
 bus = &"SFX"
+
+[node name="FailedToPlace" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("24_lw6tc")
 
 [node name="CardBackside" type="Sprite2D" parent="."]
 visible = false

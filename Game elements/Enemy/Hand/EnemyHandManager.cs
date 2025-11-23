@@ -16,6 +16,15 @@ public partial class EnemyHandManager : HandManager
     public override void _Ready()
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
+        EnemyHandManager = this;
+    }
+
+    public override void _ExitTree()
+    {
+        if (EnemyHandManager == this)
+        {
+            EnemyHandManager = null!;
+        }
     }
 
     public override bool HasMoreCards()

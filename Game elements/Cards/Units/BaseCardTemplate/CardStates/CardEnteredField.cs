@@ -12,15 +12,7 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
 
     public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
-        var handManager = isPlayer
-            ? card.GetTree().GetFirstNodeInGroup("PlayerHandManager") as HandManager
-            : card.GetTree().GetFirstNodeInGroup("EnemyHandManager") as HandManager;
-        
-        if (handManager == null)
-        {
-            GD.PrintErr("HandManager not found in the scene tree.");
-            return null;
-        }
+        var handManager = HandManager.GetHandManager(isPlayer);
         
         GD.Print(card.Name + " entered field");
         card.IsCardInField = true;
@@ -43,7 +35,7 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         Field.GetNode<Control>(fieldSide).GetNode<HBoxContainer>(fieldArea).GetNode<VBoxContainer>("FrontLane").GetNode<Control>("Position" + numberOnly).AddChild(card);
         card.Position = Vector2.Zero;
 
-        var fieldData = card.GetNode<FieldData>("/root/GameScene/FieldData");
+        var fieldData = FieldData.Instance;
         fieldData.PlayCardOnSpecificLane(indexOfLane, card, isPlayer);
 
         card.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
@@ -54,6 +46,22 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         card.CardOverlay?.Hide();
         card.CardName?.Hide();
 
+        card.OnSelfEnterField(isPlayer);
+
+        var friendlies = fieldData.GetCardsOnField(isPlayer);
+        for (var lane = 0; lane < friendlies.Length; lane++)
+        {
+            var friendly = friendlies[lane];
+            friendly?.OnFriendlyEnterField(card, lane);
+        }
+
+        var enemies = fieldData.GetCardsOnField(!isPlayer);
+        for (var lane = 0; lane < enemies.Length; lane++)
+        {
+            var enemy = enemies[lane];
+            enemy?.OnEnemyEnterField(card, lane);
+        }
+        
         return null;
     }
 

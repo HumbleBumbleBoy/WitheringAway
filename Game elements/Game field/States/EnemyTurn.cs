@@ -72,8 +72,8 @@ public class EnemyTurn : IState<TurnManager>
     private async Task PlaceAllCards(TurnManager turnManager)
     {
         var enemyPlacablePositions = turnManager.GetTree().GetNodesInGroup("EnemyPlacablePosition");
-        var playerDuelist = (turnManager.GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist)!;
-        var enemyDuelist = (turnManager.GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist)!;
+        var playerDuelist = Duelist.PlayerDuelist;
+        var enemyDuelist = Duelist.EnemyDuelist;
         
         {
             // When the player's health is low, try to kill them as fast as possible

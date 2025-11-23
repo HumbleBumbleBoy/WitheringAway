@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ca7dwerbds5x4"]
+[gd_scene load_steps=35 format=3 uid="uid://ca7dwerbds5x4"]
 
 [ext_resource type="Texture2D" uid="uid://cxxelvkw43fvc" path="res://Game elements/GameScene/Field/Field1.png" id="1_e0nab"]
 [ext_resource type="Texture2D" uid="uid://cps7lp5eg0cvf" path="res://Game elements/GameScene/PlayerHeroAnimation/Player1.png" id="2_foqq5"]
@@ -97,6 +97,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8yk8"]
+size = Vector2(95, 110.25)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fuf8r"]
 animations = [{
@@ -264,6 +267,12 @@ script = ExtResource("19_bul8f")
 MaxHealth = 20
 metadata/_custom_type_script = "uid://bdwv0wmnddn21"
 
+[node name="Area2D" type="Area2D" parent="PlayerSide/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/Player/Area2D"]
+position = Vector2(-1.25, 4.875)
+shape = SubResource("RectangleShape2D_a8yk8")
+
 [node name="EnemySide" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -398,3 +407,9 @@ metadata/_custom_type_script = "uid://cibcsysyk5auq"
 script = ExtResource("19_bul8f")
 MaxHealth = 20
 metadata/_custom_type_script = "uid://bdwv0wmnddn21"
+
+[node name="Area2D" type="Area2D" parent="EnemySide/Enemy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/Enemy/Area2D"]
+position = Vector2(-1.25, 4.875)
+shape = SubResource("RectangleShape2D_a8yk8")

@@ -29,8 +29,8 @@ public class Transition : IState<TurnManager>
         playerHand.GetTopCard();
         GD.Print("Player drew a card.");
         
-        var playerDuelist = (context.GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist)!;
-        var enemyDuelist = (context.GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist)!;
+        var playerDuelist = Duelist.PlayerDuelist;
+        var enemyDuelist = Duelist.EnemyDuelist;
         
         playerDuelist.GiveSouls(1);
         enemyDuelist.GiveSouls(1);

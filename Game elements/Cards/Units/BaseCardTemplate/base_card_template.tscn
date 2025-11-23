@@ -93,7 +93,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
-size = Vector2(20, 20.25)
+size = Vector2(32, 47.5)
 
 [node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
 layout_mode = 3
@@ -415,7 +415,7 @@ metadata/_edit_lock_ = true
 position = Vector2(0, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(16, 23.5)
+position = Vector2(16, 22.25)
 shape = SubResource("RectangleShape2D_gdwny")
 metadata/_edit_lock_ = true
 

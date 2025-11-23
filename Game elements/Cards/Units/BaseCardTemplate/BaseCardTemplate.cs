@@ -13,7 +13,6 @@ public partial class BaseCardTemplate : Control
     // hacky ass shit
     private static bool _isDraggingAnyCard;
     
-    
     [Export] public BaseCard? CardData { get; set; }
     [Export] public Sprite2D? CardOverlay;
     [Export] public Sprite2D? CardArt;
@@ -46,6 +45,18 @@ public partial class BaseCardTemplate : Control
     private float _timeSinceLastTimeOnFieldUpdate;
     private float _timeSinceLastAttackUpdate;
     private float _timeSinceLastAttackAmountUpdate;
+    
+    private (RichTextLabel hand, RichTextLabel field) _visualHealthLabels = (default, default);
+    private (RichTextLabel hand, RichTextLabel field) _visualDefenseLabels = (default, default);
+    private (RichTextLabel hand, RichTextLabel field) _visualTimeOnFieldLabels = (default, default);
+    private (RichTextLabel hand, RichTextLabel field) _visualAttackLabels = (default, default);
+    private (RichTextLabel hand, RichTextLabel field) _visualAttackAmountLabels = (default, default);
+    
+    private HealthComponent _healthComponent = null!;
+    private DefenseComponent _defenseComponent = null!;
+    private TimeOnFieldComponent _timeOnFieldComponent = null!;
+    private AttackComponent _attackComponent = null!;
+    private CostComponent _costComponent = null!;
 
     public BaseCardTemplate()
     {
@@ -74,25 +85,31 @@ public partial class BaseCardTemplate : Control
 
     public override void _Ready()
     {
+        _visualHealthLabels = (CardOverlay!.GetNode<RichTextLabel>("HealthLabel"), CardOnFieldOverlay!.GetNode<RichTextLabel>("HealthLabel"));
+        _visualDefenseLabels = (CardOverlay!.GetNode<RichTextLabel>("DefenseLabel"), CardOnFieldOverlay!.GetNode<RichTextLabel>("DefenseLabel"));
+        _visualTimeOnFieldLabels = (CardOverlay!.GetNode<RichTextLabel>("TimeLeftLabel"), CardOnFieldOverlay!.GetNode<RichTextLabel>("TimeLeftLabel"));
+        _visualAttackLabels = (CardOverlay!.GetNode<RichTextLabel>("AttackLabel"), CardOnFieldOverlay!.GetNode<RichTextLabel>("AttackLabel"));
+        _visualAttackAmountLabels = (CardOverlay!.GetNode<RichTextLabel>("AttackAmountLabel"), CardOnFieldOverlay!.GetNode<RichTextLabel>("AttackAmountLabel"));
+        
         CardOnFieldOverlay?.Hide();
         
         turnManager = GetTree().CurrentScene.GetNode<TurnManager>("TurnManager");
 
-        var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        healthComponent.SetMaxHealth(CardData?.Health ?? healthComponent.MaxHealth);
+        _healthComponent = this.GetOrAddComponent<HealthComponent>();
+        _healthComponent.SetMaxHealth(CardData?.Health ?? _healthComponent.MaxHealth);
         
-        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
-        defenseComponent.SetDefense(CardData?.Defense ?? defenseComponent.Defense);
+        _defenseComponent = this.GetOrAddComponent<DefenseComponent>();
+        _defenseComponent.SetDefense(CardData?.Defense ?? _defenseComponent.Defense);
 
-        var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
-        timeOnFieldComponent.SetTimeOnField(CardData?.TimeLeftOnField ?? timeOnFieldComponent.TimeOnField);
+        _timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
+        _timeOnFieldComponent.SetTimeOnField(CardData?.TimeLeftOnField ?? _timeOnFieldComponent.TimeOnField);
         
-        var costComponent = this.GetOrAddComponent<CostComponent>();
-        costComponent.SetCost(CardData?.Cost ?? costComponent.Cost);
+        _costComponent = this.GetOrAddComponent<CostComponent>();
+        _costComponent.SetCost(CardData?.Cost ?? _costComponent.Cost);
         
-        var attackComponent = this.GetOrAddComponent<AttackComponent>();
-        attackComponent.SetAttackDamage(CardData?.Attack ?? attackComponent.AttackDamage);
-        attackComponent.SetAttackCount(CardData?.HowManyAttacks ?? attackComponent.AttackCount);
+        _attackComponent = this.GetOrAddComponent<AttackComponent>();
+        _attackComponent.SetAttackDamage(CardData?.Attack ?? _attackComponent.AttackDamage);
+        _attackComponent.SetAttackCount(CardData?.HowManyAttacks ?? _attackComponent.AttackCount);
         
         CustomMinimumSize = new Vector2(32, 48);
         CheckAppearance();
@@ -117,8 +134,7 @@ public partial class BaseCardTemplate : Control
 
             if (IsValidDropPosition())
             {
-                var duelist = GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
-                duelist?.TakeSouls(CardData?.Cost ?? 0);
+                Duelist.PlayerDuelist.TakeSouls(CardData?.Cost ?? 0);
                 StateMachine.ChangeState(new CardEnteredField(true));
             }
             else
@@ -171,29 +187,23 @@ public partial class BaseCardTemplate : Control
     
     public int GetCurrentHealth()
     {
-        var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        return healthComponent.CurrentHealth;
+        return _healthComponent.CurrentHealth;
     }
     
     public int GetAttackDamage()
     {
-        var attackComponent = this.GetOrAddComponent<AttackComponent>();
-        return attackComponent.AttackDamage;
+        return _attackComponent.AttackDamage;
     }
     
     public int GetAttackCount()
     {
-        var attackComponent = this.GetOrAddComponent<AttackComponent>();
-        return attackComponent.AttackCount;
+        return _attackComponent.AttackCount;
     }
     
     public void TakeDamage(int damage)
     {
-        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
-        var remainingDamage = defenseComponent.AbsorbDamage(damage);
-        
-        var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        healthComponent.TakeDamage(remainingDamage);
+        var remainingDamage = _defenseComponent.AbsorbDamage(damage);
+        _healthComponent.TakeDamage(remainingDamage);
         
         var originalPosition = GlobalPosition;
         var tween = CreateTween();
@@ -203,6 +213,8 @@ public partial class BaseCardTemplate : Control
         
         PlaySound("Hurt");
         PlayAnimation("Hurt");
+        
+        tween.TweenCallback(Callable.From(() => tween.Dispose()));
     }
     
     public async Task AttackOnce(Control target, Callable? onMidAttack = null)
@@ -215,6 +227,8 @@ public partial class BaseCardTemplate : Control
         tween.TweenCallback(onMidAttack ?? _AttackCard(target) ?? Callable.From(() => {}));
         tween.TweenProperty(this, "global_position", originalPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
         await ToSignal(tween, "finished");
+        
+        tween.Dispose();
 
         await this.Wait(0.3f);
     }
@@ -243,8 +257,7 @@ public partial class BaseCardTemplate : Control
 
     public bool ShouldDie()
     {
-        var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        return healthComponent.CurrentHealth <= 0;
+        return _healthComponent.CurrentHealth <= 0;
     }
     
     public async Task PlaySound(string soundName)
@@ -281,7 +294,15 @@ public partial class BaseCardTemplate : Control
         CardName?.Hide();
         CardDescription?.Hide();
     }
-    
+
+    public override void _GuiInput(InputEvent @event)
+    {
+        var draggable = this.FirstComponent<DraggableComponent>();
+        draggable?.OnDragControlInput(@event);
+        
+        AcceptEvent();
+    }
+
     private void UpdateVisuals()
     {
         UpdateVisualHealth();
@@ -297,56 +318,31 @@ public partial class BaseCardTemplate : Control
 
     private void UpdateVisualHealth()
     {
-        var healthComponent = this.GetOrAddComponent<HealthComponent>();
-        
-        var healthLabel = CardOverlay!.GetNode<RichTextLabel>("HealthLabel");
-        var healthOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("HealthLabel");
-        
-        _UpdateTextLabels(healthLabel, healthOnFieldLabel, healthComponent.CurrentHealth, ref _timeSinceLastHealthUpdate);
+        _UpdateTextLabels(_visualHealthLabels.hand, _visualHealthLabels.field, _healthComponent.CurrentHealth, ref _timeSinceLastHealthUpdate);
     }
     
     private void UpdateVisualDefense()
     {
-        var defenseComponent = this.GetOrAddComponent<DefenseComponent>();
-        
-        var defenseLabel = CardOverlay!.GetNode<RichTextLabel>("DefenseLabel");
-        var defenseOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("DefenseLabel");
-        
-        _UpdateTextLabels(defenseLabel, defenseOnFieldLabel, defenseComponent.Defense, ref _timeSinceLastDefenseUpdate);
+        _UpdateTextLabels(_visualDefenseLabels.hand, _visualDefenseLabels.field, _defenseComponent.Defense, ref _timeSinceLastDefenseUpdate);
     }
     
     private void UpdateVisualTimeOnField()
     {
-        var timeOnFieldComponent = this.GetOrAddComponent<TimeOnFieldComponent>();
-        
-        var timeOnFieldLabel = CardOverlay!.GetNode<RichTextLabel>("TimeLeftLabel");
-        var timeOnFieldOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("TimeLeftLabel");
-        
-        _UpdateTextLabels(timeOnFieldLabel, timeOnFieldOnFieldLabel, timeOnFieldComponent.TimeOnField, ref _timeSinceLastTimeOnFieldUpdate);
+        _UpdateTextLabels(_visualTimeOnFieldLabels.hand, _visualTimeOnFieldLabels.field, _timeOnFieldComponent.TimeOnField, ref _timeSinceLastTimeOnFieldUpdate);
     }
     
     private void UpdateVisualCost()
     {
-        var costComponent = this.GetOrAddComponent<CostComponent>();
-        
         var costLabel = CardOverlay!.GetNode<RichTextLabel>("CostLabel");
         
-        costLabel.Text = costComponent.Cost.ToString();
+        costLabel.Text = _costComponent.Cost.ToString();
     }
 
     private void UpdateVisualDamage()
     {
-        var attackComponent = this.GetOrAddComponent<AttackComponent>();
+        _UpdateTextLabels(_visualAttackLabels.hand, _visualAttackLabels.field, _attackComponent.AttackDamage, ref _timeSinceLastAttackUpdate);
         
-        var attackLabel = CardOverlay!.GetNode<RichTextLabel>("AttackLabel");
-        var attackOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("AttackLabel");
-        
-        _UpdateTextLabels(attackLabel, attackOnFieldLabel, attackComponent.AttackDamage, ref _timeSinceLastAttackUpdate);
-        
-        var attackAmountLabel = CardOverlay!.GetNode<RichTextLabel>("AttackAmountLabel");
-        var attackAmountOnFieldLabel = CardOnFieldOverlay!.GetNode<RichTextLabel>("AttackAmountLabel");
-        
-        _UpdateTextLabels(attackAmountLabel, attackAmountOnFieldLabel, attackComponent.AttackCount, ref _timeSinceLastAttackAmountUpdate);
+        _UpdateTextLabels(_visualAttackAmountLabels.hand, _visualAttackAmountLabels.field, _attackComponent.AttackCount, ref _timeSinceLastAttackAmountUpdate);
     }
 
     private void _UpdateTextLabels(RichTextLabel overlayLabel, RichTextLabel fieldLabel, int value, ref float timeElapsed)
@@ -440,8 +436,7 @@ public partial class BaseCardTemplate : Control
         if (!IsCardPlayable) return false;
         if (PlacedAreaName is null) return false;
         
-        var playerDuelist = GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
-        if (playerDuelist is null) return false;
+        var playerDuelist = Duelist.PlayerDuelist;
         if (playerDuelist.CurrentSouls < (CardData?.Cost ?? 0)) return false;
         
         var fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
@@ -471,13 +466,16 @@ public partial class BaseCardTemplate : Control
         var tree = GetTree();
         foreach (var node in tree.GetNodesInGroup("PlacablePosition"))
         {
-            if (node is not Node2D placeablePosition) continue;
-            var area2D = placeablePosition.FindNodeByType<Area2D>();
-            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == false) return null; 
+            if (node is not Area2D position) continue;
+            var overlaps = position.OverlapsArea(GetNode<Area2D>("DetectionArea"));
+            if (!overlaps)
+            {
+                return null;
+            } 
             
-            var numberOnly = NumberRegex().Replace(placeablePosition.Name, "");
+            var numberOnly = NumberRegex().Replace(position.Name, "");
             var laneIndex = int.Parse(numberOnly) - 1;
-            return (placeablePosition, laneIndex);
+            return (position, laneIndex);
         }
 
         return null;
@@ -488,13 +486,16 @@ public partial class BaseCardTemplate : Control
         var tree = GetTree();
         foreach (var node in tree.GetNodesInGroup("EnemyPlacablePosition"))
         {
-            if (node is not Node2D placeablePosition) continue;
-            var area2D = placeablePosition.FindNodeByType<Area2D>();
-            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == false) return null; 
+            if (node is not Area2D position) continue;
+            var overlaps = position.OverlapsArea(GetNode<Area2D>("DetectionArea"));
+            if (!overlaps)
+            {
+                return null;
+            } 
             
-            var numberOnly = NumberRegex().Replace(placeablePosition.Name, "");
+            var numberOnly = NumberRegex().Replace(position.Name, "");
             var laneIndex = int.Parse(numberOnly) - 1;
-            return (placeablePosition, laneIndex);
+            return (position, laneIndex);
         }
 
         return null;
@@ -508,18 +509,18 @@ public partial class BaseCardTemplate : Control
         if (playerDuelist != null)
         {
             var area2D = enemyDuelist.FindNodeByType<Area2D>();
-            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == true)
+            if (area2D?.OverlapsArea(GetNode<Area2D>("DetectionArea")) == true)
             {
-                return GetTree().GetFirstNodeInGroup("PlayerDuelist") as Duelist;
+                return Duelist.PlayerDuelist;
             }
         }
         
         if (enemyDuelist != null)
         {
             var area2D = enemyDuelist.FindNodeByType<Area2D>();
-            if (area2D?.OverlapsArea(this.FindNodeByType<Area2D>()) == true)
+            if (area2D?.OverlapsArea(GetNode<Area2D>("DetectionArea")) == true)
             {
-                return GetTree().GetFirstNodeInGroup("EnemyDuelist") as Duelist;
+                return Duelist.EnemyDuelist;
             }
         }
         

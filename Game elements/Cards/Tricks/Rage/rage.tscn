@@ -17,15 +17,16 @@ metadata/_custom_type_script = "uid://cyijiqug3galh"
 script = ExtResource("4_t4e5f")
 Art = ExtResource("4_k1rfa")
 Name = "Rage"
-Description = "Hatered (+1/+1 and a bonus attack)"
-Cost = 4
+Description = "Hatered (+1/+1 and it attacks 1 more time)"
+Cost = 3
 metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 
 [node name="Rage" instance=ExtResource("1_1ftl2")]
 script = ExtResource("2_k1rfa")
 CanPlaceOnFriendlyField = true
 CanPlaceOnEnemyField = false
-CanPlaceOnEnemy = false
 CanPlaceOnPlayer = false
+CanPlaceOnEnemy = false
+IsGeneralEffect = false
 TrickEffects = [SubResource("Resource_yyk1u")]
 CardData = SubResource("Resource_ytedt")

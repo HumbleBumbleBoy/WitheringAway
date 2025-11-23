@@ -1,8 +1,6 @@
-using Godot;
-using System;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 
-public partial class Drunkyard : Witheringaway.Game_elements.Cards.Units.BaseCardTemplate.BaseCardTemplate
+public partial class Drunkyard : BaseCardTemplate
 {
     // +1ATK every time it deals damage and survives
 

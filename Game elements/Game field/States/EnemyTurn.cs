@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Godot;
-using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 

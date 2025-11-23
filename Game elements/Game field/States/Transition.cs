@@ -3,7 +3,7 @@ using Witheringaway.Game_elements.components;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 
-using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 
 public class Transition : IState<TurnManager>
 {

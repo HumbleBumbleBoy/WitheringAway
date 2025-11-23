@@ -16,7 +16,7 @@ public partial class AttackManager : Node
 
     public void UpdateLabels()
     {
-        var parent = GetParent<Witheringaway.Game_elements.Cards.BaseCardTemplate.BaseCardTemplate>();
+        var parent = GetParent<Witheringaway.Game_elements.Cards.Units.BaseCardTemplate.BaseCardTemplate>();
         if (parent != null)
         {
             parent.CardOverlay.GetNode<RichTextLabel>("AttackLabel").Text = CurrentAttack.ToString();

@@ -1,6 +1,6 @@
 ﻿using System;
 using Godot;
-using Witheringaway.Game_elements.Cards.BaseCardTemplate;
+using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 
 namespace Witheringaway.Game_elements.lib.manager;
 

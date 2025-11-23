@@ -137,10 +137,11 @@ public partial class BaseCardTemplate : Control
             
             _isDraggingAnyCard = false;
 
-            if (IsValidDropPosition())
+            var isValid = IsValidDropPosition();
+            if (isValid.Item1)
             {
                 Duelist.PlayerDuelist.TakeSouls(CardData?.Cost ?? 0);
-                StateMachine.ChangeState(new CardEnteredField(true));
+                StateMachine.ChangeState(new CardEnteredField(true, isValid.Item2));
             }
             else
             {
@@ -507,11 +508,10 @@ public partial class BaseCardTemplate : Control
     {
         if (area.IsInGroup("PlacablePosition"))
         {
+            IsCardPlayable = true;
             PlacedAreaName = area.Name;
             PlacedAreaLocation = area.GlobalPosition;
         }
-        
-        IsCardPlayable = turnManager.canPlayerPlaceCards;
     }
 
     public void onAreaExited(Area2D area)
@@ -524,19 +524,19 @@ public partial class BaseCardTemplate : Control
         }
     }
 
-    protected virtual bool IsValidDropPosition()
+    protected virtual (bool, int) IsValidDropPosition()
     {
-        if (!IsCardPlayable) return false;
-        if (PlacedAreaName is null) return false;
+        if (!IsCardPlayable) return (false, 0);
+        if (PlacedAreaName is null) return (false, 0);
         
         var playerDuelist = Duelist.PlayerDuelist;
-        if (playerDuelist.CurrentSouls < (CardData?.Cost ?? 0)) return false;
+        if (playerDuelist.CurrentSouls < (CardData?.Cost ?? 0)) return (false, 0);
         
         var fieldData = GetNode<FieldData>("/root/GameScene/FieldData");
         var numberOnly = NumberRegex().Replace(PlacedAreaName, "");
         var laneIndex = int.Parse(numberOnly) - 1;
         
-        return !fieldData.IsLaneOccupied(laneIndex, true);
+        return (!fieldData.IsLaneOccupied(laneIndex, true), laneIndex);
     }
     
     public virtual void OnCombatEnd(int lane, bool isPlayer)

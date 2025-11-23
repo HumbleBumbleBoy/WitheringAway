@@ -1,11 +1,10 @@
 using System.Text.RegularExpressions;
 using Godot;
-using Witheringaway.Game_elements.Cards;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 
-public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
+public class CardEnteredField(bool isPlayer, int? laneIndex = null) : IState<BaseCardTemplate>
 {   
     public Node2D? Field;
     public int indexOfLane;
@@ -25,10 +24,19 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         handManager.RemoveCardFromHand(card);
         
         // NOW reparent to field
-        string areaName = card.PlacedAreaName;
-        string numberOnly = Regex.Replace(areaName, @"[^\d]", "");
-        indexOfLane = int.Parse(numberOnly)-1;
-        
+        string numberOnly = "";
+        if (laneIndex is not null)
+        {
+            numberOnly = (laneIndex.Value + 1).ToString();
+            indexOfLane = laneIndex.Value;
+        }
+        else
+        {
+            string areaName = card.PlacedAreaName;
+            numberOnly = Regex.Replace(areaName, @"[^\d]", "");
+            indexOfLane = int.Parse(numberOnly) - 1;
+        }
+
         var fieldSide = isPlayer ? "PlayerSide" : "EnemySide";
         var fieldArea = isPlayer ? "PlayerArea" : "EnemyArea";
         

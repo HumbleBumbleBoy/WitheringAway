@@ -101,9 +101,9 @@ public partial class TrickCard : BaseCardTemplate
         return true;
     }
 
-    protected override bool IsValidDropPosition()
+    protected override (bool, int) IsValidDropPosition()
     {
-        return false; // Trick cards cannot be placed on the field
+        return (false, 0); // Trick cards cannot be placed on the field
     }
 
     protected override void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)

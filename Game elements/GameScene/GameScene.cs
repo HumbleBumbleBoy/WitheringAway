@@ -6,6 +6,7 @@ public partial class GameScene : Node2D
 {
     [Export] public HBoxContainer? inGameMenu;
     [Export] private TurnManager? turnManager;
+    [Export] private Sprite2D? winScreen;
 
     private PlayerHandManager? playerHandManager;
     private PlayerDeckManager? playerDeckManager;
@@ -32,5 +33,11 @@ public partial class GameScene : Node2D
     {
         GetNode<AudioStreamPlayer>("Click").Play();
         turnManager?.StateMachine.ChangeState(new EnemyTurn());
+    }
+
+    private void OnBackToMainMenuButtonPressed()
+    {
+        winScreen?.Hide();
+        GetTree().ChangeSceneToFile("res://Game elements/UI/Main menu/main_menu.tscn");
     }
 }

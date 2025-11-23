@@ -7,7 +7,7 @@ using Witheringaway.Game_elements.lib.manager;
 
 namespace Witheringaway.Game_elements.Cards;
 
-public abstract partial class TrickCard : BaseCardTemplate
+public partial class TrickCard : BaseCardTemplate
 {
     [Export] public bool CanPlaceOnFriendlyField;
     [Export] public bool CanPlaceOnEnemyField;

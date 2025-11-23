@@ -10,6 +10,10 @@ public partial class TimeOnFieldComponent : Component
     
     public event TimeOnFieldChangedEventHandler? OnTimeOnFieldChanged;
 
+    public delegate void DeathEventHandler();
+
+    public event DeathEventHandler? OnDeath;
+
     public int TimeOnField { get; private set; }
     
     public void SetTimeOnField(int amount)
@@ -19,6 +23,11 @@ public partial class TimeOnFieldComponent : Component
         var oldTimeOnField = TimeOnField;
         TimeOnField = amount;
         OnTimeOnFieldChanged?.Invoke(oldTimeOnField, TimeOnField);
+
+        if (amount <= 0)  // i tried to do it idk doesnt work sob
+        {
+            OnDeath?.Invoke();
+        }
     }
     
     public void AddTimeOnField(int amount)

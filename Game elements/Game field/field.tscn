@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ca7dwerbds5x4"]
+[gd_scene load_steps=27 format=3 uid="uid://ca7dwerbds5x4"]
 
 [ext_resource type="Texture2D" uid="uid://cxxelvkw43fvc" path="res://Game elements/GameScene/Field/Field1.png" id="1_e0nab"]
 [ext_resource type="Texture2D" uid="uid://cps7lp5eg0cvf" path="res://Game elements/GameScene/PlayerHeroAnimation/Player1.png" id="2_foqq5"]
@@ -15,6 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://721x23xdooqh" path="res://Game elements/GameScene/EnemyHeroAnimation/Enemy4.png" id="8_e0nab"]
 [ext_resource type="Texture2D" uid="uid://ck51cbdckhrsp" path="res://Game elements/GameScene/EnemyHeroAnimation/Enemy1.png" id="9_gj65n"]
 [ext_resource type="Texture2D" uid="uid://dk87dqaejnbl6" path="res://Game elements/GameScene/Block/Block0.png" id="10_6wm5a"]
+[ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="10_il5rd"]
+[ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="11_u54p7"]
+[ext_resource type="Texture2D" uid="uid://dpsxeqgb6apoe" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage3.png" id="12_bul8f"]
+[ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
+[ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
+[ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw8lp"]
 animations = [{
@@ -55,6 +61,32 @@ animations = [{
 "texture": ExtResource("5_6wm5a")
 }],
 "loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_idrk5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_il5rd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_u54p7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_bul8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_vck3y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_f5nbi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_spw73")
+}],
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
@@ -164,10 +196,19 @@ frame_progress = 0.9803384
 position = Vector2(0, 29.75)
 texture = ExtResource("10_6wm5a")
 
+[node name="Hurt" type="AnimatedSprite2D" parent="PlayerSide/Player/BlockMeter"]
+position = Vector2(-1.9073486e-06, -0.7499962)
+scale = Vector2(0.7820436, 0.7820437)
+sprite_frames = SubResource("SpriteFrames_idrk5")
+frame = 5
+frame_progress = 1.0
+speed_scale = 2.0
+
 [node name="Health" type="Sprite2D" parent="PlayerSide/Player/BlockMeter"]
 position = Vector2(0.25, 0.75)
 scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("6_tva12")
+metadata/_edit_lock_ = true
 
 [node name="HealthLabel" type="RichTextLabel" parent="PlayerSide/Player/BlockMeter/Health"]
 z_index = 1
@@ -268,6 +309,14 @@ frame_progress = 0.9072703
 [node name="BlockMeter" type="Sprite2D" parent="EnemySide/Enemy"]
 position = Vector2(0, 29.75)
 texture = ExtResource("10_6wm5a")
+
+[node name="Hurt" type="AnimatedSprite2D" parent="EnemySide/Enemy/BlockMeter"]
+position = Vector2(0, -0.75)
+scale = Vector2(0.7820436, 0.7820437)
+sprite_frames = SubResource("SpriteFrames_idrk5")
+frame = 5
+frame_progress = 1.0
+speed_scale = 2.0
 
 [node name="Health" type="Sprite2D" parent="EnemySide/Enemy/BlockMeter"]
 position = Vector2(0.25, 0.75)

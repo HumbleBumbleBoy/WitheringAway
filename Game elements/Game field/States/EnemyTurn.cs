@@ -62,7 +62,7 @@ public class EnemyTurn : IState<TurnManager>
 
             if (positionTaken) continue;
             
-            position.GetTree().CreateTimer((i + 1) * 0.1).Timeout += () =>
+            position.GetTree().CreateTimer((i + 1) * 1.0).Timeout += () =>
             {
                 if (!keepPlaying)
                 {
@@ -73,7 +73,7 @@ public class EnemyTurn : IState<TurnManager>
             };
         }
 
-        turnManager.GetTree().CreateTimer(enemyPlacablePositions.Count * 0.15 + 0.5).Timeout += () =>
+        turnManager.GetTree().CreateTimer(enemyPlacablePositions.Count * 0.15 + 5.0).Timeout += () =>
         {
             if (turnManager.StateMachine.CurrentState == this)
             {

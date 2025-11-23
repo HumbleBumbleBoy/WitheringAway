@@ -43,15 +43,15 @@ scale = Vector2(2.7765, 2.7765)
 texture = ExtResource("2_xnv2i")
 
 [node name="BackButton" type="TextureButton" parent="BackgroundOfSettings"]
-offset_left = -234.1077
-offset_top = 63.02899
-offset_right = -14.107697
-offset_bottom = 133.02899
+offset_left = -265.80225
+offset_top = 72.393295
+offset_right = -45.802246
+offset_bottom = 142.3933
+scale = Vector2(0.8, 0.8)
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_ko5qt")
 texture_pressed = ExtResource("4_gi46t")
 texture_hover = ExtResource("5_p1hl1")
-metadata/_edit_lock_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="BackgroundOfSettings/BackButton"]
 clip_contents = false
@@ -72,14 +72,15 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="ExitButton" type="TextureButton" parent="BackgroundOfSettings"]
-offset_top = 62.668823
-offset_right = 220.0
-offset_bottom = 132.66882
+offset_left = 101.20656
+offset_top = 73.47379
+offset_right = 321.20654
+offset_bottom = 143.47379
+scale = Vector2(0.8, 0.8)
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_ko5qt")
 texture_pressed = ExtResource("4_gi46t")
 texture_hover = ExtResource("5_p1hl1")
-metadata/_edit_lock_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="BackgroundOfSettings/ExitButton"]
 clip_contents = false
@@ -111,9 +112,39 @@ offset_bottom = 57.90384
 grow_horizontal = 2
 metadata/_edit_lock_ = true
 
+[node name="Menu" type="TextureButton" parent="BackgroundOfSettings"]
+offset_left = -82.838104
+offset_top = 73.113625
+offset_right = 137.1619
+offset_bottom = 143.11362
+scale = Vector2(0.8, 0.8)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_ko5qt")
+texture_pressed = ExtResource("4_gi46t")
+texture_hover = ExtResource("5_p1hl1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BackgroundOfSettings/Menu"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("1_ckgk1")
+theme_override_font_sizes/normal_font_size = 64
+text = "Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ko5qt")
 bus = &"SFX"
 
 [connection signal="pressed" from="BackgroundOfSettings/BackButton" to="." method="OnBackButtonPressed"]
 [connection signal="pressed" from="BackgroundOfSettings/ExitButton" to="." method="OnExitButtonPressed"]
+[connection signal="pressed" from="BackgroundOfSettings/Menu" to="." method="OnBackToMainMenuButtonPressed"]

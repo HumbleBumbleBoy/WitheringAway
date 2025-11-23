@@ -14,4 +14,9 @@ public partial class InGameMenu : HBoxContainer
         GetNode<AudioStreamPlayer>("Click").Play();
         GetTree().Quit();
     }
+
+    private void OnBackToMainMenuButtonPressed()
+    {
+        GetTree().ChangeSceneToFile("res://Game elements/UI/Main menu/main_menu.tscn");
+    }
 }

@@ -49,6 +49,19 @@ public partial class Duelist : Control
             WouldYouLookAtTheTime++;
             UpdateBlockSprite(WouldYouLookAtTheTime);
 
+            var field = GetNode<FieldData>("/root/GameScene/FieldData");
+            var cards = IsPlayer ? field.PlayerCardsOnField : field.EnemyCardsOnField;
+            foreach (var playerCard in cards)
+            {
+                if (!IsInstanceValid(playerCard))
+                {
+                    continue;
+                }
+                
+                var timeOnFieldComponent = playerCard.GetOrAddComponent<TimeOnFieldComponent>();
+                timeOnFieldComponent.SubtractTimeOnField(2);
+            }
+            
             HurtSoundPlayer.Play();
             await ToSignal(HurtSoundPlayer, "finished");
             

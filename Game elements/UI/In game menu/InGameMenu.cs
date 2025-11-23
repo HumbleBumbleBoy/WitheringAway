@@ -1,12 +1,11 @@
 using Godot;
-using System;
 
 public partial class InGameMenu : HBoxContainer
 {
     private void OnBackButtonPressed()
     {
         GetNode<AudioStreamPlayer>("Click").Play();
-        this.Hide();
+        Hide();
     }
 
     private void OnExitButtonPressed()

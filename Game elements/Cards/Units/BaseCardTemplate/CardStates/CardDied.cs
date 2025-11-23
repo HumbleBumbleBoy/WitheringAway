@@ -11,12 +11,26 @@ public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
     {
         GD.Print(card.Name + " died");
         
-        FieldData fieldData = card.GetNode<FieldData>("/root/GameScene/FieldData");
+        var fieldData = FieldData.Instance;
         string nameOfPosition = card.GetParent().Name;
         string positionNumber = Regex.Replace(nameOfPosition, @"[^\d]", "");
         int indexOfLane = int.Parse(positionNumber) - 1;
         fieldData.RemoveCardOnSpecificLane(indexOfLane, isPlayer);
         
+        var friendlies = fieldData.GetCardsOnField(isPlayer);
+        for (var lane = 0; lane < friendlies.Length; lane++)
+        {
+            var friendly = friendlies[lane];
+            friendly?.OnFriendlyExitField(card, lane);
+        }
+        
+        var enemies = fieldData.GetCardsOnField(!isPlayer);
+        for (var lane = 0; lane < enemies.Length; lane++)
+        {
+            var enemy = enemies[lane];
+            enemy?.OnEnemyExitField(card, lane);
+        }
+
         DeathSequence(card);
 
         /*

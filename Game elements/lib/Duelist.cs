@@ -74,7 +74,7 @@ public partial class Duelist : Control
         return healthComponent.CurrentHealth;
     }
     
-    public async Task TakeDamage(int amount)
+    public async Task TakeDamage(int amount, BaseCardTemplate? from = null)
     {
         if (WouldYouLookAtTheTime == 3)
         {
@@ -157,7 +157,10 @@ public partial class Duelist : Control
             winScreen.Show();
             
             music.SetStreamPaused(false);
+            return;
         }
+        
+        from?.OnAttackLanded(null, !IsPlayer);
     }
     
     public void GiveSouls(int amount)

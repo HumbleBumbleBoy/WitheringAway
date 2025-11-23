@@ -36,7 +36,7 @@ public partial class TrickEffect : Resource
         if (healthComponent != null)
         {
             healthComponent.SetMaxHealth(healthComponent.MaxHealth + BonusHealth, adjustCurrentHealth: false);
-            healthComponent.SetHealth(healthComponent.CurrentHealth - BonusHealth);
+            healthComponent.SetHealth(healthComponent.CurrentHealth + BonusHealth);
         }
         
         var defenseComponent = template.FirstComponent<DefenseComponent>();
@@ -52,7 +52,7 @@ public partial class TrickEffect : Resource
         var timeOnFieldComponent = template.FirstComponent<TimeOnFieldComponent>();
         timeOnFieldComponent?.SetTimeOnField(timeOnFieldComponent.TimeOnField + BonusTimeOnField);
         
-        template.TakeDamage(FlatDamage);
+        template.TakeDamage(null, FlatDamage);
 
         if (healthComponent?.CurrentHealth <= 0)
         {

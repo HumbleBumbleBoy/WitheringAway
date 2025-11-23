@@ -7,6 +7,14 @@ namespace Witheringaway.Game_elements.lib.manager;
 public partial class HandManager : Control
 {
     
+    public static HandManager PlayerHandManager = null!;
+    public static HandManager EnemyHandManager = null!;
+    
+    public static HandManager GetHandManager(bool isPlayer)
+    {
+        return isPlayer ? PlayerHandManager : EnemyHandManager;
+    }
+    
     public virtual bool HasMoreCards()
     {
         return false;

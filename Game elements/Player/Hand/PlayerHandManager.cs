@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.components;
+using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
 
 public partial class PlayerHandManager : HandManager
@@ -15,6 +16,36 @@ public partial class PlayerHandManager : HandManager
     public override void _Ready()
     {
         cardContainer = GetNode<HBoxContainer>("CardContainer");
+        PlayerHandManager = this;
+    }
+    
+    public override void _Process(double delta)
+    {
+        if (!Input.IsActionJustPressed("check_card_description")) return;
+        // Find a hooligan in the deck, and add it to the hand for testing, using check card desc for debug
+        foreach (var card in playerDeckManager?.PlayerCardsInDeck ?? [])
+        {
+            var instantiatedCard = card.Instantiate();
+
+            if (instantiatedCard is not Hooligan) continue;
+            instantiatedCard.QueueFree();
+                    
+            var topCard = playerDeckManager.PlayerCardsInDeck[^1];
+            playerDeckManager.PlayerCardsInDeck[^1] = card;
+            playerDeckManager.PlayerCardsInDeck[playerDeckManager.PlayerCardsInDeck.IndexOf(card)] = topCard;
+            GetTopCard();
+            break;
+        }
+        
+        Duelist.PlayerDuelist.GiveSouls(100);
+    }
+
+    public override void _ExitTree()
+    {
+        if (PlayerHandManager == this)
+        {
+            PlayerHandManager = null!;
+        }
     }
 
     public override bool HasMoreCards()

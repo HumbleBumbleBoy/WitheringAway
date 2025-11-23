@@ -6,17 +6,18 @@ using Witheringaway.Game_elements.lib;
 
 public class Combat : IState<TurnManager>
 {
-    private FieldData? fieldData;
-    
     public IState<TurnManager>? OnEnter(TurnManager turnManager, IState<TurnManager>? previousState)
     {
         GD.Print("FIGHT!");
 
         turnManager.isCombatTime = true;
         
-        fieldData = turnManager.GetNode<FieldData>("/root/GameScene/FieldData");
-        
         BeginCombat(turnManager);
+        
+        foreach (var (card, lane, isPlayer) in FieldData.Instance.GetAllCardsOnField())
+        {
+            card?.OnCombatStart(lane, isPlayer);
+        }
         
         return null;
     }
@@ -24,6 +25,12 @@ public class Combat : IState<TurnManager>
     public IState<TurnManager>? OnExit(TurnManager turnManager, IState<TurnManager>? nextState)
     {
         turnManager.isCombatTime = false;
+        
+        foreach (var (card, lane, isPlayer) in FieldData.Instance.GetAllCardsOnField())
+        {
+            card?.OnCombatEnd(lane, isPlayer);
+        }
+        
         return null;
     }
 
@@ -50,8 +57,8 @@ public class Combat : IState<TurnManager>
             return;
         }
         
-        var playerCard = fieldData?.GetCardOnSpecificLane(lane, true);
-        var enemyCard = fieldData?.GetCardOnSpecificLane(lane, false);
+        var playerCard = FieldData.Instance.GetCardOnSpecificLane(lane, true);
+        var enemyCard = FieldData.Instance.GetCardOnSpecificLane(lane, false);
 
         if (playerCard == null && enemyCard == null)
         {
@@ -68,7 +75,7 @@ public class Combat : IState<TurnManager>
                 _ = enemyCard.PlaySound("Attack");
                 _ = playerDuelist.TakeDamage(enemyCard.GetAttackDamage());
                 _ = enemyCard.PlaySound("Hurt");
-            }));
+            }), false);
             return;
         }
 
@@ -87,7 +94,7 @@ public class Combat : IState<TurnManager>
         }
 
         await playerCard.Attack(enemyCard);
-        await enemyCard.Attack(playerCard);
+        await enemyCard.Attack(playerCard, isPlayer: false);
 
         await turnManager.Wait(0.5f);
 

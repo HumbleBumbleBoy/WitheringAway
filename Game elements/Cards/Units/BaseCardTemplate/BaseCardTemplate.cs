@@ -57,6 +57,9 @@ public partial class BaseCardTemplate : Control
     private TimeOnFieldComponent _timeOnFieldComponent = new();
     private AttackComponent _attackComponent = new();
     private CostComponent _costComponent = new();
+    
+    private int _tempHealthBuff = 0;
+    private int _tempAttackDamageBuff = 0;
 
     public BaseCardTemplate()
     {
@@ -168,6 +171,18 @@ public partial class BaseCardTemplate : Control
             }
         };
     }
+    
+    public void AddTimeOnField(int amount)
+    {
+        _timeOnFieldComponent.AddTimeOnField(amount);
+        UpdateVisualTimeOnField();
+    }
+    
+    public void SubtractTimeOnField(int amount)
+    {
+        _timeOnFieldComponent.SubtractTimeOnField(amount);
+        UpdateVisualTimeOnField();
+    }
 
     public void SetFlipped(bool flipped)
     {
@@ -187,12 +202,63 @@ public partial class BaseCardTemplate : Control
     
     public int GetCurrentHealth()
     {
-        return _healthComponent.CurrentHealth;
+        return _healthComponent.CurrentHealth + _tempHealthBuff;
+    }
+    
+    public void Heal(int amount)
+    {
+        _healthComponent.SetHealth(_healthComponent.CurrentHealth + amount);
+    }
+    
+    public void BuffHealth(int amount)
+    {
+        _healthComponent.SetMaxHealth(amount, false);
+        _healthComponent.SetHealth(_healthComponent.CurrentHealth + amount);
+    }
+    
+    public void TempBuffHealth(int amount)
+    {
+        _tempHealthBuff += amount;
+    }
+    
+    public void TempDebuffHealth(int amount)
+    {
+        _tempHealthBuff -= amount;
+        if (_tempHealthBuff < 0) _tempHealthBuff = 0;
     }
     
     public int GetAttackDamage()
     {
-        return _attackComponent.AttackDamage;
+        return _attackComponent.AttackDamage + _tempAttackDamageBuff;
+    }
+    
+    public void SetAttackDamage(int damage)
+    {
+        _attackComponent.SetAttackDamage(damage);
+    }
+    
+    public void BuffAttackDamage(int damage)
+    {
+        var newDamage = _attackComponent.AttackDamage + damage;
+        _attackComponent.SetAttackDamage(newDamage);
+    }
+    
+    public void DebuffAttackDamage(int damage)
+    {
+        var newDamage = _attackComponent.AttackDamage - damage;
+        if (newDamage < 0) newDamage = 0;
+        _attackComponent.SetAttackDamage(newDamage);
+    }
+    
+    public void TempBuffAttackDamage(int damage)
+    {
+        _tempAttackDamageBuff += damage;
+    }
+    
+    public void TempDebuffAttackDamage(int damage)
+    {
+        _tempAttackDamageBuff -= damage;
+        if (_tempAttackDamageBuff < 0) _tempAttackDamageBuff = 0;
     }
     
     public int GetAttackCount()
@@ -205,7 +271,7 @@ public partial class BaseCardTemplate : Control
         return _costComponent.Cost;
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamage(BaseCardTemplate? attacker, int damage, bool isPlayer = true)
     {
         var remainingDamage = _defenseComponent.AbsorbDamage(damage);
         _healthComponent.TakeDamage(remainingDamage);
@@ -218,18 +284,23 @@ public partial class BaseCardTemplate : Control
         
         PlaySound("Hurt");
         PlayAnimation("Hurt");
+        OnDamageTaken(attacker, damage, isPlayer);
         
         tween.TweenCallback(Callable.From(() => tween.Dispose()));
     }
     
-    public async Task AttackOnce(Control target, Callable? onMidAttack = null)
+    public async Task AttackOnce(Control target, Callable? onMidAttack = null, bool isPlayer = true)
     {
         var originalPosition = GlobalPosition;
         var directionToTarget = (target.GlobalPosition - GlobalPosition).Normalized();
         var attackPosition = originalPosition + directionToTarget * 20;
         var tween = CreateTween();
         tween.TweenProperty(this, "global_position", attackPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
-        tween.TweenCallback(onMidAttack ?? _AttackCard(target) ?? Callable.From(() => {}));
+        tween.TweenCallback(onMidAttack ?? _AttackCard(target, isPlayer) ?? Callable.From(() => {}));
+        if (target is BaseCardTemplate bct)
+        {
+            OnAttackLanded(bct, isPlayer);
+        }
         tween.TweenProperty(this, "global_position", originalPosition, 0.1f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
         await ToSignal(tween, "finished");
         
@@ -238,22 +309,22 @@ public partial class BaseCardTemplate : Control
         await this.Wait(0.3f);
     }
     
-    public async Task Attack(Control target, Callable? onMidAttack = null)
+    public async Task Attack(Control target, Callable? onMidAttack = null, bool isPlayer = true)
     {
         for (var i = 0; i < GetAttackCount(); i++)
         {
-            await AttackOnce(target, onMidAttack);
+            await AttackOnce(target, onMidAttack, isPlayer);
         }
     }
 
-    private Callable? _AttackCard(Control node)
+    private Callable? _AttackCard(Control node, bool isPlayer = true)
     {
         if (node is BaseCardTemplate card)
         {
             return Callable.From(() =>
             {
                 _ = PlaySound("Attack");
-                card.TakeDamage(GetAttackDamage());
+                card.TakeDamage(card, GetAttackDamage(), isPlayer);
             });
         }
 
@@ -323,7 +394,7 @@ public partial class BaseCardTemplate : Control
 
     private void UpdateVisualHealth()
     {
-        _UpdateTextLabels(_visualHealthLabels.hand, _visualHealthLabels.field, _healthComponent.CurrentHealth, ref _timeSinceLastHealthUpdate);
+        _UpdateTextLabels(_visualHealthLabels.hand, _visualHealthLabels.field, GetCurrentHealth(), ref _timeSinceLastHealthUpdate);
     }
     
     private void UpdateVisualDefense()
@@ -345,7 +416,7 @@ public partial class BaseCardTemplate : Control
 
     private void UpdateVisualDamage()
     {
-        _UpdateTextLabels(_visualAttackLabels.hand, _visualAttackLabels.field, _attackComponent.AttackDamage, ref _timeSinceLastAttackUpdate);
+        _UpdateTextLabels(_visualAttackLabels.hand, _visualAttackLabels.field, GetAttackDamage(), ref _timeSinceLastAttackUpdate);
         
         _UpdateTextLabels(_visualAttackAmountLabels.hand, _visualAttackAmountLabels.field, _attackComponent.AttackCount, ref _timeSinceLastAttackAmountUpdate);
     }
@@ -450,20 +521,68 @@ public partial class BaseCardTemplate : Control
         
         return !fieldData.IsLaneOccupied(laneIndex, true);
     }
+    
+    public virtual void OnCombatEnd(int lane, bool isPlayer)
+    {
+        // can be overridden
+    }
+    
+    public virtual void OnCombatStart(int lane, bool isPlayer)
+    {
+        // can be overridden
+    }
+    
+    public virtual void OnEnemyExitField(BaseCardTemplate card, int laneIndex)
+    {
+        // can be overridden
+    }
+    
+    public virtual void OnFriendlyExitField(BaseCardTemplate card, int laneIndex)
+    {
+        // can be overridden
+    }
+    
+    public virtual void OnEnemyEnterField(BaseCardTemplate card, int laneIndex)
+    {
+        // can be overridden
+    }
+    
+    public virtual void OnFriendlyEnterField(BaseCardTemplate card, int laneIndex)
+    {
+        // can be overridden
+    }
+    
+    public virtual void OnAttackLanded(BaseCardTemplate? target, bool isPlayer)
+    {
+        // can be overridden
+    }
+
+    public virtual void OnSelfEnterField(bool isPlayer)
+    {
+        
+    }
+    
+    protected virtual void OnDamageTaken(BaseCardTemplate? attacker, int damage, bool isPlayer)
+    {
+        // can be overridden
+    }
 
     protected virtual void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
     {
         StateMachine.ChangeState(new CardInHand());
+        PlaySound("FailedToPlace");
     }
     
     protected virtual void DropOnDuelist(Duelist duelis, bool isPlayer)
     {
         StateMachine.ChangeState(new CardInHand());
+        PlaySound("FailedToPlace");
     }
 
     protected virtual void Drop(bool isPlayer)
     {
         StateMachine.ChangeState(new CardInHand());
+        PlaySound("FailedToPlace");
     }
 
     private (Node2D position, int lane)? GetHoveredFriendlyPlaceable()
@@ -475,7 +594,7 @@ public partial class BaseCardTemplate : Control
             var overlaps = position.OverlapsArea(GetNode<Area2D>("DetectionArea"));
             if (!overlaps)
             {
-                return null;
+                continue;
             } 
             
             var numberOnly = NumberRegex().Replace(position.Name, "");
@@ -495,7 +614,7 @@ public partial class BaseCardTemplate : Control
             var overlaps = position.OverlapsArea(GetNode<Area2D>("DetectionArea"));
             if (!overlaps)
             {
-                return null;
+                continue;
             } 
             
             var numberOnly = NumberRegex().Replace(position.Name, "");

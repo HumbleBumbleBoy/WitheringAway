@@ -528,6 +528,7 @@ public partial class BaseCardTemplate : Control
     {
         if (!IsCardPlayable) return (false, 0);
         if (PlacedAreaName is null) return (false, 0);
+        if (turnManager?.StateMachine.CurrentState is not PlayerTurn) return (false, 0);
         
         var playerDuelist = Duelist.PlayerDuelist;
         if (playerDuelist.CurrentSouls < (CardData?.Cost ?? 0)) return (false, 0);

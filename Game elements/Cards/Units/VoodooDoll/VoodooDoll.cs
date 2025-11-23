@@ -6,8 +6,6 @@ public partial class VoodooDoll : BaseCardTemplate
 
     protected override void OnDamageTaken(BaseCardTemplate? attacker, int damage, bool isPlayer)
     {
-        base.OnDamageTaken(attacker, damage, isPlayer);
-
         if (attacker == null || !IsInstanceValid(attacker)) return;
         
         var oldDamage = GetAttackDamage();

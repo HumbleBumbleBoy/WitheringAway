@@ -340,7 +340,7 @@ public partial class BaseCardTemplate : Control
             return Callable.From(() =>
             {
                 _ = PlaySound("Attack");
-                card.TakeDamage(card, GetAttackDamage(), isPlayer);
+                card.TakeDamage(this, GetAttackDamage(), isPlayer);
             });
         }
 

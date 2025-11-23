@@ -34,12 +34,6 @@ public class CardDied(bool isPlayer) : IState<BaseCardTemplate>
     {
         card.Wait(0.2f).ContinueWith(_ => card.CallDeferred(nameof(BaseCardTemplate.DisableArt)));
 
-        await Task.WhenAll(
-            card.PlayAnimation("Dying", 0.2f),
-            card.PlaySound("Death")
-        );
-        
-        card.GetParent().RemoveChild(card);
-        card.QueueFree();
+        await card.Kill();
     }
 }

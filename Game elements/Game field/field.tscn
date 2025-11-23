@@ -21,13 +21,13 @@
 [ext_resource type="Texture2D" uid="uid://df0l7djg8qoc8" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage4.png" id="13_vck3y"]
 [ext_resource type="Texture2D" uid="uid://36bbhxtcc48q" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage5.png" id="14_f5nbi"]
 [ext_resource type="Texture2D" uid="uid://cq12mi3qqgcro" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage6.png" id="15_spw73"]
-[ext_resource type="AudioStream" uid="uid://6ay03orqmlrc" path="res://Game elements/GameScene/Block/Blocked.wav" id="16_a8yk8"]
-[ext_resource type="Script" uid="uid://cevbcbjx2eddd" path="res://Game elements/lib/Duelist.cs" id="18_u54p7"]
+[ext_resource type="Script" uid="uid://cibcsysyk5auq" path="res://Game elements/lib/Duelist.cs" id="18_u54p7"]
 [ext_resource type="Script" uid="uid://bdwv0wmnddn21" path="res://Game elements/components/HealthComponent.cs" id="19_bul8f"]
 [ext_resource type="Texture2D" uid="uid://bwoh5qp8ggnq7" path="res://Game elements/GameScene/Block/Block1.png" id="19_vck3y"]
 [ext_resource type="Texture2D" uid="uid://bipp2fe2glao3" path="res://Game elements/GameScene/Block/Block2.png" id="20_f5nbi"]
 [ext_resource type="Texture2D" uid="uid://dhlui5ex5r0ou" path="res://Game elements/GameScene/Block/Block3.png" id="21_spw73"]
 [ext_resource type="Texture2D" uid="uid://dxy4h54e0y1x7" path="res://Game elements/GameScene/Block/Block4.png" id="22_idrk5"]
+[ext_resource type="AudioStream" uid="uid://6uia4ff1uo7s" path="res://assets/audio/Blocked.wav" id="24_a8yk8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw8lp"]
 animations = [{
@@ -192,7 +192,7 @@ layout_mode = 2
 position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
-[node name="Player" type="AnimatedSprite2D" parent="PlayerSide"]
+[node name="Player" type="AnimatedSprite2D" parent="PlayerSide" groups=["PlayerCharacter"]]
 position = Vector2(238, 280)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_n2yv0")
@@ -211,7 +211,7 @@ speed_scale = 2.0
 
 [node name="BlockSound" type="AudioStreamPlayer2D" parent="PlayerSide/Player/BlockMeter"]
 position = Vector2(-42, -74.75)
-stream = ExtResource("16_a8yk8")
+stream = ExtResource("24_a8yk8")
 
 [node name="Health" type="Sprite2D" parent="PlayerSide/Player/BlockMeter"]
 position = Vector2(0.25, 0.75)
@@ -257,6 +257,7 @@ HurtSoundPlayer = NodePath("../BlockSound")
 BlockSprite = NodePath("..")
 BlockSprites = Array[Texture2D]([ExtResource("10_6wm5a"), ExtResource("19_vck3y"), ExtResource("20_f5nbi"), ExtResource("21_spw73"), ExtResource("22_idrk5")])
 IsPlayer = true
+metadata/_custom_type_script = "uid://cibcsysyk5auq"
 
 [node name="HealthComponent" type="Node" parent="PlayerSide/Player/BlockMeter/Duelist"]
 script = ExtResource("19_bul8f")
@@ -328,7 +329,7 @@ layout_mode = 2
 position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
-[node name="Enemy" type="AnimatedSprite2D" parent="EnemySide"]
+[node name="Enemy" type="AnimatedSprite2D" parent="EnemySide" groups=["EnemyCharacter"]]
 position = Vector2(428, 286)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_fuf8r")
@@ -349,7 +350,7 @@ speed_scale = 2.0
 
 [node name="BlockSound" type="AudioStreamPlayer2D" parent="EnemySide/Enemy/BlockMeter"]
 position = Vector2(-42, -74.75)
-stream = ExtResource("16_a8yk8")
+stream = ExtResource("24_a8yk8")
 
 [node name="Health" type="Sprite2D" parent="EnemySide/Enemy/BlockMeter"]
 position = Vector2(0.25, 0.75)
@@ -391,6 +392,7 @@ HurtAnimation = NodePath("../Hurt")
 HurtSoundPlayer = NodePath("../BlockSound")
 BlockSprite = NodePath("..")
 BlockSprites = Array[Texture2D]([ExtResource("10_6wm5a"), ExtResource("19_vck3y"), ExtResource("20_f5nbi"), ExtResource("21_spw73"), ExtResource("22_idrk5")])
+metadata/_custom_type_script = "uid://cibcsysyk5auq"
 
 [node name="HealthComponent" type="Node" parent="EnemySide/Enemy/BlockMeter/Duelist"]
 script = ExtResource("19_bul8f")

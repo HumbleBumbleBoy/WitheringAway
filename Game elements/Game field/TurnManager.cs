@@ -7,6 +7,8 @@ public partial class TurnManager : Node
     [Export] Node? enemyNode;
 
     public StateMachine<TurnManager> StateMachine { get; }
+
+    public int CurrentRound = 1;
     
     public bool canPlayerPlaceCards;
     public bool canEnemyPlaceCards;

@@ -47,6 +47,8 @@ PlayerDuelist=""
 EnemyDuelist=""
 PlayerSoulCounter=""
 EnemySoulCounter=""
+PlayerCharacter=""
+EnemyCharacter=""
 
 [input]
 

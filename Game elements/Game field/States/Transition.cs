@@ -44,10 +44,10 @@ public class Transition : IState<TurnManager>
         
         context.GetTree().CreateTimer(2).Timeout += () =>
         {
-            if (context.StateMachine.CurrentState == this)
-            {
-                context.StateMachine.ChangeState(new PlayerTurn());
-            }
+            if (context.StateMachine.CurrentState != this) return;
+            
+            context.CurrentRound++;
+            context.StateMachine.ChangeState(new PlayerTurn());
         };
         
         return null;

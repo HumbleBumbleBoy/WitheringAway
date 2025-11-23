@@ -92,7 +92,7 @@ public class EnemyTurn : IState<TurnManager>
                          enemyDuelist.CurrentSouls,
                          cardPredicate =>
                          {
-                             var cardDamage = cardPredicate.AttackManager?.Attack ?? 0;
+                             var cardDamage = cardPredicate.GetAttackDamage();
                              return cardDamage >= playerDuelist.GetCurrentHealth();
                          }
                      );
@@ -123,8 +123,8 @@ public class EnemyTurn : IState<TurnManager>
                         var playerHealth = playerCard.GetCurrentHealth();
                         var cardHealth = cardPredicate.GetCurrentHealth();
                         
-                        var playerDamage = playerCard.AttackManager?.Attack ?? 0;
-                        var cardDamage = cardPredicate.AttackManager?.Attack ?? 0;
+                        var playerDamage = playerCard.GetAttackDamage();
+                        var cardDamage = cardPredicate.GetAttackDamage();
 
                         if (cardHealth - playerDamage > 0)
                         {

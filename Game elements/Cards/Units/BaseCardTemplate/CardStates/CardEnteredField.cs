@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Godot;
+using Witheringaway.Game_elements.Cards;
 using Witheringaway.Game_elements.Cards.Units.BaseCardTemplate;
 using Witheringaway.Game_elements.lib;
 using Witheringaway.Game_elements.lib.manager;
@@ -52,7 +53,7 @@ public class CardEnteredField(bool isPlayer) : IState<BaseCardTemplate>
         card.CardBackground?.Hide();
         card.CardOverlay?.Hide();
         card.CardName?.Hide();
-        
+
         return null;
     }
 

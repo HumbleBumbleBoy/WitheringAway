@@ -44,16 +44,24 @@ public partial class Duelist : Control
     
     public async Task TakeDamage(int amount)
     {
-        // 0 - 1
-        // 1 - 2
-        // 2 - 3
-        // 3 - BLOCKED
-        
         if (WouldYouLookAtTheTime == 3)
         {
             WouldYouLookAtTheTime++;
             UpdateBlockSprite(WouldYouLookAtTheTime);
 
+            var field = GetNode<FieldData>("/root/GameScene/FieldData");
+            var cards = IsPlayer ? field.PlayerCardsOnField : field.EnemyCardsOnField;
+            foreach (var playerCard in cards)
+            {
+                if (!IsInstanceValid(playerCard))
+                {
+                    continue;
+                }
+                
+                var timeOnFieldComponent = playerCard.GetOrAddComponent<TimeOnFieldComponent>();
+                timeOnFieldComponent.SubtractTimeOnField(2);
+            }
+            
             HurtSoundPlayer.Play();
             await ToSignal(HurtSoundPlayer, "finished");
             

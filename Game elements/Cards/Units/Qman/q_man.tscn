@@ -9,7 +9,7 @@
 script = ExtResource("3_v0p8v")
 Art = ExtResource("3_8pcqr")
 Name = "Q man"
-Description = "Tough farmer (choose a lane to spawn a bird in [2HP/3ATK])"
+Description = "Tough farmer (spawn a bird in [2HP/3ATK] in a random lane)"
 TimeLeftOnField = 9
 Cost = 6
 Health = 5

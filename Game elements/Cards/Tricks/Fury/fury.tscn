@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://b1721nojmcdh2"]
+
+[ext_resource type="PackedScene" uid="uid://27v8hfhp36xr" path="res://Game elements/Cards/Units/BaseCardTemplate/base_card_template.tscn" id="1_2m0ou"]
+[ext_resource type="Script" uid="uid://cofotc3xsjqx" path="res://Game elements/Cards/TrickCard.cs" id="2_6j18j"]
+[ext_resource type="Script" uid="uid://cyijiqug3galh" path="res://Game elements/Cards/TrickEffect.cs" id="3_ss5r7"]
+[ext_resource type="Texture2D" uid="uid://d0y5tv2e475wa" path="res://Game elements/Cards/Tricks/Fury/Fury.png" id="4_6j18j"]
+[ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="4_ab1xm"]
+
+[sub_resource type="Resource" id="Resource_n3705"]
+script = ExtResource("3_ss5r7")
+BonusAttacks = 1
+metadata/_custom_type_script = "uid://cyijiqug3galh"
+
+[sub_resource type="Resource" id="Resource_2hnej"]
+script = ExtResource("4_ab1xm")
+Art = ExtResource("4_6j18j")
+Name = "Fury"
+Description = "Pure Determination"
+Cost = 2
+metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
+
+[node name="Fury" instance=ExtResource("1_2m0ou")]
+script = ExtResource("2_6j18j")
+CanPlaceOnFriendlyField = true
+CanPlaceOnEnemyField = false
+CanPlaceOnEnemy = false
+CanPlaceOnPlayer = false
+TrickEffects = [SubResource("Resource_n3705")]
+CardData = SubResource("Resource_2hnej")

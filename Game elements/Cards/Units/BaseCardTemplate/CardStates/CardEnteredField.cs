@@ -78,6 +78,6 @@ public class CardEnteredField(bool isPlayer, int? laneIndex = null) : IState<Bas
         GD.Print(card.Name + "exited field");  // probably died
         card.IsCardInField = false;
 
-        return new CardDied(isPlayer);
+        return null;
     }
 }

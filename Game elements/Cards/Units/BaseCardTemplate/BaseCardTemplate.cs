@@ -123,7 +123,7 @@ public partial class BaseCardTemplate : Control
         var draggable = this.FirstComponent<DraggableComponent>();
         if (draggable is null) return;
         
-        draggable.CanStartDrag += () => !_isDraggingAnyCard;
+        draggable.CanStartDrag += () => !_isDraggingAnyCard && !IsCardInField;
         
         draggable.DragStarted += _ =>
         {

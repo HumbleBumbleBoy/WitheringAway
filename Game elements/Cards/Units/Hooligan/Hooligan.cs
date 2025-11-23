@@ -23,6 +23,7 @@ public partial class Hooligan : BaseCardTemplate
     {
         base.OnFriendlyEnterField(card, laneIndex);
 
+        if (card == this) return;
         if (card is not Hooligan) return;
         
         TempBuffAttackDamage(1);
@@ -33,6 +34,7 @@ public partial class Hooligan : BaseCardTemplate
     {
         base.OnFriendlyExitField(card, laneIndex);
 
+        if (card == this) return;
         if (card is not Hooligan) return;
         
         TempDebuffAttackDamage(1);

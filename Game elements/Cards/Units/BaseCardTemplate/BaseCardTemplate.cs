@@ -274,6 +274,11 @@ public partial class BaseCardTemplate : Control
     public void TakeDamage(BaseCardTemplate? attacker, int damage, bool isPlayer = true)
     {
         var remainingDamage = _defenseComponent.AbsorbDamage(damage);
+        
+        var damageToTemp = Mathf.Min(remainingDamage, _tempHealthBuff);
+        _tempHealthBuff -= damageToTemp;
+        remainingDamage -= damageToTemp;
+        
         _healthComponent.TakeDamage(remainingDamage);
         
         var originalPosition = GlobalPosition;

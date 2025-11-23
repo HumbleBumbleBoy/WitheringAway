@@ -18,11 +18,18 @@ public partial class TrickCard : BaseCardTemplate
     
     [Export] public TrickEffect[] TrickEffects = [];
 
-    public override void _Ready()
+    protected override void CheckAppearance()
     {
-        base._Ready();
+        base.CheckAppearance();
 
-        GetNodeOrNull<Sprite2D>("Trick")?.Show();
+        if (IsFlipped)
+        {
+            GetNodeOrNull<Sprite2D>("Trick")?.Hide();   
+        }
+        else
+        {
+            GetNodeOrNull<Sprite2D>("Trick")?.Show();
+        }
     }
 
     public bool ApplyEffect(Duelist duelist, int round)

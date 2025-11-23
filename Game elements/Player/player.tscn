@@ -42,8 +42,8 @@
 [ext_resource type="PackedScene" uid="uid://jro0pvtbpgkh" path="res://Game elements/Cards/Units/Rats/rats.tscn" id="39_k6xen"]
 [ext_resource type="PackedScene" uid="uid://bu6d6sswbfq6k" path="res://Game elements/Cards/Tricks/Decay/decay.tscn" id="40_k6xen"]
 [ext_resource type="PackedScene" uid="uid://b0x0pkt14i3ha" path="res://Game elements/Cards/Units/Knight/knight.tscn" id="41_on6gn"]
-[ext_resource type="PackedScene" uid="uid://f2qm21d7coyn" path="res://Game elements/Cards/Tricks/Justice/justice.tscn" id="42_p74pi"]
-[ext_resource type="PackedScene" uid="uid://vooycsnjmxp7" path="res://Game elements/Cards/Tricks/MetalSheet/metal_sheet.tscn" id="43_iqhhb"]
+[ext_resource type="PackedScene" path="res://Game elements/Cards/Tricks/Justice/justice.tscn" id="42_p74pi"]
+[ext_resource type="PackedScene" path="res://Game elements/Cards/Tricks/MetalSheet/metal_sheet.tscn" id="43_iqhhb"]
 
 [sub_resource type="Resource" id="Resource_p74pi"]
 script = ExtResource("4_240if")

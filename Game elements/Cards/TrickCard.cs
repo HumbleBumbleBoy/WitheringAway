@@ -18,7 +18,7 @@ public partial class TrickCard : BaseCardTemplate
     
     [Export] public TrickEffect[] TrickEffects = [];
 
-    private bool _shouldKeepDragging;
+    private bool _shouldKeepDragging = true;
 
     protected override void CheckAppearance()
     {
@@ -108,7 +108,6 @@ public partial class TrickCard : BaseCardTemplate
 
     protected override void DropOnCard(BaseCardTemplate? card, bool isPlayer, int laneIndex)
     {
-        GD.Print("Dropped on card: " + (card?.Name ?? "null"));
         if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost(isPlayer) || card is null)
         {
             base.DropOnCard(card, isPlayer, laneIndex);
@@ -128,7 +127,6 @@ public partial class TrickCard : BaseCardTemplate
 
     protected override void DropOnDuelist(Duelist duelist, bool isPlayer)
     {
-        GD.Print("Dropped on duelist: " + duelist.Name);
         if (Duelist.GetDuelist(isPlayer).CurrentSouls < GetCost(isPlayer))
         {
             base.DropOnDuelist(duelist, isPlayer);

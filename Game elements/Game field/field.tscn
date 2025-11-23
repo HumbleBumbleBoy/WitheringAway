@@ -195,7 +195,7 @@ layout_mode = 2
 position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
-[node name="Player" type="AnimatedSprite2D" parent="PlayerSide" groups=["PlayerCharacter"]]
+[node name="Player" type="AnimatedSprite2D" parent="PlayerSide"]
 position = Vector2(238, 280)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_n2yv0")
@@ -267,7 +267,7 @@ script = ExtResource("19_bul8f")
 MaxHealth = 20
 metadata/_custom_type_script = "uid://bdwv0wmnddn21"
 
-[node name="Area2D" type="Area2D" parent="PlayerSide/Player"]
+[node name="Area2D" type="Area2D" parent="PlayerSide/Player" groups=["PlayerCharacter"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSide/Player/Area2D"]
 position = Vector2(-1.25, 4.875)
@@ -338,7 +338,7 @@ layout_mode = 2
 position = Vector2(65, 65)
 shape = SubResource("CircleShape2D_4q5cl")
 
-[node name="Enemy" type="AnimatedSprite2D" parent="EnemySide" groups=["EnemyCharacter"]]
+[node name="Enemy" type="AnimatedSprite2D" parent="EnemySide"]
 position = Vector2(428, 286)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_fuf8r")
@@ -408,7 +408,7 @@ script = ExtResource("19_bul8f")
 MaxHealth = 20
 metadata/_custom_type_script = "uid://bdwv0wmnddn21"
 
-[node name="Area2D" type="Area2D" parent="EnemySide/Enemy"]
+[node name="Area2D" type="Area2D" parent="EnemySide/Enemy" groups=["EnemyCharacter"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySide/Enemy/Area2D"]
 position = Vector2(-1.25, 4.875)

@@ -642,25 +642,17 @@ public partial class BaseCardTemplate : Control
     
     private Duelist? GetHoveredDuelist()
     {
-        var playerDuelist = GetTree().GetFirstNodeInGroup("PlayerCharacter");
-        var enemyDuelist = GetTree().GetFirstNodeInGroup("EnemyCharacter");
+        var playerDuelist = GetTree().GetFirstNodeInGroup("PlayerCharacter") as Area2D;
+        var enemyDuelist = GetTree().GetFirstNodeInGroup("EnemyCharacter") as Area2D;
         
-        if (playerDuelist != null)
+        if (playerDuelist?.OverlapsArea(GetNode<Area2D>("DetectionArea")) == true)
         {
-            var area2D = enemyDuelist.FindNodeByType<Area2D>();
-            if (area2D?.OverlapsArea(GetNode<Area2D>("DetectionArea")) == true)
-            {
-                return Duelist.PlayerDuelist;
-            }
+            return Duelist.PlayerDuelist;
         }
         
-        if (enemyDuelist != null)
+        if (enemyDuelist?.OverlapsArea(GetNode<Area2D>("DetectionArea")) == true)
         {
-            var area2D = enemyDuelist.FindNodeByType<Area2D>();
-            if (area2D?.OverlapsArea(GetNode<Area2D>("DetectionArea")) == true)
-            {
-                return Duelist.EnemyDuelist;
-            }
+            return Duelist.EnemyDuelist;
         }
         
         return null;

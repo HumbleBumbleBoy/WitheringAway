@@ -17,6 +17,8 @@ public static class NodeExtensions
     {
         foreach (var child in parent.GetChildren())
         {
+            GD.Print("Found child: " + child.GetType().Name);
+            GD.Print("Looking for type: " + typeof(T).Name);
             if (child is T typedChild)
             {
                 return typedChild;

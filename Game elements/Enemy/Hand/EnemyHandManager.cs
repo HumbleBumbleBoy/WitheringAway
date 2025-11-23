@@ -33,17 +33,24 @@ public partial class EnemyHandManager : HandManager
         GD.Print("Card added");
         card.RemoveAllComponents<DraggableComponent>();
         
-        card.IsFlipped = true;
-            
-        cardContainer?.AddChild(card);
+        card.SetFlipped(true);
+        
         enemyCardsInHand.Add(card);
+        enemyCardsInHand.Sort((cardA, cardB) => 
+        {
+            if (cardA.CardData == null || cardB.CardData == null) return 0;
+            return cardA.CardData.Cost.CompareTo(cardB.CardData.Cost); 
+        });
+        
+        cardContainer?.AddChild(card);
+        cardContainer?.MoveChild(card, enemyCardsInHand.IndexOf(card));
             
         enemyDeckManager?.removeTopCardFromDeck();
     }
 
     public override void RemoveCardFromHand(BaseCardTemplate cardToRemove)
     {
-        cardToRemove.IsFlipped = false;
+        cardToRemove.SetFlipped(false);
         enemyCardsInHand.Remove(cardToRemove);
         cardContainer?.RemoveChild(cardToRemove);
     }
@@ -60,4 +67,6 @@ public partial class EnemyHandManager : HandManager
         
         return null;
     }
+    
+    
 }

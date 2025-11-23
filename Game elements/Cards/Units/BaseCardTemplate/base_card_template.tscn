@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://27v8hfhp36xr"]
+[gd_scene load_steps=34 format=3 uid="uid://27v8hfhp36xr"]
 
 [ext_resource type="Script" uid="uid://devx0glmlpslv" path="res://Game elements/Cards/Units/BaseCardTemplate/BaseCardTemplate.cs" id="1_8dryo"]
 [ext_resource type="Script" uid="uid://c1j2lf2f3p6lb" path="res://Resources/BaseCard.cs" id="2_7kkpe"]
@@ -14,7 +14,6 @@
 [ext_resource type="FontFile" uid="uid://debekwb7v6t4q" path="res://General assets/Fonts/boldpixels/BoldPixels.ttf" id="5_yp28l"]
 [ext_resource type="Script" uid="uid://cytofhpvvwyp4" path="res://Game elements/components/DefenseComponent.cs" id="6_methn"]
 [ext_resource type="Texture2D" uid="uid://hjdy44pvmpxr" path="res://Game elements/Cards/Units/BaseCardTemplate/InCombatOverlay.png" id="6_yht3s"]
-[ext_resource type="Script" uid="uid://2o446t0srkde" path="res://Resources/AttackManager.cs" id="8_yp28l"]
 [ext_resource type="Texture2D" uid="uid://dd8d4f6s20uae" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage1.png" id="9_dnwhm"]
 [ext_resource type="AudioStream" uid="uid://bvwd3k4wxv4nk" path="res://Game elements/Cards/Units/BaseCardTemplate/Audio/Hurt.wav" id="9_methn"]
 [ext_resource type="Texture2D" uid="uid://b6h7nn31tr8ev" path="res://Game elements/Cards/Units/BaseCardTemplate/Animations/TakingDamage/TakingDamage2.png" id="10_718wa"]
@@ -96,7 +95,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdwny"]
 size = Vector2(20, 20.25)
 
-[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("AttackManager", "CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
+[node name="BaseCardTemplate" type="Control" node_paths=PackedStringArray("CardOverlay", "CardArt", "CardOnFieldOverlay", "CardDescription", "CardBackground", "CardBackside", "CardName", "AudioFolder", "AnimationFolder")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
@@ -104,7 +103,6 @@ offset_bottom = 48.0
 scale = Vector2(4, 4)
 script = ExtResource("1_8dryo")
 CardData = SubResource("Resource_o8iy5")
-AttackManager = NodePath("AttackManager")
 CardOverlay = NodePath("CardOverlay")
 CardArt = NodePath("CardArt")
 CardOnFieldOverlay = NodePath("CardOnFieldOverlay")
@@ -412,9 +410,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
-
-[node name="AttackManager" type="Node" parent="."]
-script = ExtResource("8_yp28l")
 
 [node name="DetectionArea" type="Area2D" parent="." groups=["CardCollisionArea"]]
 position = Vector2(0, 2)

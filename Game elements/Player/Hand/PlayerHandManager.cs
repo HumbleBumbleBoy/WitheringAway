@@ -34,8 +34,16 @@ public partial class PlayerHandManager : HandManager
         card.GetOrAddComponent<DraggableComponent>();
             
         card.StateMachine.ChangeState(new CardInHand());
-        cardContainer?.AddChild(card);
+  
         playerCardsInHand.Add(card);
+        playerCardsInHand.Sort((cardA, cardB) => 
+        {
+            if (cardA.CardData == null || cardB.CardData == null) return 0;
+            return cardA.CardData.Cost.CompareTo(cardB.CardData.Cost); 
+        });
+        
+        cardContainer?.AddChild(card);
+        cardContainer?.MoveChild(card, playerCardsInHand.IndexOf(card));
             
         playerDeckManager?.RemoveTopCardFromDeck();
     }

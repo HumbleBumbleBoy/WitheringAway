@@ -8,7 +8,7 @@ public class CardInDeck : IState<BaseCardTemplate>
     public IState<BaseCardTemplate>? OnEnter(BaseCardTemplate card, IState<BaseCardTemplate>? previousState)
     {
         GD.Print(card.Name + " entered deck");
-        card.IsFlipped = true; 
+        card.SetFlipped(true); 
         
         return null;
     }
@@ -16,7 +16,7 @@ public class CardInDeck : IState<BaseCardTemplate>
     public IState<BaseCardTemplate>? OnExit(BaseCardTemplate card, IState<BaseCardTemplate>? nextState)
     {
         GD.Print(card.Name + " exited deck");
-        card.IsFlipped = false;
+        card.SetFlipped(false);
 
         return new CardInHand();
     }

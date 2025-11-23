@@ -23,8 +23,9 @@ metadata/_custom_type_script = "uid://c1j2lf2f3p6lb"
 script = ExtResource("2_hxfag")
 CanPlaceOnFriendlyField = true
 CanPlaceOnEnemyField = true
-CanPlaceOnEnemy = false
-CanPlaceOnPlayer = false
+CanPlaceOnPlayer = true
+CanPlaceOnEnemy = true
+IsGeneralEffect = true
 TrickEffects = [SubResource("Resource_0fots")]
 CardData = SubResource("Resource_2jd6x")
 
